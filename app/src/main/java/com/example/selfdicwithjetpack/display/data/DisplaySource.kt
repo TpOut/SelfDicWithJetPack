@@ -11,14 +11,14 @@ import com.example.selfdicwithjetpack.display.DisplayBean
 const val PAGE_NUM_START = 1
 
 class DisplayPagingSource(
-    private val query: String
+    private val pageNum: String
 ) : PagingSource<Int, DisplayBean>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START
         return try {
             val response = QueryWordList.create()
-            val photos = response.queryWorldList()
+            val photos = response.queryWorldList(pageNum)
             LoadResult.Page(
                 data = photos,
                 prevKey = if (page == PAGE_NUM_START) null else page - 1,
