@@ -29,6 +29,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -46,4 +50,11 @@ dependencies {
     //网络
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //jetpack
+    def paging_version = "3.0.0-alpha07"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    def okhttpLoggingVersion = '4.7.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingVersion"
 }

@@ -1,18 +1,17 @@
-package com.example.selfdicwithjetpack.main
+package com.example.selfdicwithjetpack
 
 import android.os.Bundle
-import android.text.TextUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.display.DisplayViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    val mViewMode by viewModels<MainViewModel>()
+    val mViewMode by viewModels<DisplayViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
