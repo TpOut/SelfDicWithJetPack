@@ -2,6 +2,7 @@ package com.example.selfdicwithjetpack.display
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +31,11 @@ class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayView
         }
     }
 
-
     class DisplayViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener { view ->
-                //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToDetailFrag(binding.item!!.src, binding.item!!.dst, binding.item!!.sentence)
+                view.findNavController().navigate(actionDisplayFragToDetailFrag.actionId, actionDisplayFragToDetailFrag.arguments)
             }
         }
 

@@ -17,10 +17,8 @@ class DisplayViewModel : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
-    private var pageNum = 1
-
     fun fetchData(): Flow<PagingData<DisplayBean>> {
-        return getSearchResultStream(pageNum).cachedIn(viewModelScope)
+        return getSearchResultStream().cachedIn(viewModelScope)
     }
 
     fun fetchNextData() {

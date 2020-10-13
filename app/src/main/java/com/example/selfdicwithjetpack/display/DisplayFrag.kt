@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.filter
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.log.LogUtil
 import kotlinx.android.synthetic.main.display_frag.*
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
  */
 class DisplayFrag : Fragment() {
 
+    private var mView: View? = null
     private val adapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
 
@@ -27,15 +29,15 @@ class DisplayFrag : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.display_frag, container, false)
+        if (null == mView) {
+            mView = inflater.inflate(R.layout.display_frag, container, false)
+        }
+        return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         rv.adapter = adapter
-
         fetchData()
     }
 
@@ -43,7 +45,7 @@ class DisplayFrag : Fragment() {
         LogUtil.d("fetchData")
         lifecycleScope.launch {
             LogUtil.d("launch - fetchData")
-            viewModel.fetchData().collectLatest{
+            viewModel.fetchData().collectLatest {
                 LogUtil.d("launch - collectLatest")
                 adapter.submitData(it)
             }
