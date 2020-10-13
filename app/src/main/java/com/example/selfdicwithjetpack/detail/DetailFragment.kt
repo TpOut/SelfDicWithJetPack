@@ -5,28 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
 import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.databinding.DetailFragBinding
+import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class DetailFragment : Fragment() {
 
+    private binding:
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        DetailFragBinding.inflate(inflater, container, false)
+        return inflater.inflate(R.layout.detail_frag, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_DetailFrag_to_DisplayFrag)
-        }
     }
 }

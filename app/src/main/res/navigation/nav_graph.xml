@@ -19,7 +19,7 @@
         android:id="@+id/DetailFrag"
         android:name="com.example.selfdicwithjetpack.detail.DetailFragment"
         android:label="@string/detail_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/detail_frag">
 
         <argument
             android:name="src"
