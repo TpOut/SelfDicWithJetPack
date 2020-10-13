@@ -2,7 +2,12 @@ package com.example.selfdicwithjetpack.display.data
 
 import androidx.paging.PagingSource
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
+import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
 import com.example.selfdicwithjetpack.display.DisplayBean
+import com.example.selfdicwithjetpack.log.LogUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 /**
  * Created by TpOut on 2020/10/12.<br>
@@ -11,19 +16,34 @@ import com.example.selfdicwithjetpack.display.DisplayBean
 const val PAGE_NUM_START = 1
 
 class DisplayPagingSource(
-    private val pageNum: String
+    private val pageNum: Int
 ) : PagingSource<Int, DisplayBean>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START
+        LogUtil.d("DisplayPagingSource - load")
         return try {
-            val response = QueryWordList.create()
-            val photos = response.queryWorldList(pageNum)
-            LoadResult.Page(
-                data = photos,
-                prevKey = if (page == PAGE_NUM_START) null else page - 1,
-                nextKey = if (page == response.totalPages) null else page + 1
-            )
+            val service = QueryWordList.create()
+            LogUtil.d("DisplayPagingSource - result")
+            var result: Response<QueryWordResultBean>
+            withContext(Dispatchers.IO) {
+                result = service.queryWorldList(pageNum).execute()
+            }
+            LogUtil.d("DisplayPagingSource - result")
+            if (result.isSuccessful) {
+                val list = result.body()!!.result
+                LoadResult.Page(
+                    data = list,
+                    prevKey = if (page == PAGE_NUM_START) null else page - 1,
+                    nextKey = if (list.isEmpty()) null else page + 1
+                )
+            } else {
+                LoadResult.Page(
+                    data = listOf(),
+                    prevKey = if (page == PAGE_NUM_START) null else page - 1,
+                    nextKey = null
+                )
+            }
         } catch (exception: Exception) {
             LoadResult.Error(exception)
         }

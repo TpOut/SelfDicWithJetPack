@@ -21,7 +21,7 @@
             android:id="@+id/item_query"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="查询：@{item.querySrc}"
+            android:text="@{item.src}"
             android:textSize="16sp" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="结果：@{item.queryResult}"
+            android:text="@{item.dst}"
             android:textSize="18sp" />
 
     </LinearLayout>

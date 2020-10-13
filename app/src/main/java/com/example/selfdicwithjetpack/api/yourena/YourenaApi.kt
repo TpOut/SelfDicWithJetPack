@@ -47,7 +47,7 @@ interface AddWordApi {
 interface QueryWordList {
 
     @GET("/WordList")
-    fun queryWorldList(@Query("pageNum") pageNum : String): Call<QueryWordResultBean>
+    fun queryWorldList(@Query("pageNum") pageNum : Int): Call<QueryWordResultBean>
 
     companion object {
         fun create(): QueryWordList {

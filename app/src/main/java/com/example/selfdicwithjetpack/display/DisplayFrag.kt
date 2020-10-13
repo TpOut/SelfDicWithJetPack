@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.log.LogUtil
 import kotlinx.android.synthetic.main.display_frag.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -32,16 +34,17 @@ class DisplayFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv.apply {
-            adapter = adapter
-        }
+        rv.adapter = adapter
 
         fetchData()
     }
 
     private fun fetchData() {
+        LogUtil.d("fetchData")
         lifecycleScope.launch {
-            viewModel.fetchData(){
+            LogUtil.d("launch - fetchData")
+            viewModel.fetchData().collectLatest{
+                LogUtil.d("launch - collectLatest")
                 adapter.submitData(it)
             }
         }

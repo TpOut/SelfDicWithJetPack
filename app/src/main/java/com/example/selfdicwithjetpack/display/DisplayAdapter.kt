@@ -53,7 +53,7 @@ private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayBean>() {
     }
 
     override fun areContentsTheSame(oldItem: DisplayBean, newItem: DisplayBean): Boolean {
-        return oldItem.querySrc == newItem.querySrc
+        return oldItem.src == newItem.src
 
     }
 }
