@@ -14,7 +14,11 @@
         <action
             android:id="@+id/action_DisplayFrag_to_DetailFrag"
             app:destination="@id/DetailFrag" />
+        <action
+            android:id="@+id/action_DisplayFrag_to_RandomFrag"
+            app:destination="@id/RandomFrag" />
     </fragment>
+
     <fragment
         android:id="@+id/DetailFrag"
         android:name="com.example.selfdicwithjetpack.detail.DetailFragment"
@@ -33,6 +37,17 @@
 
         <action
             android:id="@+id/action_DetailFrag_to_DisplayFrag"
+            app:destination="@id/DisplayFrag" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RandomFrag"
+        android:name="com.example.selfdicwithjetpack.random.RandomFrag"
+        android:label="@string/random_fragment_label"
+        tools:layout="@layout/random_frag">
+
+        <action
+            android:id="@+id/action_RandomFrag_to_DisplayFrag"
             app:destination="@id/DisplayFrag" />
     </fragment>
 </navigation>

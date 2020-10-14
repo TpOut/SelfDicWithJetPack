@@ -4,9 +4,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="display_fragment_label">Display Fragment</string>
     <string name="detail_fragment_label">Detail Fragment</string>
+    <string name="random_fragment_label">Random Fragment</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
 
     <string name="display_query">查询：%s</string>
     <string name="display_result">结果：%s</string>

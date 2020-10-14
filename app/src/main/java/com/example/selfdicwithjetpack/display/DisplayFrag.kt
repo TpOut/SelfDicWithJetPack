@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.log.LogUtil
@@ -38,9 +40,15 @@ class DisplayFrag : Fragment() {
 
     // 这种写法不能直接使用 fab、rv 来获取view
     private fun afterViewCreated(rootView: View) {
-        rootView.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+        val fab = rootView.findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener { view ->
             Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+        fab.setOnLongClickListener {
+            val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToRandomFrag()
+            findNavController().navigate(actionDisplayFragToDetailFrag.actionId)
+            true
         }
 
         rootView.findViewById<RecyclerView>(R.id.rv).adapter = mAdapter
