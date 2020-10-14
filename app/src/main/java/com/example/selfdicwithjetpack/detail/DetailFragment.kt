@@ -1,31 +1,40 @@
 package com.example.selfdicwithjetpack.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.selfdicwithjetpack.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.selfdicwithjetpack.databinding.DetailFragBinding
-import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
+import com.example.selfdicwithjetpack.display.DisplayBean
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class DetailFragment : Fragment() {
 
-    private binding:
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        DetailFragBinding.inflate(inflater, container, false)
-        return inflater.inflate(R.layout.detail_frag, container, false)
+        val binding = DetailFragBinding.inflate(inflater, container, false)
+        context ?: return binding.root
+
+        afterViewCreated(binding)
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun afterViewCreated(binding: DetailFragBinding) {
+        binding.fab.setOnClickListener { view ->
+            Snackbar.make(view, "ReplaceSuccess", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
+        binding.item = DisplayBean(args.src, args.dst, args.sentence)
     }
+
 }

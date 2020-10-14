@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.navigation.findNavController
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -17,14 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
-
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-
-
 
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)

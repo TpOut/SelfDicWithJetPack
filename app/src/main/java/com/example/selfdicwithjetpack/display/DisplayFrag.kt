@@ -1,18 +1,17 @@
 package com.example.selfdicwithjetpack.display
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.paging.filter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.log.LogUtil
-import kotlinx.android.synthetic.main.display_frag.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,22 +21,29 @@ import kotlinx.coroutines.launch
 class DisplayFrag : Fragment() {
 
     private var mView: View? = null
-    private val adapter = DisplayAdapter()
+    private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (null == mView) {
-            mView = inflater.inflate(R.layout.display_frag, container, false)
+        if (null != mView) {
+            return mView
         }
+        mView = inflater.inflate(R.layout.display_frag, container, false)
+        afterViewCreated(mView!!)
         return mView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        rv.adapter = adapter
+    // 这种写法不能直接使用 fab、rv 来获取view
+    private fun afterViewCreated(rootView: View) {
+        rootView.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+            Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
+        rootView.findViewById<RecyclerView>(R.id.rv).adapter = mAdapter
         fetchData()
     }
 
@@ -47,7 +53,7 @@ class DisplayFrag : Fragment() {
             LogUtil.d("launch - fetchData")
             viewModel.fetchData().collectLatest {
                 LogUtil.d("launch - collectLatest")
-                adapter.submitData(it)
+                mAdapter.submitData(it)
             }
         }
     }
