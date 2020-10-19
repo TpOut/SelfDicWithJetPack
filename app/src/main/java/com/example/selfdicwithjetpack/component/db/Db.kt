@@ -1,8 +1,9 @@
-package com.example.selfdicwithjetpack.db
+package com.example.selfdicwithjetpack.component.db
 
 import android.content.Context
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteOpenHelper
+import com.example.selfdicwithjetpack.model.data.Word
 
 /**
  * Created by TpOut on 2020/10/15.<br>
@@ -15,7 +16,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper
 fun getDisplayDb(appContext: Context) {
     val db = Room.databaseBuilder(
         appContext,
-        DisplayDatabase::class.java, "database-name"
+        DisplayDatabase::class.java, "yourena"
     ).build()
     // 多进程 enableMultiInstanceInvalidation
 }

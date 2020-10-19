@@ -1,7 +1,8 @@
-package com.example.selfdicwithjetpack.db
+package com.example.selfdicwithjetpack.model.user
 
-import android.content.Context
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 
 /**
  * Created by TpOut on 2020/10/16.<br>
@@ -9,13 +10,15 @@ import androidx.room.*
  */
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM word")
-    fun getAll(): List<Word>
-
     // 关联查询
     @Transaction
+    @Query("SELECT * FROM user")
+    fun getUserWord(): List<UserAndWord>
+
+    @Transaction
     @Query("SELECT * FROM User")
-    fun getUsersAndLibraries(): List<UserAndLibrary>
+    fun getUserField(): List<UserAndField>
+
 //
 //    @Query("SELECT * FROM Words WHERE uid IN (:userIds)")
 //    fun loadAllByIds(userIds: IntArray): List<User>
@@ -26,12 +29,4 @@ interface UserDao {
 
 //    @Insert
 //    fun insertAll(vararg users: User)
-
-    @Delete
-    fun delete(word: Word)
-}
-
-@Dao
-interface WordDao{
-
 }
