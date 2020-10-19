@@ -1,4 +1,4 @@
-package com.example.selfdicwithjetpack.network
+package com.example.selfdicwithjetpack.component.network
 
 
 /**

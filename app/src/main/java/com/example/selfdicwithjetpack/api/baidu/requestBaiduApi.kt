@@ -1,7 +1,7 @@
 package com.example.selfdicwithjetpack.api.baidu
 //
 //import android.text.TextUtils
-//import com.example.selfdicwithjetpack.crypto.getMD5
+//import com.example.selfdicwithjetpack.component.crypto.getMD5
 //import retrofit2.Call
 //import retrofit2.Retrofit
 //import retrofit2.converter.gson.GsonConverterFactory

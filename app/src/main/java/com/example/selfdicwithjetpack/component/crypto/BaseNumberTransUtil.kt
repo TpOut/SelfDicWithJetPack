@@ -1,4 +1,4 @@
-package com.example.selfdicwithjetpack.crypto
+package com.example.selfdicwithjetpack.component.crypto
 
 /**
  * Created by TpOut on 2020/10/12.<br>

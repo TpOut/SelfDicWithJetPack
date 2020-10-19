@@ -2,6 +2,7 @@
     <string name="app_name">SelfDicWithJetPack</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
+    <string name="login_fragment_label">Login Fragment</string>
     <string name="display_fragment_label">Display Fragment</string>
     <string name="detail_fragment_label">Detail Fragment</string>
     <string name="random_fragment_label">Random Fragment</string>

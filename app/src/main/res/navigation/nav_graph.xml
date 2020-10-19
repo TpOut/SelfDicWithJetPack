@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/DisplayFrag">
+    app:startDestination="@id/LoginFrag">
+
+    <fragment
+        android:id="@+id/LoginFrag"
+        android:name="com.example.selfdicwithjetpack.login.LoginFrag"
+        android:label="@string/login_fragment_label"
+        tools:layout="@layout/login_frag" />
 
     <fragment
         android:id="@+id/DisplayFrag"

@@ -1,4 +1,4 @@
-package com.example.selfdicwithjetpack.crypto
+package com.example.selfdicwithjetpack.component.crypto
 
 import java.security.MessageDigest
 
