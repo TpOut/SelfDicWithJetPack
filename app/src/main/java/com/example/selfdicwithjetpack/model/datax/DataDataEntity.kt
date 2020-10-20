@@ -23,7 +23,7 @@ data class WordAndField(
     @Relation(
         parentColumn = "word_id",
         entityColumn = "field_id",
-        associateBy = @Junction(WordFieldCrossRef::class)
+        associateBy = Junction(WordFieldCrossRef::class)
     )
     val fields: List<FieldBean>
 )
@@ -33,7 +33,7 @@ data class FieldAndWord(
     @Relation(
         parentColumn = "playlistId",
         entityColumn = "songId",
-        associateBy = @Junction(WordFieldCrossRef::class)
+        associateBy = Junction(WordFieldCrossRef::class)
     )
     val words: List<WordBean>
 )

@@ -17,4 +17,7 @@ class LoginViewModel : ViewModel() {
         return null
     }
 
+    fun saveUserData(name: String) {
+        Sp.saveNme(name)
+    }
 }

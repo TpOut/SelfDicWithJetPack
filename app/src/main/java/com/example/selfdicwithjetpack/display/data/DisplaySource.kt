@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
 import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
 import com.example.selfdicwithjetpack.display.DisplayBean
-import com.example.selfdicwithjetpack.component.log.LogUtil
+import com.example.selfdicwithjetpack.component.debug.log.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response

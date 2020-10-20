@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -16,7 +19,7 @@ import kotlinx.coroutines.launch
  */
 class LoginFrag : Fragment() {
 
-    private var viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = LoginFragBinding.inflate(inflater, container, false)
@@ -26,12 +29,22 @@ class LoginFrag : Fragment() {
         return binding.root
     }
 
-    fun afterViewCreated(binding: LoginFragBinding) {
+    private fun afterViewCreated(binding: LoginFragBinding) {
         lifecycleScope.launch {
             var userBean = viewModel.fetchUserData()
-            binding.bean = userBean
+//            binding.bean = userBean
+            delay(3000)
+            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
         }
     }
 
-    fun
+    fun requireNext(v: View) {
+//        val name = et.text.toString()
+//        if (name.isEmpty()) {
+//            ToastUtil.showShort(requireContext(), name)
+//        } else {
+//            viewModel.saveUserData(name)
+//            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+//        }
+    }
 }

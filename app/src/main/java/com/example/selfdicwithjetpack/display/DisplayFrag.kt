@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.selfdicwithjetpack.R
-import com.example.selfdicwithjetpack.component.log.LogUtil
+import com.example.selfdicwithjetpack.component.debug.log.LogUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest

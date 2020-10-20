@@ -1,4 +1,4 @@
-package com.example.selfdicwithjetpack.component.log
+package com.example.selfdicwithjetpack.component.debug.log
 
 import android.util.Log
 

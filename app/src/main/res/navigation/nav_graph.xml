@@ -9,7 +9,13 @@
         android:id="@+id/LoginFrag"
         android:name="com.example.selfdicwithjetpack.login.LoginFrag"
         android:label="@string/login_fragment_label"
-        tools:layout="@layout/login_frag" />
+        tools:layout="@layout/login_frag" >
+
+        <action
+            android:id="@+id/action_LoginFrag_toDisplayFrag"
+            app:destination="@+id/DisplayFrag"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/DisplayFrag"
