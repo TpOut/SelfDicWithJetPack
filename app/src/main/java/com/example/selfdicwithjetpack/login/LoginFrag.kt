@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.component.debug.ToastUtil
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
+import kotlinx.android.synthetic.main.detail_frag.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -17,7 +19,7 @@ import kotlinx.coroutines.launch
  * Created by TpOut on 2020/10/19.<br>
  * Email address: 416756910@qq.com<br>
  */
-class LoginFrag : Fragment() {
+class LoginFrag : Fragment(), LoginHandler {
 
     private val viewModel: LoginViewModel by viewModels()
 
@@ -25,6 +27,7 @@ class LoginFrag : Fragment() {
         val binding = LoginFragBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
+        binding.handler = this
         afterViewCreated(binding)
         return binding.root
     }
@@ -32,19 +35,21 @@ class LoginFrag : Fragment() {
     private fun afterViewCreated(binding: LoginFragBinding) {
         lifecycleScope.launch {
             var userBean = viewModel.fetchUserData()
-//            binding.bean = userBean
-            delay(3000)
-            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+            binding.bean = userBean
+            if (!userBean.name.isNullOrEmpty()) {
+                delay(3000)
+                findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+            }
         }
     }
 
-    fun requireNext(v: View) {
-//        val name = et.text.toString()
-//        if (name.isEmpty()) {
-//            ToastUtil.showShort(requireContext(), name)
-//        } else {
-//            viewModel.saveUserData(name)
-//            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
-//        }
+    override fun onNextClick(v: View) {
+        val name = et.text.toString()
+        if (name.isEmpty()) {
+            ToastUtil.showShort(requireContext(), LoginConstant.LOGIN)
+        } else {
+            viewModel.saveUserData(name)
+            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+        }
     }
 }

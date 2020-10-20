@@ -10,11 +10,8 @@ import com.example.selfdicwithjetpack.model.user.UserBean
  */
 class LoginViewModel : ViewModel() {
 
-    fun fetchUserData(): UserBean? {
-        Sp.queryName()?.let {
-            return UserBean(it)
-        }
-        return null
+    fun fetchUserData(): UserBean {
+        return UserBean(Sp.queryName())
     }
 
     fun saveUserData(name: String) {

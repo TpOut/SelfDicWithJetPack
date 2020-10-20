@@ -8,6 +8,10 @@
         <import type="com.example.selfdicwithjetpack.login.LoginConstant" />
 
         <variable
+            name="handler"
+            type="com.example.selfdicwithjetpack.login.LoginHandler" />
+
+        <variable
             name="bean"
             type="com.example.selfdicwithjetpack.model.user.UserBean" />
     </data>
@@ -22,7 +26,8 @@
             android:id="@+id/et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint='@{bean.name == null? LoginConstant.LOGIN : LoginConstant.WELCOME}'
+            android:gravity="center"
+            android:hint='@{bean.name.equals("") ? LoginConstant.LOGIN : LoginConstant.WELCOME}'
             android:text="@{bean.name}"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,9 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:onClick="requireNext"
+            android:onClick="@{handler::onNextClick}"
             android:text="next"
-            android:visibility="@{bean.name == null ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility='@{bean.name.equals("") ? View.VISIBLE : View.INVISIBLE}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
