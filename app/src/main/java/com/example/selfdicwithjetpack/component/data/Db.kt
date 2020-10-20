@@ -1,4 +1,4 @@
-package com.example.selfdicwithjetpack.component.db
+package com.example.selfdicwithjetpack.component.data
 
 import android.content.Context
 import androidx.room.*
