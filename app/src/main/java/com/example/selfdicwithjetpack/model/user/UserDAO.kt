@@ -10,22 +10,9 @@ import androidx.room.Transaction
  */
 @Dao
 interface UserDao {
-    // 关联查询
-    @Transaction
-    @Query("SELECT * FROM user")
-    fun getUserWord(): List<UserAndWord>
 
-    @Transaction
-    @Query("SELECT * FROM User")
-    fun getUserField(): List<UserAndField>
-
-//
-//    @Query("SELECT * FROM Words WHERE uid IN (:userIds)")
-//    fun loadAllByIds(userIds: IntArray): List<User>
-//
-//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(first: String, last: String): User
+    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
+    fun getUser(userId : Int) : UserEntity
 
 //    @Insert
 //    fun insertAll(vararg users: User)

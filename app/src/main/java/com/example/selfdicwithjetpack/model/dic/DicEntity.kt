@@ -1,0 +1,78 @@
+package com.example.selfdicwithjetpack.model.dic
+
+import androidx.room.*
+
+/**
+ * Created by TpOut on 2020/10/20.<br>
+ * Email address: 416756910@qq.com<br>
+ *
+ *     这里的关联查询，需要两个表的 id
+ *     即 word.id 和 field.id，为了防止冲突
+ *     进而在定义 entity 的时候就得分别确定为 word.word_id，field.field_id
+ *     感觉就有点侵入式了啊
+ */
+
+/**
+ * 词典和领域
+ */
+@Entity(primaryKeys = ["dic_id", "field_id"])
+data class DicFieldCrossRef(
+    @ColumnInfo(name = "dic_id")
+    val dicId: Long,
+    @ColumnInfo(name = "field_id")
+    val fieldId: Long
+)
+
+data class DicAndFieldEntity(
+    @Embedded val dic: DicEntity,
+    @Relation(
+        parentColumn = "dic_id",
+        entityColumn = "field_id",
+        associateBy = Junction(DicFieldCrossRef::class)
+    )
+    val fields: List<FieldEntity>
+)
+
+data class FieldAndDicEntity(
+    @Embedded val field: FieldEntity,
+    @Relation(
+        parentColumn = "dic_id",
+        entityColumn = "field_id",
+        associateBy = Junction(DicFieldCrossRef::class)
+    )
+    val dics: List<DicEntity>
+)
+
+/**
+ * 词典和单词
+ */
+@Entity(primaryKeys = ["dic_id", "word_id"])
+data class DicWordCrossRef(
+    @ColumnInfo(name = "dic_id")
+    val dicId: Long,
+    @ColumnInfo(name = "word_id")
+    val wordId: Long
+)
+
+data class DicAndWordEntity(
+    @Embedded val dic: DicEntity,
+    @Relation(
+        parentColumn = "dic_id",
+        entityColumn = "word_id",
+        associateBy = Junction(DicFieldCrossRef::class)
+    )
+    val words: List<WordEntity>
+)
+
+data class WordAndDicEntity(
+    @Embedded val word: WordEntity,
+    @Relation(
+        parentColumn = "word_id",
+        entityColumn = "dic_id",
+        associateBy = Junction(DicFieldCrossRef::class)
+    )
+    val dics: List<DicEntity>
+)
+
+
+
