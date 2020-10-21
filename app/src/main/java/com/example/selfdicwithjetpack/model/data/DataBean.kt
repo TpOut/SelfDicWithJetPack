@@ -16,3 +16,6 @@ open class FieldBean(var name: String?)
 
 // 单词
 open class WordBean(var src: String?, var dst: String?, var sentence: String?)
+
+// 单词本
+open class DicBean(var words: List<WordBean>)

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.selfdicwithjetpack.model.data.AddressBean
+import com.example.selfdicwithjetpack.model.data.DicBean
 import com.example.selfdicwithjetpack.model.data.FieldBean
 import com.example.selfdicwithjetpack.model.data.WordBean
 
@@ -24,9 +25,21 @@ import com.example.selfdicwithjetpack.model.data.WordBean
 //@Entity(primaryKeys = arrayOf("src","dst"),tableName = "users",ignoredColumns = arrayOf("pic"))
 //@Fts3 使用全文检索的时候，primaryKey 一定要用rowId 作为列名称， FtsOptions
 //@Fts4(languageId = "src")
+
+
+@Entity(tableName = "dic")
+class DicEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "dic_id")
+    val id: Int,
+    words: List<WordBean>
+) : DicBean(words)
+
 @Entity(tableName = "word")
 class WordEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey
+    @ColumnInfo(name = "word_id")
+    val id: Int,
     @ColumnInfo(name = "user_id") val userId: Int,
     src: String?,
     dst: String?,
@@ -37,17 +50,20 @@ class WordEntity(
 
 @Entity(tableName = "field")
 class FieldEntity(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "name")
-    name : String?
+    @PrimaryKey
+    @ColumnInfo(name = "field_id")
+    val id: Int,
+    name: String?
 ) : FieldBean(name)
 
 
 @Entity(tableName = "address")
 class AddressEntity(
-    @PrimaryKey val id: Int,
-    street :String,
-    city:String
+    @PrimaryKey
+    @ColumnInfo(name = "address_id")
+    val id: Int,
+    street: String,
+    city: String
 ) : AddressBean(street, city)
 
 

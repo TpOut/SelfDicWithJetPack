@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.selfdicwithjetpack.model.data.FieldBean
 import com.example.selfdicwithjetpack.model.data.WordBean
+import com.example.selfdicwithjetpack.model.datax.WordEntity
 import java.lang.reflect.Field
 
 /**
@@ -14,12 +15,12 @@ import java.lang.reflect.Field
 
 // 对1:1 关联的表
 data class UserAndWord(
-    @Embedded val user: UserBean,
+    @Embedded val user: UserEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "user_id"
     )
-    val word: WordBean
+    val word: WordEntity
 )
 
 // 1:n 关联的表
@@ -32,5 +33,13 @@ data class UserAndField(
     val fields: List<FieldBean>
 )
 
-
-// n:1 关联的表
+//
+data class UserAndWordAndField {
+    @Embedded val user: UserBean
+    @Relation(
+        entity = Playlist::class,
+        parentColumn = "userId",
+        entityColumn = "userCreatorId"
+    )
+    val playlists: List<PlaylistWithSongs>
+}
