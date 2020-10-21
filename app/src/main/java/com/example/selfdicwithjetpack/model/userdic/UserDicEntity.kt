@@ -2,6 +2,7 @@ package com.example.selfdicwithjetpack.model.userdic
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.selfdicwithjetpack.model.dic.DicAndFieldEntity
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.user.UserEntity
 
@@ -18,4 +19,15 @@ data class UserAndDicEntity(
         entityColumn = "word_id"
     )
     val dics: List<DicEntity>
+)
+
+//直接查询下级嵌套
+data class UserAndDicAndField(
+    @Embedded val user: UserEntity,
+    @Relation(
+        entity = DicEntity::class,
+        parentColumn = "user_id",
+        entityColumn = "user_id"
+    )
+    val dicFields: List<DicAndFieldEntity>
 )

@@ -1,5 +1,8 @@
 package com.example.selfdicwithjetpack.model.dic
 
+import android.database.Cursor
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
@@ -25,4 +28,13 @@ interface DicDao {
     @Transaction
     @Query("SELECT * FROM field")
     fun getFieldDic(): List<FieldAndDicEntity>
+
+    //
+    @Transaction
+    @Query("SELECT * FROM dic WHERE dic_id == :dicId")
+    fun getDicWord(dicId: String): List<DicAndWordEntity>
+
+    //不知道可不可以
+    fun getDicWordPagable(query: String): PagingSource<Int, List<DicAndWordEntity>>
+    fun getDicWordLiveData(): LiveData<List<DicAndWordEntity>>
 }

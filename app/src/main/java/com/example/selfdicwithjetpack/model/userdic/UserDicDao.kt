@@ -15,4 +15,9 @@ interface UserDicDao {
     @Query("SELECT * FROM user WHERE user_id == :userId")
     fun getUserDic(userId: Int): List<UserAndDicEntity>
 
+    // 嵌套关联
+    @Transaction
+    @Query("SELECT * FROM User")
+    fun getUserDicField(): List<UserAndDicAndField>
+
 }
