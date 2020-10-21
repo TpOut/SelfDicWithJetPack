@@ -12,6 +12,7 @@ import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.debug.ToastUtil
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
 import kotlinx.android.synthetic.main.detail_frag.*
+import kotlinx.android.synthetic.main.login_frag.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class LoginFrag : Fragment(), LoginHandler {
     private fun afterViewCreated(binding: LoginFragBinding) {
         lifecycleScope.launch {
             var userBean = viewModel.fetchUserData()
-            binding.bean = userBean
+            binding.userBean = userBean
             if (!userBean.name.isNullOrEmpty()) {
                 delay(3000)
                 findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
@@ -44,7 +45,7 @@ class LoginFrag : Fragment(), LoginHandler {
     }
 
     override fun onNextClick(v: View) {
-        val name = et.text.toString()
+        val name = et_name.text.toString()
         if (name.isEmpty()) {
             ToastUtil.showShort(requireContext(), LoginConstant.LOGIN)
         } else {

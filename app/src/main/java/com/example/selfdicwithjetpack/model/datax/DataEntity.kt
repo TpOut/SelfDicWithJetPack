@@ -38,9 +38,8 @@ class WordEntity(
 @Entity(tableName = "field")
 class FieldEntity(
     @PrimaryKey val id: Int,
-    @ColumnInfo(name = "user_id") val userId: Int,
+    @ColumnInfo(name = "name")
     name : String?
-//    ,@Ignore val pic : String?
 ) : FieldBean(name)
 
 

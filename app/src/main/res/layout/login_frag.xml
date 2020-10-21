@@ -5,6 +5,8 @@
 
         <import type="android.view.View" />
 
+        <import type="java.util.List" />
+
         <import type="com.example.selfdicwithjetpack.login.LoginConstant" />
 
         <variable
@@ -12,8 +14,12 @@
             type="com.example.selfdicwithjetpack.login.LoginHandler" />
 
         <variable
-            name="bean"
+            name="userBean"
             type="com.example.selfdicwithjetpack.model.user.UserBean" />
+
+        <variable
+            name="fieldList"
+            type="List&lt;com.example.selfdicwithjetpack.model.data.FieldBean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,18 +28,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et"
+        <TextView
+            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="center"
-            android:hint='@{bean.name.equals("") ? LoginConstant.LOGIN : LoginConstant.WELCOME}'
-            android:text="@{bean.name}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:minWidth="60dp"
+            android:text='@{userBean.name.equals("") ? LoginConstant.LOGIN : LoginConstant.WELCOME}'
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@{userBean.name}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+        <EditText
+            android:id="@+id/et_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text='@{"your major field :\n" + (fieldList[0] ?? "") + (fieldList[1] ?? "") + (fieldList[2] ?? "")}'
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
         <Button
             android:id="@+id/btn"
@@ -42,7 +72,7 @@
             android:layout_marginBottom="16dp"
             android:onClick="@{handler::onNextClick}"
             android:text="next"
-            android:visibility='@{bean.name.equals("") ? View.VISIBLE : View.INVISIBLE}'
+            android:visibility='@{userBean.name.equals("") ? View.VISIBLE : View.INVISIBLE}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
