@@ -20,4 +20,7 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE user_id IN (:userId)")
     fun getUser(userId : Int) : UserEntity
 
+    @Query("SELECT * FROM user WHERE birthday BETWEEN :from AND :to")
+    fun findUsersBornBetweenDates(from: DateBean, to: DateBean): List<UserEntity>
+
 }

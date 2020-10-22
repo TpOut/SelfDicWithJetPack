@@ -15,6 +15,6 @@ class LoginViewModel : ViewModel() {
     }
 
     fun saveUserData(name: String) {
-        Sp.saveNme(name)
+//        DbManager.getDisplayDb()
     }
 }

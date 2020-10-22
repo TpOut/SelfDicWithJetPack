@@ -1,6 +1,5 @@
 package com.example.selfdicwithjetpack.model.dic
 
-import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao

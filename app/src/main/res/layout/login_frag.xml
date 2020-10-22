@@ -19,7 +19,7 @@
 
         <variable
             name="fieldList"
-            type="List&lt;com.example.selfdicwithjetpack.model.data.FieldBean>" />
+            type="List&lt;com.example.selfdicwithjetpack.model.dic.FieldBean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
