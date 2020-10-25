@@ -1,16 +1,14 @@
 package com.example.selfdicwithjetpack.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.example.selfdicwithjetpack.model.dic.DicDao
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.FieldEntity
 import com.example.selfdicwithjetpack.model.dic.WordEntity
+import com.example.selfdicwithjetpack.model.user.DateConverters
 import com.example.selfdicwithjetpack.model.user.UserDao
 import com.example.selfdicwithjetpack.model.user.UserEntity
-import com.example.selfdicwithjetpack.model.userdic.UserDicDao
 
 /**
  * Created by TpOut on 2020/10/19.<br>
@@ -24,10 +22,11 @@ import com.example.selfdicwithjetpack.model.userdic.UserDicDao
         UserEntity::class
     ], version = 1
 )
+@TypeConverters(DateConverters::class)
 abstract class AppDb : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun dicDao(): DicDao
-    abstract fun userDicDao(): UserDicDao
+//    abstract fun userDicDao(): UserDicDao
 
     companion object {
         // 多进程 enableMultiInstanceInvalidation

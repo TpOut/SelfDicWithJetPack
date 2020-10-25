@@ -15,8 +15,8 @@ interface UserDao {
     fun insertUser(vararg user: UserEntity)
 
 
-    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
-    fun getSimpleUser(userId : Int) : UserBean
+//    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
+//    fun getSimpleUser(userId : Int) : UserBean
     @Query("SELECT * FROM user WHERE user_id IN (:userId)")
     fun getUser(userId : Int) : UserEntity
 

@@ -8,9 +8,9 @@ import androidx.room.*
  *     用户体系
  */
 
-@Entity(tableName = "user")
+@Entity(tableName = "user", inheritSuperIndices = true)
 class UserEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")
     val id: Int,
     name: String?,
@@ -19,9 +19,9 @@ class UserEntity(
     val address: AddressBean?
 ) : UserBean(name)
 
-@Entity(tableName = "address")
+@Entity(tableName = "address",inheritSuperIndices = true)
 class AddressEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     street: String,
     city: String
@@ -40,9 +40,9 @@ open class DateBean(
     val day: String?
 )
 
-class Converters {
+class DateConverters {
     @TypeConverter
-    fun dateFromString(value: String?): DateBean? {
+    fun toDate(value: String?): DateBean? {
         return value?.let {
             DateBean(
                 value.substring(0, 4),
@@ -53,7 +53,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun dateToString(date: DateBean?): String? {
+    fun toString(date: DateBean?): String? {
         return date?.let { it.year + it.month + it.day }
     }
 }
