@@ -1,7 +1,10 @@
 package com.example.selfdicwithjetpack.data
 
-import android.content.Context
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.blankj.utilcode.util.Utils
 import com.example.selfdicwithjetpack.model.dic.DicDao
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.FieldEntity
@@ -9,6 +12,8 @@ import com.example.selfdicwithjetpack.model.dic.WordEntity
 import com.example.selfdicwithjetpack.model.user.DateConverters
 import com.example.selfdicwithjetpack.model.user.UserDao
 import com.example.selfdicwithjetpack.model.user.UserEntity
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Created by TpOut on 2020/10/19.<br>
@@ -30,11 +35,13 @@ abstract class AppDb : RoomDatabase() {
 
     companion object {
         // 多进程 enableMultiInstanceInvalidation
-        fun getDisplayDb(appContext: Context): AppDb {
+        fun getDisplayDb(): AppDb {
             return Room.databaseBuilder(
-                appContext,
+                Utils.getApp(),
                 AppDb::class.java, "yourena"
             )
+                .setQueryExecutor(Executors.newSingleThreadExecutor())
+                .setTransactionExecutor(Executors.newCachedThreadPool())
                 .addCallback(object : RoomDatabase.Callback() {
 
                 })

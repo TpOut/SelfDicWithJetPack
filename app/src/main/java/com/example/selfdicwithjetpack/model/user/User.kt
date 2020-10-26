@@ -12,48 +12,47 @@ import androidx.room.*
 class UserEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")
-    val id: Int,
+    var id: Int = 0,
     name: String?,
-    val birthday: DateBean?,
-    @Embedded(prefix = "addr_") // 嵌入结构，实际上会作为User 表的直接column
-    val address: AddressBean?
-) : UserBean(name)
+//    @TypeConverters(DateConverters::class) //注解是说支持field 的，但是写了没用
+    birthday: String?,
+    address: AddressBean?
+//    @Embedded // 嵌入结构，实际上会作为User 表的直接column
+) : UserBean(name, birthday, address) {
+    override fun toString(): String {
+        return "$id-${super.toString()}"
+    }
+}
 
-@Entity(tableName = "address",inheritSuperIndices = true)
-class AddressEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    street: String,
-    city: String
-) : AddressBean(street, city)
-
-open class UserBean(var name: String?)
+open class UserBean(var name: String?, var birthday: String?, val address: AddressBean?) {
+    override fun toString(): String {
+        return "${name}-${birthday}-${address.toString()}"
+    }
+}
 
 open class AddressBean(
-    val street: String?,
-    val city: String?
-)
-
-open class DateBean(
-    val year: String?,
-    val month: String?,
-    val day: String?
-)
+    val city: String?,
+    val street: String?
+) {
+    override fun toString(): String {
+        return "$city-$street"
+    }
+}
 
 class DateConverters {
+
     @TypeConverter
-    fun toDate(value: String?): DateBean? {
+    fun toAddressBean(value: String?): AddressBean? {
         return value?.let {
-            DateBean(
-                value.substring(0, 4),
-                value.substring(4, 6),
-                value.substring(6, 8)
-            )
+            val results = it.split("-")
+            AddressBean(results[0], results[1])
         }
     }
 
     @TypeConverter
-    fun toString(date: DateBean?): String? {
-        return date?.let { it.year + it.month + it.day }
+    fun toString(address: AddressBean?): String? {
+        return address?.let {
+            it.city + "-" + it.street
+        }
     }
 }

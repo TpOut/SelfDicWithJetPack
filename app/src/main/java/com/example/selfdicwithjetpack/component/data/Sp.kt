@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.core.content.edit
-import com.example.selfdicwithjetpack.login.SP_KEY_LOGIN_USER_NAME
+import com.example.selfdicwithjetpack.login.SP_KEY_LOGIN_USER_ID
 
 /**
  * Created by TpOut on 2020/10/20.<br>
@@ -19,14 +19,14 @@ object Sp {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext)
     }
 
-    fun saveNme(name: String) {
+    fun saveUserId(id: String) {
         sharedPreferences.edit {
-            putString(SP_KEY_LOGIN_USER_NAME, name)
+            putString(SP_KEY_LOGIN_USER_ID, id)
         }
     }
 
-    fun queryName(): String? {
-        return sharedPreferences.getString(SP_KEY_LOGIN_USER_NAME, "");
+    fun queryUserId(): String? {
+        return sharedPreferences.getString(SP_KEY_LOGIN_USER_ID, "");
     }
 
 }

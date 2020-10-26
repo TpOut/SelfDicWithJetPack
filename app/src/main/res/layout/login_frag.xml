@@ -29,13 +29,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:minWidth="60dp"
-            android:text='@{userBean.name.equals("") ? LoginConstant.LOGIN : LoginConstant.WELCOME}'
+            android:text='@{userBean == null ? LoginConstant.LOGIN_NAME : LoginConstant.WELCOME}'
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,46 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:hint='@{userBean == null ? LoginConstant.LOGIN_BIRTHDAY : ""}'
+            android:textSize="18sp"
+            android:visibility="@{userBean == null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:hint='@{userBean == null ? LoginConstant.LOGIN_ADDRESS_CITY : ""}'
+            android:textSize="18sp"
+            android:visibility="@{userBean == null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toStartOf="@+id/et_street"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_birthday" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_street"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:hint='@{userBean == null ? LoginConstant.LOGIN_ADDRESS_STREET : ""}'
+            android:textSize="18sp"
+            android:visibility="@{userBean == null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et_city"
+            app:layout_constraintTop_toBottomOf="@+id/et_birthday" />
 
         <EditText
             android:id="@+id/et_field"
@@ -59,11 +98,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text='@{"your major field :\n" + (fieldList[0] ?? "") + (fieldList[1] ?? "") + (fieldList[2] ?? "")}'
+            android:hint='@{"your major field :\n" + (fieldList[0] ?? "") + (fieldList[1] ?? "") + (fieldList[2] ?? "")}'
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_name" />
+            app:layout_constraintTop_toBottomOf="@+id/et_city" />
 
         <Button
             android:id="@+id/btn"
@@ -72,7 +111,7 @@
             android:layout_marginBottom="16dp"
             android:onClick="@{handler::onNextClick}"
             android:text="next"
-            android:visibility='@{userBean.name.equals("") ? View.VISIBLE : View.INVISIBLE}'
+            android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

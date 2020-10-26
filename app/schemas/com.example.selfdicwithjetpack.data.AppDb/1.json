@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b9821d0305439464b09e5dfc2cf627cb",
+    "identityHash": "c80ad1fe121ac00007f446a9be63886a",
     "entities": [
       {
         "tableName": "dic",
@@ -102,7 +102,7 @@
       },
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `birthday` TEXT, `name` TEXT, `addr_street` TEXT, `addr_city` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `birthday` TEXT, `address` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -111,26 +111,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "birthday",
-            "columnName": "birthday",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "address.street",
-            "columnName": "addr_street",
+            "fieldPath": "birthday",
+            "columnName": "birthday",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "address.city",
-            "columnName": "addr_city",
+            "fieldPath": "address",
+            "columnName": "address",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -148,7 +142,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b9821d0305439464b09e5dfc2cf627cb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c80ad1fe121ac00007f446a9be63886a')"
     ]
   }
 }

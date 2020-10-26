@@ -24,7 +24,7 @@ class DisplayViewModel : ViewModel() {
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
 
-    private var repo: DicRepository = DicRepository(AppDb.getDisplayDb(Utils.getApp()).dicDao())
+    private var repo: DicRepository = DicRepository(AppDb.getDisplayDb().dicDao())
 
 //    val allWords: LiveData<List<WordEntity>> = repo.allWords
 

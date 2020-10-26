@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.debug.ToastUtil
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
-import kotlinx.android.synthetic.main.detail_frag.*
 import kotlinx.android.synthetic.main.login_frag.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,7 +36,7 @@ class LoginFrag : Fragment(), LoginHandler {
         lifecycleScope.launch {
             var userBean = viewModel.fetchUserData()
             binding.userBean = userBean
-            if (!userBean.name.isNullOrEmpty()) {
+            if (!userBean?.name.isNullOrEmpty()) {
                 delay(3000)
                 findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
             }
@@ -46,11 +45,32 @@ class LoginFrag : Fragment(), LoginHandler {
 
     override fun onNextClick(v: View) {
         val name = et_name.text.toString()
-        if (name.isEmpty()) {
-            ToastUtil.showShort(requireContext(), LoginConstant.LOGIN)
-        } else {
-            viewModel.saveUserData(name)
-            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+        val birthday = et_birthday.text.toString()
+        val city = et_city.text.toString()
+        val street = et_street.text.toString()
+
+        when {
+            name.isEmpty() -> {
+                ToastUtil.showShort(requireContext(), LoginConstant.LOGIN_NAME)
+            }
+            birthday.isEmpty() -> {
+                ToastUtil.showShort(requireContext(), LoginConstant.LOGIN_BIRTHDAY)
+            }
+            city.isEmpty() -> {
+                ToastUtil.showShort(requireContext(), LoginConstant.LOGIN_ADDRESS_CITY)
+            }
+            street.isEmpty() -> {
+                ToastUtil.showShort(requireContext(), LoginConstant.LOGIN_ADDRESS_STREET)
+            }
+            else -> {
+                lifecycleScope.launch {
+                    if (viewModel.saveUserData(name, birthday, city, street)) {
+                        findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+                    } else {
+                        ToastUtil.showShort(requireContext(), LoginConstant.LOGIN_ADDRESS_STREET)
+                    }
+                }
+            }
         }
     }
 }

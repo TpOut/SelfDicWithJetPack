@@ -6,5 +6,9 @@ package com.example.selfdicwithjetpack.login;
  */
 public class LoginConstant {
     public static final String WELCOME = "welcome to use SelfDic";
-    public static final String LOGIN = "pls input your name and fields\n(the later split by space)";
+    public static final String LOGIN_FAIL = "login fail, pls retry after a while";
+    public static final String LOGIN_NAME = "pls input your information";
+    public static final String LOGIN_BIRTHDAY = "pls input your birthday like 20080808";
+    public static final String LOGIN_ADDRESS_CITY = "pls input your city";
+    public static final String LOGIN_ADDRESS_STREET = "pls input your street";
 }

@@ -12,15 +12,15 @@ import androidx.room.*
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertUser(vararg user: UserEntity)
+    suspend fun insertUser(vararg user: UserEntity): List<Long>
 
 
-//    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
+    //    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
 //    fun getSimpleUser(userId : Int) : UserBean
-    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
-    fun getUser(userId : Int) : UserEntity
+    @Query("SELECT * FROM user WHERE user_id == :userId")
+    suspend fun getUserInfo(userId: String): UserEntity
 
-    @Query("SELECT * FROM user WHERE birthday BETWEEN :from AND :to")
-    fun findUsersBornBetweenDates(from: DateBean, to: DateBean): List<UserEntity>
+    @Query("SELECT * FROM user")
+    suspend fun getCurrentUserInfo(): List<UserEntity>?
 
 }
