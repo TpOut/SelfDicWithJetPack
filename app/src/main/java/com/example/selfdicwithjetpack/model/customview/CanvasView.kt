@@ -13,17 +13,17 @@ import android.view.View
  */
 class CanvasView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
-    var mName: String?
-    var mPaint: Paint
+//    var mName: String?
+//    var mPaint: Paint
 
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomViewApiName)
-        mName = typedArray.getString(R.styleable.CustomViewApiName_cvan_name)
-        typedArray.recycle()
-
-        mPaint = Paint().apply {
-            color = resources.getColor(R.color.colorAccent)
-        }
+//        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomViewApiName)
+//        mName = typedArray.getString(R.styleable.CustomViewApiName_cvan_name)
+//        typedArray.recycle()
+//
+//        mPaint = Paint().apply {
+//            color = resources.getColor(R.color.colorAccent)
+//        }
     }
 
     override fun onDraw(canvas: Canvas) {
