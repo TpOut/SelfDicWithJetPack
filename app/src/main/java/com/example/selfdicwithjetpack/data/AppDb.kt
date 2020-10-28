@@ -18,6 +18,12 @@ import java.util.concurrent.Executors
 /**
  * Created by TpOut on 2020/10/19.<br>
  * Email address: 416756910@qq.com<br>
+ *
+ * Room executes all queries on a separate thread.
+ * Observed LiveData will notify the observer when the data has changed.
+ *
+ * val allWords: LiveData<List<DicAndWordEntity>> = dicDao.getDicWordLiveData()
+ *
  */
 @Database(
     entities = [

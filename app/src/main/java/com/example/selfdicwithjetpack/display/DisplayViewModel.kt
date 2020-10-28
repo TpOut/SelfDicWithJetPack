@@ -6,11 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.blankj.utilcode.util.Utils
-import com.example.selfdicwithjetpack.data.AppDb
-import com.example.selfdicwithjetpack.data.DicRepository
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
-import com.example.selfdicwithjetpack.display.data.getSearchResultStream
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,17 +22,18 @@ class DisplayViewModel : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
-    private var repo: DicRepository = DicRepository(AppDb.getDisplayDb().dicDao())
 
 //    val allWords: LiveData<List<WordEntity>> = repo.allWords
 
     fun insert(word: WordEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repo.insert(word)
+        // AppDb.getDisplayDb().dicDao().insert(word)
     }
 
+    // 支持多种
+    // Flow, LiveData, and the Flowable and Observable types from RxJava.
     fun fetchData(): Flow<PagingData<DisplayBean>> {
         return Pager(
-            config = PagingConfig(enablePlaceholders = false, pageSize = 5),
+            config = PagingConfig(enablePlaceholders = false, pageSize = 20),
             pagingSourceFactory = { DisplayPagingSource() }
         ).flow.cachedIn(viewModelScope)
     }

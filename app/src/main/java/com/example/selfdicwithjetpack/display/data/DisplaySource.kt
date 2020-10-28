@@ -15,21 +15,22 @@ import retrofit2.Response
  *
  *     page 库，数据源 ： PagingSource, PagingMediator
  *
+ *     RxPagingSource, ListenableFuturePagingSource
+ *
  */
 const val PAGE_NUM_START = 1
 
 class DisplayPagingSource : PagingSource<Int, DisplayBean>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START
-        LogUtil.d("DisplayPagingSource - load")
+        LogUtil.d("DisplayPagingSource - load $page")
         return try {
             val service = QueryWordList.create()
-            LogUtil.d("DisplayPagingSource - result")
             var result: Response<QueryWordResultBean>
             withContext(Dispatchers.IO) {
                 result = service.queryWorldList(page).execute()
             }
-            LogUtil.d("DisplayPagingSource - result")
+            LogUtil.d("DisplayPagingSource - load $result")
             if (result.isSuccessful) {
                 val list = result.body()!!.result
                 LoadResult.Page(

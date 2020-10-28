@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.debug.log.LogUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.display_frag.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,6 +24,12 @@ import kotlinx.coroutines.launch
 class DisplayFrag : Fragment() {
 
     private var mView: View? = null
+
+    // ExampleLoadStateAdapter
+    //.withLoadStateHeaderAndFooter(
+    //    header = ExampleLoadStateAdapter(adapter::retry),
+    //    footer = ExampleLoadStateAdapter(adapter::retry)
+    //  )
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
 
@@ -55,12 +63,18 @@ class DisplayFrag : Fragment() {
     }
 
     private fun fetchData() {
-        LogUtil.d("fetchData")
-        lifecycleScope.launch {
-            LogUtil.d("launch - fetchData")
+        lifecycleScope.launchWhenResumed {
             viewModel.fetchData().collectLatest {
-                LogUtil.d("launch - collectLatest")
+                LogUtil.d("fetchData - $it")
                 mAdapter.submitData(it)
+            }
+            mAdapter.loadStateFlow.collectLatest { loadStates ->
+                LogUtil.d("loadStateFlow - ${loadStates.refresh}")
+                when (loadStates.refresh) {
+                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "加载完毕" else "全部加载完毕"
+                    is LoadState.Loading -> tv.text = "加载中..."
+                    is LoadState.Error -> tv.text = "加载出错..."
+                }
             }
         }
     }
