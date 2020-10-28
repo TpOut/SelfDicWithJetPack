@@ -2,11 +2,14 @@ package com.example.selfdicwithjetpack.display
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.blankj.utilcode.util.Utils
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.data.DicRepository
+import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
 import com.example.selfdicwithjetpack.display.data.getSearchResultStream
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +26,6 @@ class DisplayViewModel : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
-
     private var repo: DicRepository = DicRepository(AppDb.getDisplayDb().dicDao())
 
 //    val allWords: LiveData<List<WordEntity>> = repo.allWords
@@ -33,7 +35,10 @@ class DisplayViewModel : ViewModel() {
     }
 
     fun fetchData(): Flow<PagingData<DisplayBean>> {
-        return getSearchResultStream().cachedIn(viewModelScope)
+        return Pager(
+            config = PagingConfig(enablePlaceholders = false, pageSize = 5),
+            pagingSourceFactory = { DisplayPagingSource() }
+        ).flow.cachedIn(viewModelScope)
     }
 
     fun fetchNextData() {

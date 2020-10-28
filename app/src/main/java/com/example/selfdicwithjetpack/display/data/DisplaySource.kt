@@ -12,11 +12,13 @@ import retrofit2.Response
 /**
  * Created by TpOut on 2020/10/12.<br>
  * Email address: 416756910@qq.com<br>
+ *
+ *     page 库，数据源 ： PagingSource, PagingMediator
+ *
  */
 const val PAGE_NUM_START = 1
 
 class DisplayPagingSource : PagingSource<Int, DisplayBean>() {
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START
         LogUtil.d("DisplayPagingSource - load")

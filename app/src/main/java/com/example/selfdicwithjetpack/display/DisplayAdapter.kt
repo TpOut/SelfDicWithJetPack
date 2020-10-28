@@ -48,6 +48,7 @@ class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayView
     }
 }
 
+// AsyncPagingDataDiffer
 private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayBean>() {
     override fun areItemsTheSame(oldItem: DisplayBean, newItem: DisplayBean): Boolean {
         return oldItem == newItem
