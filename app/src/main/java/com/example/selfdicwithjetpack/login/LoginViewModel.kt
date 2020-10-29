@@ -26,7 +26,7 @@ class LoginViewModel : ViewModel() {
         var userId = Sp.queryUserId()
         LogUtils.d(LOGIN_VIEW_MODEL_TAG, "查询登录用户id 为：${userId}")
         if (!userId.isNullOrEmpty()) {
-            userBean = AppDb.getDisplayDb().userDao().getUserInfo(userId)
+            userBean = AppDb.addDb.userDao().getUserInfo(userId)
             LogUtils.d(LOGIN_VIEW_MODEL_TAG, "查询登录用户信息 为：${userBean}")
         }
         return userBean
@@ -34,7 +34,7 @@ class LoginViewModel : ViewModel() {
 
     suspend fun saveUserData(name: String, birthday: String, city: String, street: String): Boolean {
         var currentUserInfo: UserEntity? = null
-        val userDao = AppDb.getDisplayDb().userDao()
+        val userDao = AppDb.addDb.userDao()
         val rowId = userDao.insertUser(
             UserEntity(name = name, birthday = birthday, address = AddressBean(city, street))
         )

@@ -12,7 +12,6 @@ import com.example.selfdicwithjetpack.model.dic.WordEntity
 import com.example.selfdicwithjetpack.model.user.DateConverters
 import com.example.selfdicwithjetpack.model.user.UserDao
 import com.example.selfdicwithjetpack.model.user.UserEntity
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
@@ -41,8 +40,8 @@ abstract class AppDb : RoomDatabase() {
 
     companion object {
         // 多进程 enableMultiInstanceInvalidation
-        fun getDisplayDb(): AppDb {
-            return Room.databaseBuilder(
+        val addDb: AppDb by lazy {
+            Room.databaseBuilder(
                 Utils.getApp(),
                 AppDb::class.java, "yourena"
             )
