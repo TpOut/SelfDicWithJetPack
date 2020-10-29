@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
-import com.example.selfdicwithjetpack.component.debug.log.LogUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.display_frag.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -25,11 +24,6 @@ class DisplayFrag : Fragment() {
 
     private var mView: View? = null
 
-    // ExampleLoadStateAdapter
-    //.withLoadStateHeaderAndFooter(
-    //    header = ExampleLoadStateAdapter(adapter::retry),
-    //    footer = ExampleLoadStateAdapter(adapter::retry)
-    //  )
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
 
@@ -58,23 +52,41 @@ class DisplayFrag : Fragment() {
             true
         }
 
+        val tv = rootView.findViewById<TextView>(R.id.tv)
         rootView.findViewById<RecyclerView>(R.id.rv).adapter = mAdapter
+
+        // Activities can use lifecycleScope directly, but Fragments should instead use
+        // viewLifecycleOwner.lifecycleScope.
+        viewLifecycleOwner.lifecycleScope.launch {
+//            mAdapter.loadStateFlow.collectLatest { loadStates ->
+//                LogUtils.d("loadStateFlow - ${loadStates.refresh}")
+//                when (loadStates.refresh) {
+//                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "全部加载完毕" else "加载完毕"
+//                    is LoadState.Loading -> tv.text = "加载中..."
+//                    is LoadState.Error -> {
+//                        tv.text = "加载出错..."
+//                        tv.setOnClickListener {
+//                            mAdapter.retry()
+//                        }
+//                    }
+//                }
+//            }
+        }
+
+        mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
+//        mAdapter.withLoadStateHeaderAndFooter(
+//            header = ExampleLoadStateAdapter(mAdapter::retry),
+//            footer = ExampleLoadStateAdapter(mAdapter::retry)
+//        )
+
         fetchData()
     }
 
     private fun fetchData() {
         lifecycleScope.launchWhenResumed {
             viewModel.fetchData().collectLatest {
-                LogUtil.d("fetchData - $it")
+                LogUtils.d("fetchData - $it")
                 mAdapter.submitData(it)
-            }
-            mAdapter.loadStateFlow.collectLatest { loadStates ->
-                LogUtil.d("loadStateFlow - ${loadStates.refresh}")
-                when (loadStates.refresh) {
-                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "加载完毕" else "全部加载完毕"
-                    is LoadState.Loading -> tv.text = "加载中..."
-                    is LoadState.Error -> tv.text = "加载出错..."
-                }
             }
         }
     }

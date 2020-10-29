@@ -1,6 +1,7 @@
 package com.example.selfdicwithjetpack.display.data
 
 import androidx.paging.PagingSource
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
 import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
 import com.example.selfdicwithjetpack.display.DisplayBean
@@ -19,33 +20,37 @@ import retrofit2.Response
  *
  */
 const val PAGE_NUM_START = 1
+const val PAGE_SIZE = 20
 
 class DisplayPagingSource : PagingSource<Int, DisplayBean>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START
-        LogUtil.d("DisplayPagingSource - load $page")
+        LogUtils.d("DisplayPagingSource - load $page")
         return try {
             val service = QueryWordList.create()
             var result: Response<QueryWordResultBean>
             withContext(Dispatchers.IO) {
                 result = service.queryWorldList(page).execute()
             }
-            LogUtil.d("DisplayPagingSource - load $result")
+            LogUtils.d("DisplayPagingSource - load $result")
             if (result.isSuccessful) {
+                LogUtils.d("DisplayPagingSource - load success")
                 val list = result.body()!!.result
                 LoadResult.Page(
                     data = list,
-                    prevKey = if (page == PAGE_NUM_START) null else page - 1,
-                    nextKey = if (list.isEmpty()) null else page + 1
+                    prevKey = null,
+                    nextKey = if (list.isEmpty() || list.size < PAGE_SIZE) null else page + 1
                 )
             } else {
+                LogUtils.d("DisplayPagingSource - load none")
                 LoadResult.Page(
-                    data = listOf(),
-                    prevKey = if (page == PAGE_NUM_START) null else page - 1,
+                    data = emptyList(),
+                    prevKey = null,
                     nextKey = null
                 )
             }
         } catch (exception: Exception) {
+            LogUtils.d("DisplayPagingSource - load error")
             LoadResult.Error(exception)
         }
     }

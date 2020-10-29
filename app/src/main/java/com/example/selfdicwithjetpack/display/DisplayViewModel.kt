@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
+import com.example.selfdicwithjetpack.display.data.PAGE_SIZE
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +34,7 @@ class DisplayViewModel : ViewModel() {
     // Flow, LiveData, and the Flowable and Observable types from RxJava.
     fun fetchData(): Flow<PagingData<DisplayBean>> {
         return Pager(
-            config = PagingConfig(enablePlaceholders = false, pageSize = 20),
+            config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
             pagingSourceFactory = { DisplayPagingSource() }
         ).flow.cachedIn(viewModelScope)
     }
