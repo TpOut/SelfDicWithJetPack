@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
@@ -58,22 +59,22 @@ class DisplayFrag : Fragment() {
         // Activities can use lifecycleScope directly, but Fragments should instead use
         // viewLifecycleOwner.lifecycleScope.
         viewLifecycleOwner.lifecycleScope.launch {
-//            mAdapter.loadStateFlow.collectLatest { loadStates ->
-//                LogUtils.d("loadStateFlow - ${loadStates.refresh}")
-//                when (loadStates.refresh) {
-//                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "全部加载完毕" else "加载完毕"
-//                    is LoadState.Loading -> tv.text = "加载中..."
-//                    is LoadState.Error -> {
-//                        tv.text = "加载出错..."
-//                        tv.setOnClickListener {
-//                            mAdapter.retry()
-//                        }
-//                    }
-//                }
-//            }
+            mAdapter.loadStateFlow.collectLatest { loadStates ->
+                LogUtils.d("loadStateFlow - ${loadStates.refresh}")
+                when (loadStates.refresh) {
+                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "全部加载完毕" else "加载完毕"
+                    is LoadState.Loading -> tv.text = "加载中..."
+                    is LoadState.Error -> {
+                        tv.text = "加载出错..."
+                        tv.setOnClickListener {
+                            mAdapter.retry()
+                        }
+                    }
+                }
+            }
         }
 
-        mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
+//        mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
 //        mAdapter.withLoadStateHeaderAndFooter(
 //            header = ExampleLoadStateAdapter(mAdapter::retry),
 //            footer = ExampleLoadStateAdapter(mAdapter::retry)

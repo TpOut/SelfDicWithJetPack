@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.DisplayRvLoadStateItemBinding
 
@@ -47,6 +48,7 @@ class LoadStateViewHolder(
     }
 
     fun bind(loadState: LoadState) {
+        LogUtils.d("loadStateFlow - $loadState")
         if (loadState is LoadState.Error) {
             errorMsg.text = loadState.error.localizedMessage
         }
