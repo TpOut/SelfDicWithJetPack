@@ -41,6 +41,7 @@ class LoadStateViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.display_rv_load_state_item, parent, false)
 ) {
     private val binding = DisplayRvLoadStateItemBinding.bind(itemView)
+
     private val progressBar: ProgressBar = binding.pb
     private val errorMsg: TextView = binding.tvMsg
     private val retry = binding.tvRetry.also {

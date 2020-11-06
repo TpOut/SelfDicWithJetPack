@@ -60,21 +60,27 @@ class DisplayFrag : Fragment() {
         // viewLifecycleOwner.lifecycleScope.
         viewLifecycleOwner.lifecycleScope.launch {
             mAdapter.loadStateFlow.collectLatest { loadStates ->
-                LogUtils.d("loadStateFlow - ${loadStates.refresh}")
-                when (loadStates.refresh) {
-                    is LoadState.NotLoading -> tv.text = if (loadStates.refresh.endOfPaginationReached) "全部加载完毕" else "加载完毕"
-                    is LoadState.Loading -> tv.text = "加载中..."
-                    is LoadState.Error -> {
-                        tv.text = "加载出错..."
-                        tv.setOnClickListener {
-                            mAdapter.retry()
-                        }
+                LogUtils.d(
+                    "loadStateFlow : "
+                            + "\n mediator ${loadStates.mediator}" +
+                            "\n source ${loadStates.source}"
+                )
+
+                if (loadStates.refresh is LoadState.Loading || loadStates.append is LoadState.Loading) {
+                    tv.text = "加载中..."
+                } else if (loadStates.refresh is LoadState.NotLoading && loadStates.append is LoadState.NotLoading) {
+                    if (loadStates.refresh.endOfPaginationReached || loadStates.append.endOfPaginationReached) {
+                        tv.text = "全部加载完毕"
+                    } else {
+                        tv.text = "加载完毕"
                     }
+                } else if (loadStates.refresh is LoadState.Error || loadStates.append is LoadState.Error) {
+                    tv.text = "加载出错..."
                 }
             }
         }
+        mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
 
-//        mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
 //        mAdapter.withLoadStateHeaderAndFooter(
 //            header = ExampleLoadStateAdapter(mAdapter::retry),
 //            footer = ExampleLoadStateAdapter(mAdapter::retry)
@@ -86,7 +92,7 @@ class DisplayFrag : Fragment() {
     private fun fetchData() {
         lifecycleScope.launchWhenResumed {
             viewModel.fetchData().collectLatest {
-                LogUtils.d("fetchData - $it")
+                LogUtils.d("fetchData - $it}")
                 mAdapter.submitData(it)
             }
         }
