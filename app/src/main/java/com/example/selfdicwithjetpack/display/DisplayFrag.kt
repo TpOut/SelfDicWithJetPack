@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
  */
 const val DISPLAY_FRAG_TAG = "DisplayFrag"
 
-class DisplayFrag : Fragment() {
+class DisplayFrag : BaseFrag() {
 
     private var mView: View? = null
 
@@ -106,6 +107,7 @@ class DisplayFrag : Fragment() {
 
         viewModel.dicList.observe(viewLifecycleOwner, Observer<List<DicEntity>> { list ->
             lifecycleScope.launch {
+                LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
                 var mapJob = async {
                     list.map { it.name }
                 }

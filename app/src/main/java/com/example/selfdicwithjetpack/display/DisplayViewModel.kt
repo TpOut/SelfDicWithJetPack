@@ -17,6 +17,7 @@ import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
@@ -31,19 +32,8 @@ class DisplayViewModel : ViewModel() {
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
-    val dicList: LiveData<List<DicEntity>> by lazy {
-        var result: LiveData<List<DicEntity>> = liveData { }
-        LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "start launch")
-        viewModelScope.launch {
-            val asyncJob = async {
-                AppDb.appDb.dicDao().getAllDics()
-            }
-            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "start async")
-            result = asyncJob.await()
-            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "end async")
-        }
-        LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "end launch")
-        result
+    val dicList by lazy {
+        AppDb.appDb.dicDao().getAllDics()
     }
 
 //    val allWords: LiveData<List<WordEntity>> = repo.allWords
