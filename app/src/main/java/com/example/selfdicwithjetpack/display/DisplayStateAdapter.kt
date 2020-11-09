@@ -9,6 +9,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.DisplayRvLoadStateItemBinding
 
@@ -43,15 +44,20 @@ class LoadStateViewHolder(
     private val binding = DisplayRvLoadStateItemBinding.bind(itemView)
 
     private val progressBar: ProgressBar = binding.pb
-    private val errorMsg: TextView = binding.tvMsg
+    private val errorMsg: TextView = binding.tvMsg.also {
+        it.setOnClickListener { errorStr?.let { ToastUtils.showShort(errorStr) } }
+    }
     private val retry = binding.tvRetry.also {
         it.setOnClickListener { retry() }
     }
 
+    private var errorStr: String? = null
+
     fun bind(loadState: LoadState) {
         LogUtils.d("loadStateFlow - $loadState")
         if (loadState is LoadState.Error) {
-            errorMsg.text = loadState.error.localizedMessage
+            errorStr = loadState.error.localizedMessage
+            errorMsg.text = "加载出错（点击查看错误信息）"
         }
 
         progressBar.isVisible = loadState is LoadState.Loading
