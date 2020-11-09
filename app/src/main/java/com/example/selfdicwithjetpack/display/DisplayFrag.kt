@@ -1,9 +1,12 @@
 package com.example.selfdicwithjetpack.display
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +17,8 @@ import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -22,6 +27,8 @@ import kotlinx.coroutines.flow.collectLatest
 class DisplayFrag : Fragment() {
 
     private var mView: View? = null
+
+    private var dicSpinner: Spinner? = null
 
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
@@ -40,6 +47,8 @@ class DisplayFrag : Fragment() {
 
     // 这种写法不能直接使用 fab、rv 来获取view
     private fun afterViewCreated(rootView: View) {
+        dicSpinner = rootView.findViewById<Spinner>(R.id.s)
+
         val fab = rootView.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
@@ -91,7 +100,16 @@ class DisplayFrag : Fragment() {
 
     private fun fetchData() {
         lifecycleScope.launchWhenResumed {
-            viewModel.fetchData().collectLatest {
+            val dicListJob = async(Dispatchers.IO) {
+                LogUtils.d("fetch dic list: start")
+                val fetchDicList = viewModel.fetchDicList()
+                LogUtils.d("fetch dic list: end ${fetchDicList.size}")
+                fetchDicList
+            }
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, dicListJob.await().toTypedArray())
+            dicSpinner?.adapter = adapter
+
+            viewModel.fetchData(dicSpinner?.selectedItem as String).collectLatest {
                 LogUtils.d("fetchData - $it}")
                 mAdapter.submitData(it)
             }

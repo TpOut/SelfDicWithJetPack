@@ -1,13 +1,16 @@
 package com.example.selfdicwithjetpack.display
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
 import com.example.selfdicwithjetpack.display.data.PAGE_SIZE
+import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,9 +33,16 @@ class DisplayViewModel : ViewModel() {
         // AppDb.getDisplayDb().dicDao().insert(word)
     }
 
+    @WorkerThread
+    suspend fun fetchDicList(): List<String> {
+        return AppDb.appDb.dicDao().getAllDics().map {
+            it.name
+        }
+    }
+
     // 支持多种
     // Flow, LiveData, and the Flowable and Observable types from RxJava.
-    fun fetchData(): Flow<PagingData<DisplayBean>> {
+    fun fetchData(dicId: String): Flow<PagingData<DisplayBean>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
             pagingSourceFactory = { DisplayPagingSource() }

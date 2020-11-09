@@ -40,7 +40,7 @@ abstract class AppDb : RoomDatabase() {
 
     companion object {
         // 多进程 enableMultiInstanceInvalidation
-        val addDb: AppDb by lazy {
+        val appDb: AppDb by lazy {
             Room.databaseBuilder(
                 Utils.getApp(),
                 AppDb::class.java, "yourena"

@@ -3,6 +3,8 @@ package com.example.selfdicwithjetpack.model.dic
 //import androidx.lifecycle.LiveData
 //import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Query
+
 //import androidx.room.Delete
 //import androidx.room.Query
 //import androidx.room.Transaction
@@ -13,6 +15,9 @@ import androidx.room.Dao
 // */
 @Dao
 interface DicDao {
+    @Query("SELECT * FROM dic")
+    fun getAllDics(): List<DicEntity>
+
 //    @Query("SELECT * FROM word")
 //    fun getAllWords(): List<WordEntity>
 //
