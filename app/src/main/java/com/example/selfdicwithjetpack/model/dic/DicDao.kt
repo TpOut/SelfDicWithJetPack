@@ -2,7 +2,9 @@ package com.example.selfdicwithjetpack.model.dic
 //
 //import androidx.lifecycle.LiveData
 //import androidx.paging.PagingSource
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 
 //import androidx.room.Delete
@@ -16,7 +18,10 @@ import androidx.room.Query
 @Dao
 interface DicDao {
     @Query("SELECT * FROM dic")
-    fun getAllDics(): List<DicEntity>
+    fun getAllDics(): LiveData<List<DicEntity>>
+
+    @Insert
+    suspend fun insertDic(dic: DicEntity)
 
 //    @Query("SELECT * FROM word")
 //    fun getAllWords(): List<WordEntity>

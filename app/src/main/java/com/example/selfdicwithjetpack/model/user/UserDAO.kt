@@ -18,7 +18,7 @@ interface UserDao {
     //    @Query("SELECT * FROM user WHERE user_id IN (:userId)")
 //    fun getSimpleUser(userId : Int) : UserBean
     @Query("SELECT * FROM user WHERE user_id == :userId")
-    suspend fun getUserInfo(userId: String): UserEntity
+    suspend fun getUserInfo(userId: Int): UserEntity
 
     @Query("SELECT * FROM user")
     suspend fun getCurrentUserInfo(): List<UserEntity>?

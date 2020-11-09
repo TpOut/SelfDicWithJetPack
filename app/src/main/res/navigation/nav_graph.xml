@@ -9,14 +9,13 @@
         android:id="@+id/LoginFrag"
         android:name="com.example.selfdicwithjetpack.login.LoginFrag"
         android:label="@string/login_fragment_label"
-        tools:layout="@layout/login_frag" >
+        tools:layout="@layout/login_frag">
 
         <action
             android:id="@+id/action_LoginFrag_toDisplayFrag"
             app:destination="@+id/DisplayFrag"
             app:popUpTo="@+id/LoginFrag"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -31,6 +30,17 @@
         <action
             android:id="@+id/action_DisplayFrag_to_RandomFrag"
             app:destination="@id/RandomFrag" />
+        <action
+            android:id="@+id/action_DisplayFrag_to_DicCreateFrag"
+            app:destination="@+id/DicCreateFrag" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DicCreateFrag"
+        android:name="com.example.selfdicwithjetpack.dic.DicCreateFrag"
+        android:label="@string/dic_create_fragment_label"
+        tools:layout="@layout/dic_create_frag">
+
     </fragment>
 
     <fragment

@@ -1,18 +1,21 @@
 package com.example.selfdicwithjetpack.display
 
-import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
 import com.example.selfdicwithjetpack.display.data.PAGE_SIZE
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -21,11 +24,27 @@ import kotlinx.coroutines.launch
  * Email address: 416756910@qq.com<br>
  */
 
+const val DISPLAY_VIEW_MODEL_TAG = "DisplayViewModel"
+
 class DisplayViewModel : ViewModel() {
 
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<DisplayBean>>? = null
 
+    val dicList: LiveData<List<DicEntity>> by lazy {
+        var result: LiveData<List<DicEntity>> = liveData { }
+        LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "start launch")
+        viewModelScope.launch {
+            val asyncJob = async {
+                AppDb.appDb.dicDao().getAllDics()
+            }
+            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "start async")
+            result = asyncJob.await()
+            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "end async")
+        }
+        LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "end launch")
+        result
+    }
 
 //    val allWords: LiveData<List<WordEntity>> = repo.allWords
 
@@ -33,16 +52,9 @@ class DisplayViewModel : ViewModel() {
         // AppDb.getDisplayDb().dicDao().insert(word)
     }
 
-    @WorkerThread
-    suspend fun fetchDicList(): List<String> {
-        return AppDb.appDb.dicDao().getAllDics().map {
-            it.name
-        }
-    }
-
     // 支持多种
     // Flow, LiveData, and the Flowable and Observable types from RxJava.
-    fun fetchData(dicId: String): Flow<PagingData<DisplayBean>> {
+    fun fetchData(dicId: String?): Flow<PagingData<DisplayBean>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
             pagingSourceFactory = { DisplayPagingSource() }

@@ -90,7 +90,7 @@ import com.example.selfdicwithjetpack.model.dic.WordBean
 class DicEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "dic_id")
-    val id: Int,
+    val id: Int = 0,
     @ColumnInfo(name = "user_id")
     val userId: Int,
     name: String

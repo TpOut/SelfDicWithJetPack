@@ -11,18 +11,18 @@
         android:id="@+id/s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
 
     <TextView
         android:id="@+id/tv_s_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="⬅选择词典"
-        app:layout_constraintStart_toEndOf="@+id/s"
+        android:text="⬅ 新建词典"
         app:layout_constraintBottom_toBottomOf="@+id/s"
-        />
+        app:layout_constraintStart_toEndOf="@+id/s"
+        app:layout_constraintTop_toTopOf="@+id/s" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"

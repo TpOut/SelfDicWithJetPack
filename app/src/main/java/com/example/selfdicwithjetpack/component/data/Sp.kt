@@ -19,14 +19,14 @@ object Sp {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext)
     }
 
-    fun saveUserId(id: String) {
+    fun saveUserId(id: Int) {
         sharedPreferences.edit {
-            putString(SP_KEY_LOGIN_USER_ID, id)
+            putInt(SP_KEY_LOGIN_USER_ID, id)
         }
     }
 
-    fun queryUserId(): String? {
-        return sharedPreferences.getString(SP_KEY_LOGIN_USER_ID, "");
+    fun queryUserId(): Int {
+        return sharedPreferences.getInt(SP_KEY_LOGIN_USER_ID, 0);
     }
 
 }

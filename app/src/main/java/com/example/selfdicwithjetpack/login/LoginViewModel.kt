@@ -21,7 +21,7 @@ class LoginViewModel : ViewModel() {
         var userBean: UserBean? = null
         var userId = Sp.queryUserId()
         LogUtils.d(LOGIN_VIEW_MODEL_TAG, "查询登录用户id 为：${userId}")
-        if (!userId.isNullOrEmpty()) {
+        if (userId != 0) {
             userBean = AppDb.appDb.userDao().getUserInfo(userId)
             LogUtils.d(LOGIN_VIEW_MODEL_TAG, "查询登录用户信息 为：${userBean}")
         }
@@ -38,7 +38,7 @@ class LoginViewModel : ViewModel() {
         currentUserInfo = userDao.getCurrentUserInfo()?.last()
         LogUtils.d(LOGIN_VIEW_MODEL_TAG, currentUserInfo)
 
-        Sp.saveUserId(currentUserInfo?.id.toString())
+        Sp.saveUserId(currentUserInfo?.id.toString().toInt())
         return currentUserInfo != null
     }
 }

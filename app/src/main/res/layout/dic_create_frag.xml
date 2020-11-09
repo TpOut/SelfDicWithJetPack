@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.KeyEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.selfdicwithjetpack.dic.DicCreateViewModel" />
+
+        <variable
+            name="handler"
+            type="com.example.selfdicwithjetpack.dic.DicCreateFrag" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="新建词典名"
+            android:onEditorAction="@{(v,actionId,event) -> event.action == KeyEvent.ACTION_DOWN ? handler.onEditorActionDone(v.text.toString()) : false}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
