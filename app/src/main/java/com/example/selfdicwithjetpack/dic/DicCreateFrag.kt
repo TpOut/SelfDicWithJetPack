@@ -1,7 +1,6 @@
 package com.example.selfdicwithjetpack.dic
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.KeyboardUtils
-import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.databinding.DicCreateFragBinding
+import kotlinx.android.synthetic.main.dic_create_frag.view.*
 
 /**
  * Created by TpOut on 2020/11/9.<br>
@@ -21,13 +20,13 @@ const val DIC_CREATE_FRAG_TAG = "DicCreateFrag"
 class DicCreateFrag : Fragment() {
 
     private val viewModel: DicCreateViewModel by viewModels()
-
+    private lateinit var binding: DicCreateFragBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DicCreateFragBinding.inflate(inflater, container, false)
+        binding = DicCreateFragBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
         binding.handler = this
@@ -36,6 +35,11 @@ class DicCreateFrag : Fragment() {
     }
 
     private fun afterViewCreated(binding: DicCreateFragBinding) {
+    }
+
+    //更新了一波模拟器，回车都不管用了
+    fun onEditorActionDone(v: View) {
+        onEditorActionDone(binding.root.et.text.toString())
     }
 
     // 模拟器键盘需要按pc 的回车键才行

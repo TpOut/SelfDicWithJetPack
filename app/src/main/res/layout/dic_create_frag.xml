@@ -24,12 +24,25 @@
             android:id="@+id/et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:hint="新建词典名"
             android:onEditorAction="@{(v,actionId,event) -> event.action == KeyEvent.ACTION_DOWN ? handler.onEditorActionDone(v.text.toString()) : false}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view)->handler.onEditorActionDone(view)}"
+            android:text="done"
+            app:layout_constraintBottom_toBottomOf="@+id/et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et"
+            app:layout_constraintTop_toTopOf="@+id/et" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
