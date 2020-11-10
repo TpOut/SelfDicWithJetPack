@@ -15,4 +15,4 @@ open class DicBean(var name: String)
 open class FieldBean(var name: String?)
 
 // 单词
-open class WordBean(var src: String?, var dst: String?, var sentence: String?)
+open class WordBean(var src: String, var dst: String, var sentence: String?)

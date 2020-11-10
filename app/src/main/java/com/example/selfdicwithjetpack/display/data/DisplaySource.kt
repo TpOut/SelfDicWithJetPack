@@ -19,9 +19,6 @@ import retrofit2.Response
  *     RxPagingSource, ListenableFuturePagingSource
  *
  */
-const val PAGE_NUM_START = 1
-const val PAGE_SIZE = 20
-
 class DisplayPagingSource : PagingSource<Int, DisplayBean>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
         val page = params.key ?: PAGE_NUM_START

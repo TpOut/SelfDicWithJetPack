@@ -69,11 +69,7 @@ class DisplayFrag : BaseFrag() {
     // 这种写法不能直接使用 fab、rv 来获取view
     private fun afterViewCreated(rootView: View) {
         dicSpinner = rootView.findViewById<Spinner>(R.id.s)
-        tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip).apply {
-            setOnClickListener {
-                findNavController().navigate(R.id.action_DisplayFrag_to_DicCreateFrag)
-            }
-        }
+        tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
 
         val fab = rootView.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
@@ -135,18 +131,29 @@ class DisplayFrag : BaseFrag() {
                 mSpinnerAdapter?.addAll(dicList)
             }
             dicSpinner?.setSelection(dicList.size - 1)
-            tvSpinnerTip?.text = "➡ 点此创建词典"
+            tvSpinnerTip?.text = "⬅️ 当前词典"
+            tvSpinnerTip?.setOnClickListener { }
             fetchData()
         } else {
             tvSpinnerTip?.text = "请先点此创建词典"
+            tvSpinnerTip?.setOnClickListener {
+                findNavController().navigate(R.id.action_DisplayFrag_to_DicCreateFrag)
+            }
         }
     }
 
     private fun fetchData() {
         lifecycleScope.launchWhenResumed {
-            viewModel.fetchData(dicSpinner?.selectedItem as String?).collectLatest {
-                LogUtils.d("fetchData - $it}")
-                mAdapter.submitData(it)
+//            viewModel.fetchData(dicSpinner?.selectedItem as String?).collectLatest {
+//                LogUtils.d("fetchData - $it}")
+//                mAdapter.submitData(it)
+//            }
+            viewModel.fetchMediatorData().collectLatest {
+                val result = it.mapSync { wordEntity ->
+                    LogUtils.d(DISPLAY_FRAG_TAG, "collect num + 1")
+                    DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
+                }
+                mAdapter.submitData(result)
             }
         }
     }

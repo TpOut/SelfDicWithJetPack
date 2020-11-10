@@ -100,9 +100,9 @@ class DicEntity(
 class WordEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "word_id")
-    val id: Int,
-    src: String?,
-    dst: String?,
+    val id: Int = 0,
+    src: String,
+    dst: String,
     sentence: String?
 //    ,@Ignore val pic : String?
 ) : WordBean(src, dst, sentence)
