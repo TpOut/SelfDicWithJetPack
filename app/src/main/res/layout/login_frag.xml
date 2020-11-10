@@ -29,13 +29,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:minWidth="60dp"
-            android:text='@{userBean == null ? LoginConstant.LOGIN_NAME : LoginConstant.WELCOME}'
+            android:text='@{userBean == null ? LoginConstant.LOGIN_INFO : LoginConstant.WELCOME}'
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +48,11 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@{userBean.name}"
+            android:hint="@{LoginConstant.LOGIN_NAME}"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_birthday"

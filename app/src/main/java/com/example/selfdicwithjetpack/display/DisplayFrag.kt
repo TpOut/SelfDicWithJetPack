@@ -44,11 +44,26 @@ class DisplayFrag : BaseFrag() {
         savedInstanceState: Bundle?
     ): View? {
         if (null != mView) {
+            lifecycleRebind()
             return mView
         }
         mView = inflater.inflate(R.layout.display_frag, container, false)
         afterViewCreated(mView!!)
+        lifecycleRebind()
         return mView
+    }
+
+    // 目前navigation 导航使用replace ，会重走onCreateView/onDestroyView.
+    private fun lifecycleRebind() {
+        viewModel.dicList.observe(viewLifecycleOwner, Observer<List<DicEntity>> { list ->
+            lifecycleScope.launch {
+                LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
+                var mapJob = async {
+                    list.map { it.name }
+                }
+                refreshSpinner(mapJob.await())
+            }
+        })
     }
 
     // 这种写法不能直接使用 fab、rv 来获取view
@@ -104,17 +119,6 @@ class DisplayFrag : BaseFrag() {
 //                }
 //            }
 //        }
-
-        viewModel.dicList.observe(viewLifecycleOwner, Observer<List<DicEntity>> { list ->
-            lifecycleScope.launch {
-                LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
-                var mapJob = async {
-                    list.map { it.name }
-                }
-                refreshSpinner(mapJob.await())
-                fetchData()
-            }
-        })
     }
 
     private fun refreshSpinner(dicList: List<String>) {
@@ -123,14 +127,18 @@ class DisplayFrag : BaseFrag() {
             if (null == dicSpinner?.adapter) {
                 mSpinnerAdapter = ArrayAdapter(
                     requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item, dicList.toTypedArray()
+                    android.R.layout.simple_spinner_dropdown_item, dicList.toMutableList()
                 )
                 dicSpinner?.adapter = mSpinnerAdapter
             } else {
+                mSpinnerAdapter?.clear()
                 mSpinnerAdapter?.addAll(dicList)
             }
+            dicSpinner?.setSelection(dicList.size - 1)
+            tvSpinnerTip?.text = "➡ 点此创建词典"
+            fetchData()
         } else {
-            tvSpinnerTip?.text = "点此创建词典"
+            tvSpinnerTip?.text = "请先点此创建词典"
         }
     }
 

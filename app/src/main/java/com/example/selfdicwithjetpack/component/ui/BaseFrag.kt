@@ -1,6 +1,7 @@
 package com.example.selfdicwithjetpack.component.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.LogUtils
 
@@ -15,6 +16,11 @@ open class BaseFrag : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LogUtils.d(BASE_FRAG_TAG, "onCreate")
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        LogUtils.d(BASE_FRAG_TAG, "onViewCreated")
     }
 
     override fun onStart() {
@@ -35,6 +41,11 @@ open class BaseFrag : Fragment() {
     override fun onStop() {
         super.onStop()
         LogUtils.d(BASE_FRAG_TAG, "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        LogUtils.d(BASE_FRAG_TAG, "onDestroyView")
     }
 
     override fun onDestroy() {

@@ -19,7 +19,7 @@
         android:id="@+id/tv_s_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="⬅ 新建词典"
+        android:text="➡ 点此创建词典"
         app:layout_constraintBottom_toBottomOf="@+id/s"
         app:layout_constraintStart_toEndOf="@+id/s"
         app:layout_constraintTop_toTopOf="@+id/s" />
