@@ -47,7 +47,6 @@ class DisplayFrag : BaseFrag() {
         savedInstanceState: Bundle?
     ): View? {
         if (null != mView) {
-            lifecycleRebind()
             return mView
         }
         mView = inflater.inflate(R.layout.display_frag, container, false)
@@ -62,7 +61,10 @@ class DisplayFrag : BaseFrag() {
             viewModel.dicList.distinctUntilChanged().collectLatest { list ->
                 LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
                 var mapJob = async(Dispatchers.Default) {
-                    list.map { it.name }
+                    list.map {
+                        LogUtils.d(DISPLAY_FRAG_TAG, "dicList map ${it.name}")
+                        it.name
+                    }
                 }
                 refreshSpinner(mapJob.await())
             }
@@ -154,7 +156,7 @@ class DisplayFrag : BaseFrag() {
 //            }
             viewModel.fetchMediatorData().collectLatest {
                 var num = 0
-                val mapJob = async {
+                val mapJob = lifecycleScope.async {
                     it.map { wordEntity ->
                         LogUtils.d(DISPLAY_FRAG_TAG, "collect ${num++} : ${wordEntity.src}")
                         DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")

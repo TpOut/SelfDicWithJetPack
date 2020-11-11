@@ -26,6 +26,7 @@ const val DISPLAY_MEDIATOR_TAG = "DisplayMediator"
 @OptIn(ExperimentalPagingApi::class)
 class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
     private val dicDao = AppDb.appDb.dicDao()
+    private var page = PAGE_NUM_START
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, WordEntity>): MediatorResult {
         return try {
@@ -36,14 +37,14 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
                 LogUtils.d(DISPLAY_MEDIATOR_TAG, "last page item : ${state.pages.last().data.last().src}")
             }
             val page = when (loadType) {
-                LoadType.REFRESH -> PAGE_NUM_START
+                LoadType.REFRESH -> page
                 LoadType.PREPEND ->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val lastItemOrNull = state.lastItemOrNull()
                     lastItemOrNull ?: return MediatorResult.Success(endOfPaginationReached = true)
                     LogUtils.d(DISPLAY_MEDIATOR_TAG, "nextKey : ${state.pages.last().nextKey}")
-                    state.pages.last().nextKey!!
+                    page ++
                 }
             }
             var result: Response<QueryWordResultBean>
