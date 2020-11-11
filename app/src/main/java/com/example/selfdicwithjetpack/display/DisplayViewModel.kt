@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.display.data.DisplayMediator
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
+import com.example.selfdicwithjetpack.display.data.PAGE_NUM_START
 import com.example.selfdicwithjetpack.display.data.PAGE_SIZE
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.WordEntity
@@ -49,6 +50,7 @@ class DisplayViewModel : ViewModel() {
             config = PagingConfig(pageSize = PAGE_SIZE),
             remoteMediator = DisplayMediator()
         ) {
+
             LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource")
             val wordsPagingSource = dao.getWordsPagingSource()
             LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource $wordsPagingSource")

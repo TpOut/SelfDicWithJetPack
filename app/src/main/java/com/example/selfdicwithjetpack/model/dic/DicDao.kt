@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -25,7 +26,7 @@ interface DicDao {
     @Insert
     suspend fun insertDic(dic: DicEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertWords(words: List<WordEntity>)
 
     @Query("SELECT * FROM word")

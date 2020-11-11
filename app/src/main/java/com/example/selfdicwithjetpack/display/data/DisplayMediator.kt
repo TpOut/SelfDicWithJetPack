@@ -40,19 +40,22 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
                 LoadType.PREPEND ->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
-                    PAGE_NUM_START + 1
+                    val lastItemOrNull = state.lastItemOrNull()
+                    lastItemOrNull ?: return MediatorResult.Success(endOfPaginationReached = true)
+                    LogUtils.d(DISPLAY_MEDIATOR_TAG, "nextKey : ${state.pages.last().nextKey}")
+                    state.pages.last().nextKey!!
                 }
             }
             var result: Response<QueryWordResultBean>
             withContext(Dispatchers.IO) {
+                LogUtils.d(DISPLAY_MEDIATOR_TAG, "queryWorldList $page")
                 result = QueryWordList.create().queryWorldList(page).execute()
             }
             LogUtils.d(DISPLAY_MEDIATOR_TAG, "result isSuccessful : ${result.isSuccessful}")
             if (result.isSuccessful) {
                 val list = result.body()!!.result
-                list.forEach {
-                    LogUtils.d(DISPLAY_MEDIATOR_TAG, "result item : ${it.src}")
+                list.forEachIndexed { index, displayBean ->
+                    LogUtils.d(DISPLAY_MEDIATOR_TAG, "result item $index: ${displayBean.src}")
                 }
                 if (list.isNullOrEmpty()) {
                     return MediatorResult.Success(endOfPaginationReached = true)

@@ -102,6 +102,10 @@ android {
 //            }
 //        }
 //    }
+
+    kotlinOptions {
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
 }
 
 dependencies {
