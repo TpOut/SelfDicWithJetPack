@@ -7,6 +7,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 //import androidx.room.Delete
 //import androidx.room.Query
@@ -19,7 +20,7 @@ import androidx.room.Query
 @Dao
 interface DicDao {
     @Query("SELECT * FROM dic")
-    fun getAllDics(): LiveData<List<DicEntity>>
+    fun getAllDics(): Flow<List<DicEntity>>
 
     @Insert
     suspend fun insertDic(dic: DicEntity)

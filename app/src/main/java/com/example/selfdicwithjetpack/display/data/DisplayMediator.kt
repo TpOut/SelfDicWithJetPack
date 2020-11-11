@@ -30,8 +30,7 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
     override suspend fun load(loadType: LoadType, state: PagingState<Int, WordEntity>): MediatorResult {
         return try {
             LogUtils.d(
-                DISPLAY_MEDIATOR_TAG, "loadType :" +
-                        " $loadType -- ${state.anchorPosition} -- ${state.pages}"
+                DISPLAY_MEDIATOR_TAG, "loadType :" + " $loadType -- ${state.anchorPosition} -- ${state.pages}"
             )
             if (!state.pages.isNullOrEmpty()) {
                 LogUtils.d(DISPLAY_MEDIATOR_TAG, "last page item : ${state.pages.last().data.last().src}")

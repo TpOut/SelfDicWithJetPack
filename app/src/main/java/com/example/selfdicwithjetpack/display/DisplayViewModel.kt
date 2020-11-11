@@ -33,7 +33,7 @@ class DisplayViewModel : ViewModel() {
 
     //这里有个纠结点，本来想用lazy 做一个协程async 返回结果。实际上是不可行的
     //todo 数据库设置有查询线程，不知道这里可不可以，注解是说所有suspend
-    val dicList: LiveData<List<DicEntity>> by lazy {
+    val dicList: Flow<List<DicEntity>> by lazy {
         AppDb.appDb.dicDao().getAllDics()
     }
     //val allWords: LiveData<List<WordEntity>> = repo.allWords
@@ -49,7 +49,9 @@ class DisplayViewModel : ViewModel() {
             config = PagingConfig(pageSize = PAGE_SIZE),
             remoteMediator = DisplayMediator()
         ) {
+            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource")
             val wordsPagingSource = dao.getWordsPagingSource()
+            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource $wordsPagingSource")
             wordsPagingSource.registerInvalidatedCallback {
                 LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "invalidate + 1")
             }

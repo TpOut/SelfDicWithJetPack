@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
@@ -19,8 +20,10 @@ import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 /**
@@ -55,15 +58,15 @@ class DisplayFrag : BaseFrag() {
 
     // 目前navigation 导航使用replace ，会重走onCreateView/onDestroyView.
     private fun lifecycleRebind() {
-        viewModel.dicList.observe(viewLifecycleOwner, Observer<List<DicEntity>> { list ->
-            lifecycleScope.launch {
+        lifecycleScope.launch {
+            viewModel.dicList.distinctUntilChanged().collectLatest { list ->
                 LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
-                var mapJob = async {
+                var mapJob = async(Dispatchers.Default) {
                     list.map { it.name }
                 }
                 refreshSpinner(mapJob.await())
             }
-        })
+        }
     }
 
     // 这种写法不能直接使用 fab、rv 来获取view
@@ -142,6 +145,7 @@ class DisplayFrag : BaseFrag() {
         }
     }
 
+    //todo 词典可以变换之后，需要处理取消观察和重新绑定观察的逻辑
     private fun fetchData() {
         lifecycleScope.launchWhenResumed {
 //            viewModel.fetchData(dicSpinner?.selectedItem as String?).collectLatest {
@@ -149,11 +153,16 @@ class DisplayFrag : BaseFrag() {
 //                mAdapter.submitData(it)
 //            }
             viewModel.fetchMediatorData().collectLatest {
-                val result = it.mapSync { wordEntity ->
-                    LogUtils.d(DISPLAY_FRAG_TAG, "collect num + 1")
-                    DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
+                var num = 0
+                val mapJob = async {
+                    it.map { wordEntity ->
+                        LogUtils.d(DISPLAY_FRAG_TAG, "collect ${num++} : ${wordEntity.src}")
+                        DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
+                    }
                 }
-                mAdapter.submitData(result)
+                val mapResult = mapJob.await()
+                LogUtils.d(DISPLAY_FRAG_TAG, "collect submitData")
+                mAdapter.submitData(mapResult)
             }
         }
     }
