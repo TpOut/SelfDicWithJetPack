@@ -127,13 +127,14 @@ dependencies {
     //网络
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    //jetpack
-    def paging_version = "3.0.0-alpha07"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
     def okhttpLoggingVersion = '4.7.2'
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingVersion"
+
+    //jetpack
+    def paging_version = "3.0.0-alpha08"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
     def room_version = "2.3.0-alpha03"
 
