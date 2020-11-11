@@ -19,12 +19,12 @@ import java.io.IOException
 /**
  * Created by TpOut on 2020/11/10.<br>
  * Email address: 416756910@qq.com<br>
+ *
  */
-
 const val DISPLAY_MEDIATOR_TAG = "DisplayMediator"
 
 @OptIn(ExperimentalPagingApi::class)
-class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
+class DisplayMediator(): RemoteMediator<Int, WordEntity>() {
     private val dicDao = AppDb.appDb.dicDao()
     private var page = PAGE_NUM_START
 
@@ -44,7 +44,7 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
                     val lastItemOrNull = state.lastItemOrNull()
                     lastItemOrNull ?: return MediatorResult.Success(endOfPaginationReached = true)
                     LogUtils.d(DISPLAY_MEDIATOR_TAG, "nextKey : ${state.pages.last().nextKey}")
-                    page ++
+                    ++ page
                 }
             }
             var result: Response<QueryWordResultBean>

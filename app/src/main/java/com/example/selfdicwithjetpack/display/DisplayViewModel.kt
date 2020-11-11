@@ -3,10 +3,7 @@ package com.example.selfdicwithjetpack.display
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import androidx.paging.*
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.display.data.DisplayMediator
@@ -44,21 +41,28 @@ class DisplayViewModel : ViewModel() {
     }
 
     //从网络获取到数据库
-    fun fetchMediatorData(): Flow<PagingData<WordEntity>> {
+    fun fetchMediatorData(): Flow<PagingData<DisplayBean>> {
         val dao = AppDb.appDb.dicDao()
         return Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE),
-            remoteMediator = DisplayMediator()
-        ) {
-
-            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource")
-            val wordsPagingSource = dao.getWordsPagingSource()
-            LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource $wordsPagingSource")
-            wordsPagingSource.registerInvalidatedCallback {
-                LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "invalidate + 1")
+            config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = DisplayMediator(),
+            pagingSourceFactory = {
+                LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource")
+                val wordsPagingSource = dao.getWordsPagingSource()
+                LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "getWordsPagingSource $wordsPagingSource")
+                wordsPagingSource.registerInvalidatedCallback {
+                    LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "invalidate + 1")
+                }
+                wordsPagingSource
             }
-            wordsPagingSource
-        }.flow.cachedIn(viewModelScope)
+        ).flow
+            .map { pageData ->
+                pageData.map { wordEntity ->
+                    LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchMediatorData map ${wordEntity.src}")
+                    DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
+                }
+            }
+            .cachedIn(viewModelScope)
     }
 
     // 只是从网络获取

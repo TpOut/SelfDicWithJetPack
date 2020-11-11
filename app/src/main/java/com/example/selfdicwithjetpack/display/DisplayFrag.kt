@@ -155,16 +155,9 @@ class DisplayFrag : BaseFrag() {
 //                mAdapter.submitData(it)
 //            }
             viewModel.fetchMediatorData().collectLatest {
-                var num = 0
-                val mapJob = lifecycleScope.async {
-                    it.map { wordEntity ->
-                        LogUtils.d(DISPLAY_FRAG_TAG, "collect ${num++} : ${wordEntity.src}")
-                        DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
-                    }
-                }
-                val mapResult = mapJob.await()
-                LogUtils.d(DISPLAY_FRAG_TAG, "collect submitData")
-                mAdapter.submitData(mapResult)
+                LogUtils.d("submitData - $it}")
+                mAdapter.submitData(it)
+                LogUtils.d("submitData - ${mAdapter.itemCount}}")
             }
         }
     }
