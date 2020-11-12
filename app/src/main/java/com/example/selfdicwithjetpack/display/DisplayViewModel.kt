@@ -40,6 +40,22 @@ class DisplayViewModel : ViewModel() {
         // AppDb.getDisplayDb().dicDao().insert(word)
     }
 
+    fun fetchRoomData(): Flow<PagingData<DisplayBean>> {
+        return Pager(config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = {
+                LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchRoomData time +1 ")
+                AppDb.appDb.dicDao().getWordsPagingSource()
+            }
+        ).flow
+            .map { pageData ->
+                pageData.map { wordEntity ->
+                    LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchRoomData map ${wordEntity.src}")
+                    DisplayBean(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
+                }
+            }
+            .cachedIn(viewModelScope)
+    }
+
     //从网络获取到数据库
     fun fetchMediatorData(): Flow<PagingData<DisplayBean>> {
         val dao = AppDb.appDb.dicDao()
