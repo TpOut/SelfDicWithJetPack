@@ -24,9 +24,9 @@ import java.io.IOException
 const val DISPLAY_MEDIATOR_TAG = "DisplayMediator"
 
 @OptIn(ExperimentalPagingApi::class)
-class DisplayMediator(): RemoteMediator<Int, WordEntity>() {
+class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
     private val dicDao = AppDb.appDb.dicDao()
-    private var page = PAGE_NUM_START
+    private var mPage = PAGE_NUM_START
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, WordEntity>): MediatorResult {
         return try {
@@ -34,17 +34,17 @@ class DisplayMediator(): RemoteMediator<Int, WordEntity>() {
                 DISPLAY_MEDIATOR_TAG, "loadType :" + " $loadType -- ${state.anchorPosition} -- ${state.pages}"
             )
             if (!state.pages.isNullOrEmpty()) {
-                LogUtils.d(DISPLAY_MEDIATOR_TAG, "last page item : ${state.pages.last().data.last().src}")
+                LogUtils.d(DISPLAY_MEDIATOR_TAG, "last page item : ${state.pages.lastOrNull()?.data?.lastOrNull()?.src}")
             }
             val page = when (loadType) {
-                LoadType.REFRESH -> page
+                LoadType.REFRESH -> mPage
                 LoadType.PREPEND ->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val lastItemOrNull = state.lastItemOrNull()
                     lastItemOrNull ?: return MediatorResult.Success(endOfPaginationReached = true)
                     LogUtils.d(DISPLAY_MEDIATOR_TAG, "nextKey : ${state.pages.last().nextKey}")
-                    ++ page
+                    mPage + 1
                 }
             }
             var result: Response<QueryWordResultBean>
@@ -70,6 +70,7 @@ class DisplayMediator(): RemoteMediator<Int, WordEntity>() {
                     LogUtils.d(DISPLAY_MEDIATOR_TAG, "do insert")
                     dicDao.insertWords(dbList)
                 }
+                mPage++
                 MediatorResult.Success(endOfPaginationReached = false)
             } else {
                 MediatorResult.Success(endOfPaginationReached = true)

@@ -3,9 +3,7 @@ package com.example.selfdicwithjetpack.model.dic
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.selfdicwithjetpack.model.dic.DicBean
-import com.example.selfdicwithjetpack.model.dic.FieldBean
-import com.example.selfdicwithjetpack.model.dic.WordBean
+
 //
 //import androidx.room.*
 //
@@ -86,7 +84,7 @@ import com.example.selfdicwithjetpack.model.dic.WordBean
 ////@Entity(primaryKeys = arrayOf("src","dst"),tableName = "users",ignoredColumns = arrayOf("pic"))
 ////@Fts3 使用全文检索的时候，primaryKey 一定要用rowId 作为列名称， FtsOptions
 ////@Fts4(languageId = "src")
-@Entity(tableName = "dic",inheritSuperIndices = true)
+@Entity(tableName = "dic", inheritSuperIndices = true)
 class DicEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "dic_id")
@@ -96,7 +94,7 @@ class DicEntity(
     name: String
 ) : DicBean(name)
 
-@Entity(tableName = "word",inheritSuperIndices = true)
+@Entity(tableName = "word", inheritSuperIndices = true)
 class WordEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "word_id")
@@ -105,9 +103,13 @@ class WordEntity(
     dst: String,
     sentence: String?
 //    ,@Ignore val pic : String?
-) : WordBean(src, dst, sentence)
+) : WordBean(src, dst, sentence) {
+    override fun toString(): String {
+        return "WordEntity{$id-${super.toString()}}"
+    }
+}
 
-@Entity(tableName = "field",inheritSuperIndices = true)
+@Entity(tableName = "field", inheritSuperIndices = true)
 class FieldEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "field_id")

@@ -1,9 +1,5 @@
 package com.example.selfdicwithjetpack.model.dic
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
 /**
  * Created by TpOut on 2020/10/21.<br>
  * Email address: 416756910@qq.com<br>
@@ -15,4 +11,8 @@ open class DicBean(var name: String)
 open class FieldBean(var name: String?)
 
 // 单词
-open class WordBean(var src: String, var dst: String, var sentence: String?)
+open class WordBean(var src: String, var dst: String, var sentence: String?) {
+    override fun toString(): String {
+        return "WordBean{$src-$dst-$sentence}"
+    }
+}
