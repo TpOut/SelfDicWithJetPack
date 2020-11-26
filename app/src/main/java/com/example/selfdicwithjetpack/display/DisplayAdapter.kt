@@ -6,17 +6,33 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.databinding.DisplayRvHeaderBinding
 import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
 
 /**
  * Created by TpOut on 2020/10/12.<br>
  * Email address: 416756910@qq.com<br>
  */
-class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayViewHolder>(DisplayDiffCallback()) {
+class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DisplayViewHolder {
-        return DisplayViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        R.layout.display_rv_header -> DisplayHeaderViewHolder(
+            DisplayRvHeaderBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+        R.layout.display_rv_item -> DisplayItemViewHolder(
             DisplayRvItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+        else -> DisplayHeaderViewHolder(
+            DisplayRvHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -24,14 +40,25 @@ class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayView
         )
     }
 
-    override fun onBindViewHolder(holder: DisplayViewHolder, position: Int) {
-        val photo = getItem(position)
-        if (photo != null) {
-            holder.bind(photo)
+
+    override fun getItemViewType(position: Int) = when (getItem(position)) {
+        is DisplayUIModel.DisplayHeaderModel -> R.layout.display_rv_header
+        is DisplayUIModel.DisplayItemModel -> R.layout.display_rv_item
+        null -> throw IllegalStateException("Unknown view")
+    }
+
+    override fun onBindViewHolder(holderItem: RecyclerView.ViewHolder, position: Int) {
+        val item = getItem(position)
+        if (holderItem is DisplayHeaderViewHolder) {
+
+        } else if (holderItem is DisplayItemViewHolder) {
+            holderItem.bind(item as DisplayUIModel.DisplayItemModel)
         }
     }
 
-    class DisplayViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class DisplayHeaderViewHolder(private val binding: DisplayRvHeaderBinding) : RecyclerView.ViewHolder(binding.root) {}
+
+    class DisplayItemViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener { view ->
                 val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToDetailFrag(binding.item!!.src, binding.item!!.dst, binding.item!!.sentence)
@@ -39,7 +66,7 @@ class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayView
             }
         }
 
-        fun bind(item: DisplayBean) {
+        fun bind(item: DisplayUIModel.DisplayItemModel) {
             binding.apply {
                 this.item = item
                 executePendingBindings()
@@ -49,13 +76,13 @@ class DisplayAdapter : PagingDataAdapter<DisplayBean, DisplayAdapter.DisplayView
 }
 
 // AsyncPagingDataDiffer
-private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayBean>() {
-    override fun areItemsTheSame(oldItem: DisplayBean, newItem: DisplayBean): Boolean {
+private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayUIModel>() {
+    override fun areItemsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: DisplayBean, newItem: DisplayBean): Boolean {
-        return oldItem.src == newItem.src
+    override fun areContentsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
+        return oldItem.toString() == newItem.toString()
 
     }
 }

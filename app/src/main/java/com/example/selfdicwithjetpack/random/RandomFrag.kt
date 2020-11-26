@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.selfdicwithjetpack.R
-import com.example.selfdicwithjetpack.display.DisplayBean
+import com.example.selfdicwithjetpack.display.DisplayUIModel
 
 /**
  * Created by TpOut on 2020/10/14.<br>
@@ -17,7 +17,7 @@ const val MAX_RANDOM_SIZE = 5
 
 class RandomFrag : Fragment() {
 
-    private var list: ArrayList<DisplayBean> = arrayListOf()
+    private var mList: ArrayList<DisplayUIModel> = arrayListOf()
     private var mIndex = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

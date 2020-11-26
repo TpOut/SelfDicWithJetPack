@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.selfdicwithjetpack.databinding.DetailFragBinding
-import com.example.selfdicwithjetpack.display.DisplayBean
+import com.example.selfdicwithjetpack.display.DisplayUIModel
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -34,7 +34,7 @@ class DetailFragment : Fragment() {
                 .setAction("Action", null).show()
         }
 
-        binding.item = DisplayBean(args.src, args.dst, args.sentence)
+        binding.item = DisplayUIModel.DisplayItemModel(args.src, args.dst, args.sentence)
     }
 
 }

@@ -4,8 +4,8 @@ import androidx.paging.PagingSource
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
 import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
-import com.example.selfdicwithjetpack.display.DisplayBean
-import com.example.selfdicwithjetpack.component.debug.log.LogUtil
+import com.example.selfdicwithjetpack.display.DisplayUIModel
+import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -19,8 +19,8 @@ import retrofit2.Response
  *     RxPagingSource, ListenableFuturePagingSource
  *
  */
-class DisplayPagingSource : PagingSource<Int, DisplayBean>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisplayBean> {
+class DisplayPagingSource : PagingSource<Int, WordEntity>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, WordEntity> {
         val page = params.key ?: PAGE_NUM_START
         LogUtils.d("DisplayPagingSource - load $page")
         return try {

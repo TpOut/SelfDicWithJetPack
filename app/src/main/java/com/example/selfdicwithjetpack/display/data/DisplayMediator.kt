@@ -55,9 +55,6 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
             LogUtils.d(DISPLAY_MEDIATOR_TAG, "result isSuccessful : ${result.isSuccessful}")
             if (result.isSuccessful) {
                 val list = result.body()!!.result
-                list.forEachIndexed { index, displayBean ->
-                    LogUtils.d(DISPLAY_MEDIATOR_TAG, "result item $index: ${displayBean.src}")
-                }
                 if (list.isNullOrEmpty()) {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
