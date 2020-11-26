@@ -154,7 +154,7 @@ class DisplayFrag : BaseFrag() {
 //                LogUtils.d("fetchData - $it}")
 //                mAdapter.submitData(it)
 //            }
-            viewModel.fetchRoomData().collectLatest {
+            viewModel.fetchMediatorData().collectLatest {
                 LogUtils.d("submitData - $it}")
                 mAdapter.submitData(it)
                 LogUtils.d("submitData - ${mAdapter.itemCount}}")
