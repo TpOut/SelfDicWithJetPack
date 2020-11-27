@@ -77,6 +77,7 @@ class DisplayViewModel : ViewModel() {
                         DisplayUIModel.DisplayItemModel(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
                     }
                     .insertSeparators<DisplayUIModel.DisplayItemModel, DisplayUIModel> { before, after ->
+                        LogUtils.d(DISPLAY_VIEW_MODEL_TAG,"insertSeparators : $before - $after ")
                         when {
                             before == null -> DisplayUIModel.DisplayHeaderModel()
                             after == null -> null

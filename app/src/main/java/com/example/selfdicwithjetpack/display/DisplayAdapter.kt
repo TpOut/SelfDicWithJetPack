@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.DisplayRvHeaderBinding
 import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
@@ -14,6 +15,7 @@ import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
  * Created by TpOut on 2020/10/12.<br>
  * Email address: 416756910@qq.com<br>
  */
+const val DISPLAY_ADAPTER_TAG = "DisplayAdapter"
 class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
@@ -49,6 +51,7 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 
     override fun onBindViewHolder(holderItem: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
+        LogUtils.d(DISPLAY_ADAPTER_TAG, "onBindViewHolder : $holderItem")
         if (holderItem is DisplayHeaderViewHolder) {
 
         } else if (holderItem is DisplayItemViewHolder) {
@@ -82,6 +85,7 @@ private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayUIModel>() {
     }
 
     override fun areContentsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
+        LogUtils.d(DISPLAY_ADAPTER_TAG, "areContentsTheSame : ${oldItem.toString()} -- ${newItem.toString()}")
         return oldItem.toString() == newItem.toString()
 
     }

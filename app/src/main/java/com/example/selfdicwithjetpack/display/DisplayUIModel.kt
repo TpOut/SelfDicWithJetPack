@@ -11,6 +11,10 @@ sealed class DisplayUIModel {
             return super.hashCode()
         }
 
+        override fun toString(): String {
+            return "DisplayHeaderModel"
+        }
+
         override fun equals(other: Any?): Boolean {
             if (other !is DisplayUIModel) {
                 return false
