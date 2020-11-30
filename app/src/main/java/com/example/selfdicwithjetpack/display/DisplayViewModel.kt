@@ -55,7 +55,7 @@ class DisplayViewModel : ViewModel() {
     }
 
     //从网络获取到数据库
-    fun fetchMediatorData(): Flow<PagingData<DisplayUIModel>> {
+    fun fetchMediatorData(): Flow<PagingData<DisplayUIModel.DisplayItemModel>> {
         val dao = AppDb.appDb.dicDao()
         return Pager(
             config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
@@ -76,18 +76,18 @@ class DisplayViewModel : ViewModel() {
                         LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchMediatorData map ${wordEntity.src}")
                         DisplayUIModel.DisplayItemModel(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
                     }
-                    .insertSeparators<DisplayUIModel.DisplayItemModel, DisplayUIModel> { before, after ->
-                        LogUtils.d(DISPLAY_VIEW_MODEL_TAG,"insertSeparators : $before - $after ")
-                        when {
-                            before == null -> DisplayUIModel.DisplayHeaderModel()
-                            after == null -> null
-//                            shouldSeparate(before, after) -> UiModel.SeparatorModel(
-//                                "BETWEEN ITEMS $before AND $after"
-//                            )
-                            // Return null to avoid adding a separator between two items.
-                            else -> null
-                        }
-                    }
+//                    .insertSeparators<DisplayUIModel.DisplayItemModel, DisplayUIModel> { before, after ->
+//                        LogUtils.d(DISPLAY_VIEW_MODEL_TAG,"insertSeparators : $before - $after ")
+//                        when {
+//                            before == null -> DisplayUIModel.DisplayHeaderModel()
+//                            after == null -> null
+////                            shouldSeparate(before, after) -> UiModel.SeparatorModel(
+////                                "BETWEEN ITEMS $before AND $after"
+////                            )
+//                            // Return null to avoid adding a separator between two items.
+//                            else -> null
+//                        }
+//                    }
             }
             .cachedIn(viewModelScope)
     }

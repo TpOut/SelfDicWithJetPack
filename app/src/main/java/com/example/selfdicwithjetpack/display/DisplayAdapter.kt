@@ -16,7 +16,7 @@ import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
  * Email address: 416756910@qq.com<br>
  */
 const val DISPLAY_ADAPTER_TAG = "DisplayAdapter"
-class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
+class DisplayAdapter : PagingDataAdapter<DisplayUIModel.DisplayItemModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         R.layout.display_rv_header -> DisplayHeaderViewHolder(
@@ -44,9 +44,9 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is DisplayUIModel.DisplayHeaderModel -> R.layout.display_rv_header
+//        is DisplayUIModel.DisplayHeaderModel -> R.layout.display_rv_header
         is DisplayUIModel.DisplayItemModel -> R.layout.display_rv_item
-        null -> throw IllegalStateException("Unknown view")
+        else -> throw IllegalStateException("Unknown view")
     }
 
     override fun onBindViewHolder(holderItem: RecyclerView.ViewHolder, position: Int) {
@@ -79,12 +79,12 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 }
 
 // AsyncPagingDataDiffer
-private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayUIModel>() {
-    override fun areItemsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
+private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayUIModel.DisplayItemModel>() {
+    override fun areItemsTheSame(oldItem: DisplayUIModel.DisplayItemModel, newItem: DisplayUIModel.DisplayItemModel): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
+    override fun areContentsTheSame(oldItem: DisplayUIModel.DisplayItemModel, newItem: DisplayUIModel.DisplayItemModel): Boolean {
         LogUtils.d(DISPLAY_ADAPTER_TAG, "areContentsTheSame : ${oldItem.toString()} -- ${newItem.toString()}")
         return oldItem.toString() == newItem.toString()
 
