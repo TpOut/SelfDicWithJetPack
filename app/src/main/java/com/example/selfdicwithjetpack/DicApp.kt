@@ -11,12 +11,14 @@ import com.example.selfdicwithjetpack.component.debug.log.LogUtil
  */
 class DicApp  : Application(){
 
-
     override fun onCreate() {
         super.onCreate()
 
         LogUtil
         Sp.init(this)
+        Thread.setDefaultUncaughtExceptionHandler { t, e ->
+            LogUtils.d("AppUncaught", e.printStackTrace())
+        }
     }
 
 }
