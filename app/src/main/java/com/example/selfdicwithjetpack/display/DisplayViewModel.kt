@@ -76,6 +76,7 @@ class DisplayViewModel : ViewModel() {
                         LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchMediatorData map ${wordEntity.src}")
                         DisplayUIModel.DisplayItemModel(wordEntity.src, wordEntity.dst, wordEntity.sentence ?: "")
                     }
+                // TODO: 2020/12/2 添加头之后，再滑动会崩溃
 //                    .insertSeparators<DisplayUIModel.DisplayItemModel, DisplayUIModel> { before, after ->
 //                        LogUtils.d(DISPLAY_VIEW_MODEL_TAG,"insertSeparators : $before - $after ")
 //                        when {
