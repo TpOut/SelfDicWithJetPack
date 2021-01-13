@@ -58,7 +58,7 @@ class DisplayFrag : BaseFrag() {
     // 目前navigation 导航使用replace ，会重走onCreateView/onDestroyView.
     private fun lifecycleRebind() {
         lifecycleScope.launch {
-            viewModel.dicList.distinctUntilChanged().collectLatest { list ->
+            viewModel.getDicListDeferred()?.distinctUntilChanged()?.collectLatest { list ->
                 LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
                 var mapJob = async(Dispatchers.Default) {
                     list.map {
