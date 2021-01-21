@@ -3,6 +3,7 @@ package com.example.selfdicwithjetpack.api
 import com.example.selfdicwithjetpack.api.baidu.BaiduTransApi
 import com.example.selfdicwithjetpack.api.baidu.BaiduTransResultBean
 import com.example.selfdicwithjetpack.api.yourena.AddWordApi
+import com.example.selfdicwithjetpack.api.yourena.AddWordResultBean
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -34,10 +35,10 @@ class NetworkCenter {
 
         suspend fun upload2Yourena(src: String, dst: String, sentence: String): Boolean {
             var result: Boolean = false
-            var response: Response<String>? = null
+            var response: Response<AddWordResultBean>? = null
             withContext(Dispatchers.IO) {
                 response = AddWordApi.create().uploadResult(src, dst, sentence)?.execute()
-                if (response?.isSuccessful == true) {
+                if (response?.isSuccessful == true && response?.body()?.result.equals("success")) {
                     result = true
                 }
             }

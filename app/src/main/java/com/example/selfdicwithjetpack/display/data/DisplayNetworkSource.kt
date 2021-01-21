@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
 import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
-import com.example.selfdicwithjetpack.display.DisplayUIModel
 import com.example.selfdicwithjetpack.model.dic.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

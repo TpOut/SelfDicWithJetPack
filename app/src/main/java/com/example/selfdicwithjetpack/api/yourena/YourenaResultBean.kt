@@ -7,3 +7,4 @@ import com.example.selfdicwithjetpack.model.dic.WordEntity
  * Email address: 416756910@qq.com<br>
  */
 data class QueryWordResultBean(val result: List<WordEntity>, val page: Int)
+data class AddWordResultBean(val result: String)

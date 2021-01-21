@@ -23,7 +23,7 @@ interface AddWordApi {
         @Field("src") queryStr: String,
         @Field("result") srcLanguage: String,
         @Field("sentence") targetLanguage: String
-    ): Call<String>
+    ): Call<AddWordResultBean>
 
     companion object {
         fun create(): AddWordApi {
