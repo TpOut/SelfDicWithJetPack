@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:hint="输入遇到时的句子更能帮助记忆哦"
-        android:maxLength="2"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

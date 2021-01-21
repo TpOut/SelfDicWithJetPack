@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.blankj.utilcode.util.LogUtils
+import com.example.selfdicwithjetpack.api.NetworkCenter
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.display.data.DisplayMediator
 import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
@@ -37,7 +38,7 @@ class DisplayViewModel : ViewModel() {
     }
 
     private fun queryDicList(): Deferred<Flow<List<DicEntity>>> {
-        return viewModelScope.async(context =  Dispatchers.IO, start = CoroutineStart.LAZY) {
+        return viewModelScope.async(context = Dispatchers.IO, start = CoroutineStart.LAZY) {
             AppDb.appDb.dicDao().getAllDics()
         }
     }
@@ -124,12 +125,8 @@ class DisplayViewModel : ViewModel() {
 
     }
 
-    fun queryWord() {
-//        currentQueryValue = queryString
-//        val newResult: Flow<PagingData<DisplayBean>> = repository.getSearchResultStream(queryString).cachedIn(viewModelScope)
-//        currentSearchResult = newResult
-//        return newResult
+    suspend fun queryWord(query: String, sentence: String): String {
+        return NetworkCenter.queryBaiduTransAndUpload2Yourena(query, sentence)
     }
-
 
 }
