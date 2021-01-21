@@ -24,6 +24,18 @@ sealed class DisplayUIModel {
     }
 
     class DisplayItemModel(val src: String, val dst: String, val sentence: String) : DisplayUIModel() {
+
+        override fun hashCode(): Int {
+            return super.hashCode()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if(other !is DisplayItemModel){
+                return false
+            }
+            return src == other.src
+        }
+
         override fun toString(): String {
             return "{$src}"
         }
