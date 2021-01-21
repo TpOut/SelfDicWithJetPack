@@ -125,7 +125,7 @@ class DisplayViewModel : ViewModel() {
 
     }
 
-    suspend fun queryWord(query: String, sentence: String): String {
+    suspend fun queryWord(query: String, sentence: String): Boolean{
         return NetworkCenter.queryBaiduTransAndUpload2Yourena(query, sentence)
     }
 

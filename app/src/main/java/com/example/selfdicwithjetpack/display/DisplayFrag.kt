@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -38,6 +39,8 @@ class DisplayFrag : BaseFrag() {
     private var dicSpinner: Spinner? = null
     private var mSpinnerAdapter: ArrayAdapter<String>? = null
     private var tvSpinnerTip: TextView? = null
+    private var etQuery: EditText? = null
+    private var etSentence: EditText? = null
 
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
@@ -75,11 +78,17 @@ class DisplayFrag : BaseFrag() {
     private fun afterViewCreated(rootView: View) {
         dicSpinner = rootView.findViewById<Spinner>(R.id.s)
         tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
+        etQuery = rootView.findViewById(R.id.et_query)
+        etSentence = rootView.findViewById(R.id.et_sentence)
 
         val fab = rootView.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            lifecycleScope.launch {
+                if(viewModel.queryWord(etQuery?.text.toString(), etSentence?.text.toString())){
+                    Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
         }
         fab.setOnLongClickListener {
             val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToRandomFrag()
