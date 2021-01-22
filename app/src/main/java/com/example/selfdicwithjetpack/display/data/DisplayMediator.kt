@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.blankj.utilcode.util.LogUtils
+import com.example.selfdicwithjetpack.api.RESPONSE_SUCCESS
 import com.example.selfdicwithjetpack.api.yourena.QueryWordList
 import com.example.selfdicwithjetpack.api.yourena.QueryWordResultBean
 import com.example.selfdicwithjetpack.data.AppDb
@@ -53,7 +54,7 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
                 result = QueryWordList.create().queryWorldList(page).execute()
             }
             LogUtils.d(DISPLAY_MEDIATOR_TAG, "result isSuccessful : ${result.isSuccessful}")
-            if (result.isSuccessful) {
+            if (result.isSuccessful && result.body()?.resultStatus.equals(RESPONSE_SUCCESS)) {
                 val list = result.body()!!.result
                 if (list.isNullOrEmpty()) {
                     return MediatorResult.Success(endOfPaginationReached = true)

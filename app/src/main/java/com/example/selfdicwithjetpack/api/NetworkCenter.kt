@@ -12,6 +12,9 @@ import retrofit2.Response
  * Created by TpOut on 2021/1/21.<br>
  * Email address: 416756910@qq.com<br>
  */
+const val RESPONSE_SUCCESS = "success"
+const val RESPONSE_FAIL = "fail"
+
 class NetworkCenter {
     companion object {
 
@@ -37,8 +40,8 @@ class NetworkCenter {
             var result: Boolean = false
             var response: Response<AddWordResultBean>? = null
             withContext(Dispatchers.IO) {
-                response = AddWordApi.create().uploadResult(src, dst, sentence)?.execute()
-                if (response?.isSuccessful == true && response?.body()?.result.equals("success")) {
+                response = AddWordApi.create().uploadResult(src, dst, sentence).execute()
+                if (response?.isSuccessful == true && response?.body()?.resultStatus.equals(RESPONSE_SUCCESS)) {
                     result = true
                 }
             }
