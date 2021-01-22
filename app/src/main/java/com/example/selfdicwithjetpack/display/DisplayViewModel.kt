@@ -3,6 +3,7 @@ package com.example.selfdicwithjetpack.display
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import androidx.room.withTransaction
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.api.NetworkCenter
 import com.example.selfdicwithjetpack.data.AppDb
@@ -11,7 +12,9 @@ import com.example.selfdicwithjetpack.display.data.DisplayPagingSource
 import com.example.selfdicwithjetpack.display.data.PAGE_SIZE
 import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.example.selfdicwithjetpack.model.dic.WordEntity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -38,21 +41,19 @@ class DisplayViewModel : ViewModel() {
     }
 
     private fun queryDicList(): Deferred<Flow<List<DicEntity>>> {
-        return viewModelScope.async(context = Dispatchers.IO, start = CoroutineStart.LAZY) {
-            AppDb.appDb.dicDao().getAllDics()
+        return viewModelScope.async(start = CoroutineStart.LAZY) {
+            AppDb.appDb.withTransaction {
+                AppDb.appDb.dicDao().getAllDics()
+            }
         }
     }
 
     //val allWords: LiveData<List<WordEntity>> = repo.allWords
 
-    fun insert(word: WordEntity) = viewModelScope.launch(Dispatchers.IO) {
-        // AppDb.getDisplayDb().dicDao().insert(word)
-    }
-
     fun fetchRoomData(): Flow<PagingData<DisplayUIModel.DisplayItemModel>> {
         return Pager(config = PagingConfig(pageSize = PAGE_SIZE),
             pagingSourceFactory = {
-                LogUtils.d(DISPLAY_VIEW_MODEL_TAG, "fetchRoomData time +1 ")
+//                AppDb.appDb.withTransaction //todo
                 AppDb.appDb.dicDao().getWordsPagingSource()
             }
         ).flow
@@ -126,8 +127,13 @@ class DisplayViewModel : ViewModel() {
 
     }
 
-    suspend fun queryWord(query: String, sentence: String): Boolean{
-        return NetworkCenter.queryBaiduTransAndUpload2Yourena(query, sentence)
+    suspend fun queryWord(query: String, sentence: String): Boolean {
+        val result = NetworkCenter.queryBaiduTransAndUpload2Yourena(query, sentence)
+        AppDb.appDb.withTransaction {
+            // TODO: 1/22/21 这里的时间现在本地写，后续可以考虑后台返回
+            AppDb.appDb.dicDao().insertWord(WordEntity(src = query, dst = result, sentence = sentence, createTime = System.currentTimeMillis()))
+        }
+        return result.isNotEmpty()
     }
 
 }

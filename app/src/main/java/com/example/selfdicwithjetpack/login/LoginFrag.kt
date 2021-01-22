@@ -34,9 +34,8 @@ class LoginFrag : Fragment(), LoginHandler {
 
     private fun afterViewCreated(binding: LoginFragBinding) {
         lifecycleScope.launch {
-            var userBean = viewModel.fetchUserData()
-            binding.userBean = userBean
-            if (!userBean?.name.isNullOrEmpty()) {
+            binding.userBean = viewModel.fetchUserData()
+            if (!binding.userBean?.name.isNullOrEmpty()) {
                 delay(3000)
                 findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
             }

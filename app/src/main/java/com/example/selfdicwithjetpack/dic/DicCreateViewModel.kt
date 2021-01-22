@@ -2,11 +2,11 @@ package com.example.selfdicwithjetpack.dic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.LogUtils
+import androidx.room.withTransaction
 import com.example.selfdicwithjetpack.component.data.Sp
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.model.dic.DicEntity
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Created by TpOut on 2020/11/9.<br>
@@ -17,11 +17,11 @@ const val DIC_CREATE_VIEW_MODEL_TAG = "DicCreateViewModel"
 class DicCreateViewModel : ViewModel() {
 
     fun insertDic(dicName: String) {
-        viewModelScope.async {
+        viewModelScope.launch {
             val userId = Sp.queryUserId()
-            LogUtils.d(DIC_CREATE_VIEW_MODEL_TAG, "start insert")
-            AppDb.appDb.dicDao().insertDic(DicEntity(userId = userId, name = dicName))
-            LogUtils.d(DIC_CREATE_VIEW_MODEL_TAG, "end insert")
+            AppDb.appDb.withTransaction {
+                AppDb.appDb.dicDao().insertDic(DicEntity(userId = userId, name = dicName))
+            }
         }
     }
 

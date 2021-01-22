@@ -59,7 +59,7 @@ class DisplayMediator() : RemoteMediator<Int, WordEntity>() {
                 if (list.isNullOrEmpty()) {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
-                val dbList = list.map { WordEntity(src = it.src, dst = it.dst, sentence = it.sentence) }
+                val dbList = list.map { WordEntity(src = it.src, dst = it.dst, sentence = it.sentence, createTime = it.createTime) }
                 AppDb.appDb.withTransaction {
                     if (loadType == LoadType.REFRESH) {
                         LogUtils.d(DISPLAY_MEDIATOR_TAG, "do clearAll")

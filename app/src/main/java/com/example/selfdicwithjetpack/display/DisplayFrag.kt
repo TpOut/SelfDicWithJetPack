@@ -10,15 +10,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.ui.BaseFrag
-import com.example.selfdicwithjetpack.model.dic.DicEntity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -39,8 +36,11 @@ class DisplayFrag : BaseFrag() {
     private var dicSpinner: Spinner? = null
     private var mSpinnerAdapter: ArrayAdapter<String>? = null
     private var tvSpinnerTip: TextView? = null
+    private var rv : RecyclerView? = null
     private var etQuery: EditText? = null
     private var etSentence: EditText? = null
+
+    private var waitScrollToTop = false
 
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
@@ -78,6 +78,7 @@ class DisplayFrag : BaseFrag() {
     private fun afterViewCreated(rootView: View) {
         dicSpinner = rootView.findViewById<Spinner>(R.id.s)
         tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
+        rv = rootView.findViewById<RecyclerView>(R.id.rv)
         etQuery = rootView.findViewById(R.id.et_query)
         etSentence = rootView.findViewById(R.id.et_sentence)
 
@@ -85,7 +86,11 @@ class DisplayFrag : BaseFrag() {
         fab.setOnClickListener { view ->
             lifecycleScope.launch {
                 if(viewModel.queryWord(etQuery?.text.toString(), etSentence?.text.toString())){
-                    Snackbar.make(view, "SaveSuccess", Snackbar.LENGTH_LONG)
+                    waitScrollToTop = true
+                    Snackbar.make(view, "保存成功", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                } else {
+                    Snackbar.make(view, "保存失败", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
                 }
             }
@@ -104,7 +109,7 @@ class DisplayFrag : BaseFrag() {
 //            footer = ExampleLoadStateAdapter(mAdapter::retry)
 //        )
 
-        rootView.findViewById<RecyclerView>(R.id.rv).adapter = loadStateAdapter
+        rv?.adapter = loadStateAdapter
 
         // Activities can use lifecycleScope directly, but Fragments should instead use
         // viewLifecycleOwner.lifecycleScope.
@@ -166,6 +171,10 @@ class DisplayFrag : BaseFrag() {
             viewModel.fetchMediatorData().collectLatest {
                 LogUtils.d("submitData - $it}")
                 mAdapter.submitData(it)
+                if(waitScrollToTop){
+                    waitScrollToTop = false
+                    rv?.scrollToPosition(0)
+                }
                 LogUtils.d("submitData - ${mAdapter.itemCount}}")
             }
         }

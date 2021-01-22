@@ -48,13 +48,15 @@ class NetworkCenter {
             return result
         }
 
-        suspend fun queryBaiduTransAndUpload2Yourena(query: String, sentence: String): Boolean {
-            var success = false
+        suspend fun queryBaiduTransAndUpload2Yourena(query: String, sentence: String): String {
             val queryResult = queryBaiduTrans(query)
             if (queryResult.isNotEmpty()) {
-                success = upload2Yourena(query, queryResult, sentence)
+                val success = upload2Yourena(query, queryResult, sentence)
+                if(success){
+                    return queryResult
+                }
             }
-            return success
+            return ""
         }
     }
 

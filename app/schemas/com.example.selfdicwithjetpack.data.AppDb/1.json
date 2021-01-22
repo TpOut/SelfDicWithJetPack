@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "983a94cf40e4a97893a1f58712db5f8c",
+    "identityHash": "81664efa66291b0378176826994c8b7b",
     "entities": [
       {
         "tableName": "dic",
@@ -38,13 +38,19 @@
       },
       {
         "tableName": "word",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`word_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `src` TEXT NOT NULL, `dst` TEXT NOT NULL, `sentence` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`word_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `create_time` INTEGER, `src` TEXT NOT NULL, `dst` TEXT NOT NULL, `sentence` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "word_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "src",
@@ -142,7 +148,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '983a94cf40e4a97893a1f58712db5f8c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81664efa66291b0378176826994c8b7b')"
     ]
   }
 }

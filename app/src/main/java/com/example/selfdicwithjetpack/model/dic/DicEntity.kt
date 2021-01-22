@@ -101,7 +101,9 @@ class WordEntity(
     val id: Int = 0,
     src: String,
     dst: String,
-    sentence: String?
+    sentence: String?,
+    @ColumnInfo(name = "create_time")
+    val createTime: Long?
 //    ,@Ignore val pic : String?
 ) : WordBean(src, dst, sentence) {
     override fun toString(): String {
