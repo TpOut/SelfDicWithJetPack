@@ -66,6 +66,7 @@ class DisplayViewModel : ViewModel() {
     }
 
     //从网络获取到数据库
+    @OptIn(ExperimentalPagingApi::class)
     fun fetchMediatorData(): Flow<PagingData<DisplayUIModel>> {
         val dao = AppDb.appDb.dicDao()
         return Pager(
