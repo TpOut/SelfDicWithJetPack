@@ -34,6 +34,10 @@ open class AddressBean(
     val city: String?,
     val street: String?
 ) {
+    fun component1() = city
+
+    fun component2() = street
+
     override fun toString(): String {
         return "$city-$street"
     }
