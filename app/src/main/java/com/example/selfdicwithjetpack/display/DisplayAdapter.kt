@@ -1,6 +1,11 @@
 package com.example.selfdicwithjetpack.display
 
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
@@ -16,7 +21,10 @@ import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
  * Email address: 416756910@qq.com<br>
  */
 const val DISPLAY_ADAPTER_TAG = "DisplayAdapter"
+
 class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
+
+    var inMultiQuickMode = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         R.layout.display_rv_header -> DisplayHeaderViewHolder(
@@ -32,7 +40,9 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
                 parent,
                 false
             )
-        )
+        ).apply {
+            this.inMultiQuickMode = this@DisplayAdapter.inMultiQuickMode
+        }
         else -> DisplayHeaderViewHolder(
             DisplayRvHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -62,6 +72,9 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
     class DisplayHeaderViewHolder(private val binding: DisplayRvHeaderBinding) : RecyclerView.ViewHolder(binding.root) {}
 
     class DisplayItemViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        var inMultiQuickMode = false
+
         init {
             binding.root.setOnClickListener { view ->
                 val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToDetailFrag(binding.item!!.src, binding.item!!.dst, binding.item!!.sentence)
@@ -71,6 +84,33 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 
         fun bind(item: DisplayUIModel.DisplayItemModel) {
             binding.apply {
+                // 考虑优化
+                this.root.setOnLongClickListener { dragView ->
+                    if (inMultiQuickMode) {
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                            dragView.startDragAndDrop(
+                                ClipData(
+                                    ClipDescription(
+                                        "列表信息",
+                                        arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                    ),
+                                    ClipData.Item(Intent().apply {
+                                        putExtra("src", item.src)
+                                        putExtra("dst", item.dst)
+                                        putExtra("sentence", item.sentence)
+                                    })
+                                ),
+                                View.DragShadowBuilder(dragView),
+                                "local",
+                                View.DRAG_FLAG_GLOBAL
+                            )
+                            return@setOnLongClickListener true
+                        }
+                        return@setOnLongClickListener false
+                    } else {
+                        return@setOnLongClickListener false
+                    }
+                }
                 this.item = item
                 executePendingBindings()
             }

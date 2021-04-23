@@ -1,28 +1,29 @@
 package com.example.selfdicwithjetpack.display
 
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.Intent
 import android.content.res.Configuration
-import android.content.res.Configuration.ORIENTATION_LANDSCAPE
-import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.DragEvent.*
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.DRAG_FLAG_GLOBAL
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.ui.BaseFrag
+import com.example.selfdicwithjetpack.detail.DetailAct
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +44,7 @@ class DisplayFrag : BaseFrag() {
     private var dicSpinner: Spinner? = null
     private var mSpinnerAdapter: ArrayAdapter<String>? = null
     private var tvSpinnerTip: TextView? = null
+    private var btnMultiWindowDetail: Button? = null
     private var rv: RecyclerView? = null
     private var etQuery: EditText? = null
     private var etSentence: EditText? = null
@@ -101,6 +103,22 @@ class DisplayFrag : BaseFrag() {
     private fun afterViewCreated(rootView: View) {
         dicSpinner = rootView.findViewById<Spinner>(R.id.s)
         tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
+        btnMultiWindowDetail = rootView.findViewById(R.id.btn)
+        btnMultiWindowDetail?.setOnClickListener { btn ->
+            startActivity(Intent(requireContext(), DetailAct::class.java).apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    if (!requireActivity().isInMultiWindowMode) {
+                        ToastUtils.showShort("请先进入分屏模式")
+                        return@setOnClickListener
+                    }
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
+                } else {
+                    ToastUtils.showShort("需要支持分配的设备")
+                }
+            })
+            mAdapter.inMultiQuickMode = true
+            mAdapter.notifyDataSetChanged()
+        }
         rv = rootView.findViewById<RecyclerView>(R.id.rv)
         etQuery = rootView.findViewById(R.id.et_query)
         etQuery?.addTextChangedListener(object : TextWatcher {

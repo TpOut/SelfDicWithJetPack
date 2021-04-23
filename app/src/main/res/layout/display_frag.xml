@@ -24,6 +24,14 @@
         app:layout_constraintStart_toEndOf="@+id/s"
         app:layout_constraintTop_toTopOf="@+id/s" />
 
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="快速详情"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"

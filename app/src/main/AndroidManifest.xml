@@ -24,16 +24,16 @@
             <!-- layout在manifest 文档里没有；defaultWidth 不能用match_parent -->
             <layout
                 android:defaultWidth="500dp"
-                android:defaultHeight="300dp"
                 android:gravity="top|end"
                 android:minWidth="300dp"
-                android:minHeight="450dp" />
+                />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".detail.DetailAct"/>
     </application>
 
 </manifest>
