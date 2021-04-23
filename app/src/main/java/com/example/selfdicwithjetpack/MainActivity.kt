@@ -1,11 +1,17 @@
 package com.example.selfdicwithjetpack
 
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.LogUtils
+import com.example.selfdicwithjetpack.display.DISPLAY_FRAG_TAG
 import com.example.selfdicwithjetpack.display.DisplayViewModel
+
+const val MAIN_ACTIVITY_TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,5 +52,32 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        LogUtils.d(MAIN_ACTIVITY_TAG, "onPictureInPictureModeChanged : $isInPictureInPictureMode --")
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+        LogUtils.d(MAIN_ACTIVITY_TAG, "onPictureInPictureModeChanged : $isInPictureInPictureMode")
+    }
+
+    // true 的时候，是在onConfigurationChanged 之前调
+    // false 的时候，是在onConfigurationChanged 之后一段时间调。小米mix2 手机
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration?) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        LogUtils.d(MAIN_ACTIVITY_TAG, "onMultiWindowModeChanged : $isInMultiWindowMode --")
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode)
+        LogUtils.d(MAIN_ACTIVITY_TAG, "onMultiWindowModeChanged : $isInMultiWindowMode")
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LogUtils.d(MAIN_ACTIVITY_TAG, "onConfigurationChanged : $newConfig")
     }
 }

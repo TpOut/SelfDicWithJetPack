@@ -1,5 +1,9 @@
 package com.example.selfdicwithjetpack.display
 
+import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -61,6 +65,22 @@ class DisplayFrag : BaseFrag() {
         return mView
     }
 
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+        LogUtils.d(DISPLAY_FRAG_TAG, "onMultiWindowModeChanged : $isInPictureInPictureMode")
+    }
+
+    // false 的时候，是在onConfigurationChanged 之后一段时间调。小米mix2 手机
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode)
+        LogUtils.d(DISPLAY_FRAG_TAG, "onMultiWindowModeChanged : $isInMultiWindowMode")
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LogUtils.d(DISPLAY_FRAG_TAG, "onConfigurationChanged : $newConfig")
+    }
+
     // 目前navigation 导航使用replace ，会重走onCreateView/onDestroyView.
     private fun lifecycleRebind() {
         lifecycleScope.launch {
@@ -97,10 +117,10 @@ class DisplayFrag : BaseFrag() {
                 val items = mAdapter.snapshot().items
                 run loop@{
                     items.forEachIndexed { index, displayUIModel ->
-                        if(displayUIModel !is DisplayUIModel.DisplayItemModel){
+                        if (displayUIModel !is DisplayUIModel.DisplayItemModel) {
                             return@forEachIndexed
                         }
-                        if(displayUIModel.src.contains(s.toString())){
+                        if (displayUIModel.src.contains(s.toString())) {
                             rv?.scrollToPosition(index)
                             return@loop
                         }
