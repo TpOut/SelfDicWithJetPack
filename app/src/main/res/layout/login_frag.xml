@@ -22,8 +22,7 @@
             type="List&lt;com.example.selfdicwithjetpack.model.dic.FieldBean>" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -47,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="@{userBean.name}"
             android:hint="@{LoginConstant.LOGIN_NAME}"
+            android:text="@{userBean.name}"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,8 +113,19 @@
             android:text="next"
             android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}'
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_temp"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{handler::onTempClick}"
+            android:text="游客登陆"
+            android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}'
+            app:layout_constraintBottom_toBottomOf="@+id/btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

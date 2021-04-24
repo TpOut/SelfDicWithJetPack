@@ -22,9 +22,14 @@ import kotlinx.coroutines.launch
 class LoginFrag : Fragment(), LoginHandler {
 
     private val viewModel: LoginViewModel by viewModels()
+    private lateinit var binding: LoginFragBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = LoginFragBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = LoginFragBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
         binding.handler = this
@@ -35,9 +40,7 @@ class LoginFrag : Fragment(), LoginHandler {
     private fun afterViewCreated(binding: LoginFragBinding) {
         lifecycleScope.launch {
             binding.userBean = viewModel.fetchUserData()
-            if (binding.userBean != DEFAULT_USER_BEAN
-                && !binding.userBean?.name.isNullOrEmpty()
-            ) {
+            if (!binding.userBean?.name.isNullOrEmpty()) {
                 delay(3000)
                 findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
             }
@@ -72,6 +75,14 @@ class LoginFrag : Fragment(), LoginHandler {
                     }
                 }
             }
+        }
+    }
+
+    override fun onTempClick(v: View) {
+        lifecycleScope.launch {
+            binding.userBean = DEFAULT_USER_BEAN
+            delay(3000)
+            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
         }
     }
 }

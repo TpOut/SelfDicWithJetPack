@@ -28,8 +28,6 @@ class LoginViewModel : ViewModel() {
                 AppDb.appDb.userDao().getUserInfo(userId)
             }
             LogUtils.d(LOGIN_VIEW_MODEL_TAG, "查询登录用户信息 为：${userBean}")
-        } else {
-            userBean = DEFAULT_USER_BEAN
         }
         return userBean
     }
