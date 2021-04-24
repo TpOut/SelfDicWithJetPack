@@ -16,24 +16,28 @@
         <!-- 分屏最少要screenSize|smallestScreenSize|screenLayout|orientation -->
         <activity
             android:name=".MainActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:label="@string/app_name"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar">
             <!-- layout在manifest 文档里没有；defaultWidth 不能用match_parent -->
             <layout
                 android:defaultWidth="500dp"
                 android:gravity="top|end"
-                android:minWidth="300dp"
-                />
+                android:minWidth="300dp" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".detail.DetailAct"/>
+        <activity
+            android:name=".detail.DetailAct"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:noHistory="true"
+            android:resizeableActivity="true" />
     </application>
 
 </manifest>

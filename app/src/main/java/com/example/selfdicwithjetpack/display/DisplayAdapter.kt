@@ -28,30 +28,27 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         R.layout.display_rv_header -> DisplayHeaderViewHolder(
-            DisplayRvHeaderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+                DisplayRvHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                )
         )
         R.layout.display_rv_item -> DisplayItemViewHolder(
-            DisplayRvItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        ).apply {
-            this.inMultiQuickMode = this@DisplayAdapter.inMultiQuickMode
-        }
+                DisplayRvItemBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                )
+        )
         else -> DisplayHeaderViewHolder(
-            DisplayRvHeaderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+                DisplayRvHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                )
         )
     }
-
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is DisplayUIModel.DisplayHeaderModel -> R.layout.display_rv_header
@@ -65,6 +62,7 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
         if (holderItem is DisplayHeaderViewHolder) {
 
         } else if (holderItem is DisplayItemViewHolder) {
+            holderItem.inMultiQuickMode = inMultiQuickMode
             holderItem.bind(item as DisplayUIModel.DisplayItemModel)
         }
     }
@@ -73,7 +71,7 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
 
     class DisplayItemViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        var inMultiQuickMode = false
+        var inMultiQuickMode: Boolean = false
 
         init {
             binding.root.setOnClickListener { view ->
@@ -89,20 +87,20 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
                     if (inMultiQuickMode) {
                         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                             dragView.startDragAndDrop(
-                                ClipData(
-                                    ClipDescription(
-                                        "列表信息",
-                                        arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                    ClipData(
+                                            ClipDescription(
+                                                    "列表信息",
+                                                    arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                            ),
+                                            ClipData.Item(Intent().apply {
+                                                putExtra("src", item.src)
+                                                putExtra("dst", item.dst)
+                                                putExtra("sentence", item.sentence)
+                                            })
                                     ),
-                                    ClipData.Item(Intent().apply {
-                                        putExtra("src", item.src)
-                                        putExtra("dst", item.dst)
-                                        putExtra("sentence", item.sentence)
-                                    })
-                                ),
-                                View.DragShadowBuilder(dragView),
-                                "local",
-                                View.DRAG_FLAG_GLOBAL
+                                    View.DragShadowBuilder(dragView),
+                                    "local",
+                                    View.DRAG_FLAG_GLOBAL
                             )
                             return@setOnLongClickListener true
                         }
