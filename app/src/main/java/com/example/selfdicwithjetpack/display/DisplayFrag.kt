@@ -1,7 +1,5 @@
 package com.example.selfdicwithjetpack.display
 
-import android.content.ClipData
-import android.content.ClipDescription
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
@@ -11,7 +9,6 @@ import android.text.TextWatcher
 import android.view.DragEvent.*
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.DRAG_FLAG_GLOBAL
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
