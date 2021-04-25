@@ -55,6 +55,9 @@ class DisplayFrag : BaseFrag() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 如果不加这个，动画会因为初始化等操作出现卡顿
+        // 对应 startPostponedEnterTransition
+        postponeEnterTransition()
 //        enterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.image)
@@ -71,6 +74,10 @@ class DisplayFrag : BaseFrag() {
         afterViewCreated(mView!!)
         lifecycleRebind()
         return mView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
@@ -251,6 +258,7 @@ class DisplayFrag : BaseFrag() {
                 findNavController().navigate(R.id.action_DisplayFrag_to_DicCreateFrag)
             }
         }
+        startPostponedEnterTransition()
     }
 
     //todo 词典可以变换之后，需要处理取消观察和重新绑定观察的逻辑
