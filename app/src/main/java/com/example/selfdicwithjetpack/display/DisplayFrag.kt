@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -263,7 +264,7 @@ class DisplayFrag : BaseFrag() {
 
     //todo 词典可以变换之后，需要处理取消观察和重新绑定观察的逻辑
     private fun fetchData() {
-        lifecycleScope.launchWhenResumed {
+        lifecycleScope.launchWhenStarted {
 //            viewModel.fetchData(dicSpinner?.selectedItem as String?).collectLatest {
 //                LogUtils.d("fetchData - $it}")
 //                mAdapter.submitData(it)
@@ -271,6 +272,9 @@ class DisplayFrag : BaseFrag() {
             viewModel.fetchMediatorData().collectLatest {
                 LogUtils.d("submitData - $it}")
                 mAdapter.submitData(it)
+//                (view?.parent as? ViewGroup)?.doOnPreDraw {
+//                    startPostponedEnterTransition()
+//                }
                 if (waitScrollToTop) {
                     waitScrollToTop = false
                     rv?.scrollToPosition(0)

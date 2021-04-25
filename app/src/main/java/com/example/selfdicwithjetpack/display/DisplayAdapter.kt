@@ -94,6 +94,7 @@ class DisplayAdapter :
         }
 
         fun bind(item: DisplayUIModel.DisplayItemModel) {
+            // ViewCompat.setTransitionName(image, id)
             binding.apply {
                 // 考虑优化
                 this.root.setOnLongClickListener { dragView ->
