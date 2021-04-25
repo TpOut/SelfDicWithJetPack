@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.DragEvent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,7 +101,9 @@ class DisplayFrag : BaseFrag() {
         tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
         btnMultiWindowDetail = rootView.findViewById(R.id.btn)
         btnMultiWindowDetail?.setOnClickListener { btn ->
-            startActivity(Intent(requireContext(), DetailAct::class.java).apply {
+            startActivity(Intent().apply {
+                setClass(requireContext(), DetailAct::class.java)
+//                component = ComponentName("com.example.temppractice","com.example.temppractice.MainActivity")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     if (!requireActivity().isInMultiWindowMode) {
                         ToastUtils.showShort("请先进入分屏模式")

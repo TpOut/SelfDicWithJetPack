@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // multi-resume 情况下，要处理麦克风、摄像头等
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+    }
+
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         LogUtils.d(MAIN_ACTIVITY_TAG, "onPictureInPictureModeChanged : $isInPictureInPictureMode --")
