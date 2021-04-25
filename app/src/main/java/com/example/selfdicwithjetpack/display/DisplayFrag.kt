@@ -13,8 +13,10 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.R
@@ -44,11 +46,19 @@ class DisplayFrag : BaseFrag() {
     private var rv: RecyclerView? = null
     private var etQuery: EditText? = null
     private var etSentence: EditText? = null
+    private var ivIcon: ImageView? = null
 
     private var waitScrollToTop = false
 
     private val mAdapter = DisplayAdapter()
     private val viewModel: DisplayViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        enterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.image)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,6 +107,7 @@ class DisplayFrag : BaseFrag() {
 
     // 这种写法不能直接使用 fab、rv 来获取view
     private fun afterViewCreated(rootView: View) {
+        ivIcon = rootView.findViewById(R.id.icon)
         dicSpinner = rootView.findViewById<Spinner>(R.id.s)
         tvSpinnerTip = rootView.findViewById<TextView>(R.id.tv_s_tip)
         btnMultiWindowDetail = rootView.findViewById(R.id.btn)
@@ -170,14 +181,21 @@ class DisplayFrag : BaseFrag() {
             }
         }
         fab.setOnLongClickListener {
-            val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToRandomFrag()
-            findNavController().navigate(actionDisplayFragToDetailFrag.actionId)
+            val actionDisplayFragToDetailFrag =
+                DisplayFragDirections.actionDisplayFragToRandomFrag()
+            findNavController().navigate(
+                actionDisplayFragToDetailFrag.actionId,
+                null,
+                null,
+                FragmentNavigatorExtras(ivIcon!! to "icon")
+            )
             true
         }
 
         val tv = rootView.findViewById<TextView>(R.id.tv)
 
-        val loadStateAdapter = mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
+        val loadStateAdapter =
+            mAdapter.withLoadStateFooter(ExampleLoadStateAdapter(mAdapter::retry))
 //        mAdapter.withLoadStateHeaderAndFooter(
 //            header = ExampleLoadStateAdapter(mAdapter::retry),
 //            footer = ExampleLoadStateAdapter(mAdapter::retry)

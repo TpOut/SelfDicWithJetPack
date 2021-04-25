@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -22,33 +23,35 @@ import com.example.selfdicwithjetpack.databinding.DisplayRvItemBinding
  */
 const val DISPLAY_ADAPTER_TAG = "DisplayAdapter"
 
-class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
+class DisplayAdapter :
+    PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder>(DisplayDiffCallback()) {
 
     var inMultiQuickMode = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
-        R.layout.display_rv_header -> DisplayHeaderViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
+            R.layout.display_rv_header -> DisplayHeaderViewHolder(
                 DisplayRvHeaderBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
-        )
-        R.layout.display_rv_item -> DisplayItemViewHolder(
+            )
+            R.layout.display_rv_item -> DisplayItemViewHolder(
                 DisplayRvItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
-        )
-        else -> DisplayHeaderViewHolder(
+            )
+            else -> DisplayHeaderViewHolder(
                 DisplayRvHeaderBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
-        )
-    }
+            )
+        }
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is DisplayUIModel.DisplayHeaderModel -> R.layout.display_rv_header
@@ -67,16 +70,26 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
         }
     }
 
-    class DisplayHeaderViewHolder(private val binding: DisplayRvHeaderBinding) : RecyclerView.ViewHolder(binding.root) {}
+    class DisplayHeaderViewHolder(private val binding: DisplayRvHeaderBinding) :
+        RecyclerView.ViewHolder(binding.root) {}
 
-    class DisplayItemViewHolder(private val binding: DisplayRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class DisplayItemViewHolder(private val binding: DisplayRvItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         var inMultiQuickMode: Boolean = false
 
         init {
             binding.root.setOnClickListener { view ->
-                val actionDisplayFragToDetailFrag = DisplayFragDirections.actionDisplayFragToDetailFrag(binding.item!!.src, binding.item!!.dst, binding.item!!.sentence)
-                view.findNavController().navigate(actionDisplayFragToDetailFrag.actionId, actionDisplayFragToDetailFrag.arguments)
+                val actionDisplayFragToDetailFrag =
+                    DisplayFragDirections.actionDisplayFragToDetailFrag(
+                        binding.item!!.src,
+                        binding.item!!.dst,
+                        binding.item!!.sentence
+                    )
+                view.findNavController().navigate(
+                    actionDisplayFragToDetailFrag.actionId,
+                    actionDisplayFragToDetailFrag.arguments
+                )
             }
         }
 
@@ -87,20 +100,20 @@ class DisplayAdapter : PagingDataAdapter<DisplayUIModel, RecyclerView.ViewHolder
                     if (inMultiQuickMode) {
                         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                             dragView.startDragAndDrop(
-                                    ClipData(
-                                            ClipDescription(
-                                                    "列表信息",
-                                                    arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-                                            ),
-                                            ClipData.Item(Intent().apply {
-                                                putExtra("src", item.src)
-                                                putExtra("dst", item.dst)
-                                                putExtra("sentence", item.sentence)
-                                            })
+                                ClipData(
+                                    ClipDescription(
+                                        "列表信息",
+                                        arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
                                     ),
-                                    View.DragShadowBuilder(dragView),
-                                    "local",
-                                    View.DRAG_FLAG_GLOBAL
+                                    ClipData.Item(Intent().apply {
+                                        putExtra("src", item.src)
+                                        putExtra("dst", item.dst)
+                                        putExtra("sentence", item.sentence)
+                                    })
+                                ),
+                                View.DragShadowBuilder(dragView),
+                                "local",
+                                View.DRAG_FLAG_GLOBAL
                             )
                             return@setOnLongClickListener true
                         }
@@ -123,7 +136,10 @@ private class DisplayDiffCallback : DiffUtil.ItemCallback<DisplayUIModel>() {
     }
 
     override fun areContentsTheSame(oldItem: DisplayUIModel, newItem: DisplayUIModel): Boolean {
-        LogUtils.d(DISPLAY_ADAPTER_TAG, "areContentsTheSame : ${oldItem.toString()} -- ${newItem.toString()}")
+        LogUtils.d(
+            DISPLAY_ADAPTER_TAG,
+            "areContentsTheSame : ${oldItem.toString()} -- ${newItem.toString()}"
+        )
         return oldItem.toString() == newItem.toString()
 
     }

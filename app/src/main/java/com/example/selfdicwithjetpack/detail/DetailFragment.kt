@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
+import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.DetailFragBinding
 import com.example.selfdicwithjetpack.display.DisplayUIModel
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +18,14 @@ import com.google.android.material.snackbar.Snackbar
 class DetailFragment : Fragment() {
 
     private val args: DetailFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        enterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(
+            R.transition.image
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.debug.ToastUtil
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
@@ -23,6 +25,11 @@ class LoginFrag : Fragment(), LoginHandler {
 
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: LoginFragBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +49,12 @@ class LoginFrag : Fragment(), LoginHandler {
             binding.userBean = viewModel.fetchUserData()
             if (!binding.userBean?.name.isNullOrEmpty()) {
                 delay(3000)
-                findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+                findNavController().navigate(
+                    R.id.action_LoginFrag_toDisplayFrag,
+                    null,
+                    null,
+                    FragmentNavigatorExtras(binding.icon to "icon")
+                )
             }
         }
     }
@@ -82,7 +94,12 @@ class LoginFrag : Fragment(), LoginHandler {
         lifecycleScope.launch {
             binding.userBean = DEFAULT_USER_BEAN
             delay(3000)
-            findNavController().navigate(R.id.action_LoginFrag_toDisplayFrag)
+            findNavController().navigate(
+                R.id.action_LoginFrag_toDisplayFrag,
+                null,
+                null,
+                FragmentNavigatorExtras(binding.icon to "icon")
+            )
         }
     }
 }
