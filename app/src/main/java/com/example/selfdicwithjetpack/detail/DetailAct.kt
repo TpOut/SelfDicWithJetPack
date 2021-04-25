@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.DragEvent.ACTION_DROP
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import com.example.selfdicwithjetpack.R
 
 /**
@@ -15,6 +16,11 @@ class DetailAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_act)
+
+//        supportFragmentManager.commit {
+//            setReorderingAllowed(true)
+//            add<ExampleFragment>(R.id.fragment_container_view, args = bundle)
+//        }
 
         findViewById<TextView>(R.id.tv).setOnDragListener { v, event ->
             when (event.action) {

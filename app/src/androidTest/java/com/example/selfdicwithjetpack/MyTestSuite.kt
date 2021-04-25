@@ -39,5 +39,13 @@ class MyTestSuite {
         Log.d("屠龙宝刀", "originalActivityState $originalActivityState")
 
     }
+
+    @Test
+    fun testFragment(){
+//        val dessertRepository = mock(DessertsRepository::class.java)
+//        launchFragment<DessertsFragment>(factory = MyFragmentFactory(dessertRepository)).onFragment {
+//            // Test Fragment logic
+//        }
+    }
 }
     
