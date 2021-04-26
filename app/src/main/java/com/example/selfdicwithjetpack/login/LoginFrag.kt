@@ -31,6 +31,10 @@ class LoginFrag : Fragment(), LoginHandler {
         exitTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

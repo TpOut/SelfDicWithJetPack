@@ -38,8 +38,6 @@ const val DISPLAY_FRAG_TAG = "DisplayFrag"
 
 class DisplayFrag : BaseFrag() {
 
-    private var mView: View? = null
-
     private var dicSpinner: Spinner? = null
     private var mSpinnerAdapter: ArrayAdapter<String>? = null
     private var tvSpinnerTip: TextView? = null
@@ -68,13 +66,13 @@ class DisplayFrag : BaseFrag() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (null != mView) {
-            return mView
+        if (null != view) {
+            return view
         }
-        mView = inflater.inflate(R.layout.display_frag, container, false)
-        afterViewCreated(mView!!)
+        val v = inflater.inflate(R.layout.display_frag, container, false)
+        afterViewCreated(v)
         lifecycleRebind()
-        return mView
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

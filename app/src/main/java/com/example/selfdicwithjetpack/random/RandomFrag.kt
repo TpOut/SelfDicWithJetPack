@@ -16,19 +16,24 @@ import com.example.selfdicwithjetpack.display.DisplayUIModel
 
 const val MAX_RANDOM_SIZE = 5
 
-class RandomFrag : Fragment() {
+class RandomFrag(val layout: Int = R.layout.random_frag) : Fragment(layout) {
 
     private var mList: ArrayList<DisplayUIModel> = arrayListOf()
     private var mIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.image)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.image)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.random_frag, container, false)
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        return inflater.inflate(R.layout.random_frag, container, false)
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
