@@ -167,7 +167,7 @@ class DisplayFrag : BaseFrag() {
 
         val fab = rootView.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val src = etQuery?.text.toString()
                 if (src.isEmpty()) {
                     return@launch
@@ -212,7 +212,6 @@ class DisplayFrag : BaseFrag() {
         rv?.adapter = loadStateAdapter
 
         // Activities can use lifecycleScope directly, but Fragments should instead use
-        // viewLifecycleOwner.lifecycleScope.
 //        viewLifecycleOwner.lifecycleScope.launch {
 //            mAdapter.loadStateFlow.collectLatest { loadStates ->
 //                LogUtils.d(
@@ -264,7 +263,7 @@ class DisplayFrag : BaseFrag() {
 
     //todo 词典可以变换之后，需要处理取消观察和重新绑定观察的逻辑
     private fun fetchData() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
 //            viewModel.fetchData(dicSpinner?.selectedItem as String?).collectLatest {
 //                LogUtils.d("fetchData - $it}")
 //                mAdapter.submitData(it)

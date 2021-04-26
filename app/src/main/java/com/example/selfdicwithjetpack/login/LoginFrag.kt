@@ -45,7 +45,7 @@ class LoginFrag : Fragment(), LoginHandler {
     }
 
     private fun afterViewCreated(binding: LoginFragBinding) {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             binding.userBean = viewModel.fetchUserData()
             if (!binding.userBean?.name.isNullOrEmpty()) {
                 delay(3000)
@@ -91,7 +91,7 @@ class LoginFrag : Fragment(), LoginHandler {
     }
 
     override fun onTempClick(v: View) {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             binding.userBean = DEFAULT_USER_BEAN
             delay(3000)
             findNavController().navigate(
