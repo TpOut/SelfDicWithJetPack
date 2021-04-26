@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.databinding.DetailFragBinding
 import com.example.selfdicwithjetpack.display.DisplayUIModel
+import com.example.selfdicwithjetpack.display.DisplayViewModel
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -17,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar
  */
 class DetailFragment : Fragment() {
 
+    // navGraphViewModels(R.id.list_fragment)
+    private val viewModel: ViewModel by activityViewModels<DisplayViewModel>() // 用于共享activity 数据
     private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
