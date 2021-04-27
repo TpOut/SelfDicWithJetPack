@@ -1,14 +1,13 @@
 package com.example.selfdicwithjetpack
 
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
-import com.example.selfdicwithjetpack.display.DISPLAY_FRAG_TAG
+import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 
 const val MAIN_ACTIVITY_TAG = "MainActivity"
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
@@ -49,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                ToastUtils.showShort("你好，主页")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -59,9 +61,15 @@ class MainActivity : AppCompatActivity() {
         super.onTopResumedActivityChanged(isTopResumedActivity)
     }
 
-    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration?
+    ) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
-        LogUtils.d(MAIN_ACTIVITY_TAG, "onPictureInPictureModeChanged : $isInPictureInPictureMode --")
+        LogUtils.d(
+            MAIN_ACTIVITY_TAG,
+            "onPictureInPictureModeChanged : $isInPictureInPictureMode --"
+        )
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {

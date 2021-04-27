@@ -6,9 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -54,6 +52,7 @@ class DisplayFrag : BaseFrag() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true) // 关联appbar 中menu
         // 如果不加这个，动画会因为初始化等操作出现卡顿
         // 对应 startPostponedEnterTransition
         postponeEnterTransition()
@@ -77,6 +76,29 @@ class DisplayFrag : BaseFrag() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.display_menu, menu)
+    }
+
+    // 主动刷新 requireActivity().invalidateOptionsMenu()
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+//        val item = menu.findItem(R.id.action_done)
+//        item.isVisible = isEditing
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_display -> {
+                // navigate to settings screen
+                ToastUtils.showShort("你好，展示页面")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {

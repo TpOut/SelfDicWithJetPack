@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.selfdicwithjetpack.MainActivity">
+    <item
+        android:id="@+id/action_display"
+        android:orderInCategory="100"
+        android:title="@string/action_display"
+        app:showAsAction="never" />
+</menu>
