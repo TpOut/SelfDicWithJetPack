@@ -21,6 +21,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.detail.DetailAct
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -120,6 +121,7 @@ class DisplayFrag : BaseFrag() {
     // 目前navigation 导航使用replace ，会重走onCreateView/onDestroyView.
     private fun lifecycleRebind() {
         lifecycleScope.launch {
+//            DicListFrag().show(childFragmentManager, "bottomSheet")
             viewModel.getDicListDeferred()?.distinctUntilChanged()?.collectLatest { list ->
                 LogUtils.d(DISPLAY_FRAG_TAG, "dicList observe ${list.size}")
                 var mapJob = async(Dispatchers.Default) {
