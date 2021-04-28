@@ -3,9 +3,10 @@ package com.example.selfdicwithjetpack.dic
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
-import com.example.selfdicwithjetpack.component.data.Sp
 import com.example.selfdicwithjetpack.data.AppDb
+import com.example.selfdicwithjetpack.login.SP_KEY_LOGIN_USER_ID
 import com.example.selfdicwithjetpack.model.dic.DicEntity
+import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
 import kotlinx.coroutines.launch
 
 /**
@@ -16,9 +17,11 @@ const val DIC_CREATE_VIEW_MODEL_TAG = "DicCreateViewModel"
 
 class DicCreateViewModel : ViewModel() {
 
+    val storage = MmkvStorage()
+
     fun insertDic(dicName: String) {
         viewModelScope.launch {
-            val userId = Sp.queryUserId()
+            val userId = storage.queryInt(SP_KEY_LOGIN_USER_ID)
             AppDb.appDb.withTransaction {
                 AppDb.appDb.dicDao().insertDic(DicEntity(userId = userId, name = dicName))
             }

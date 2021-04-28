@@ -9,17 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.display.DisplayViewModel
+import com.example.selfdicwithjetpack.general.PrivacyDialog
+import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 const val MAIN_ACTIVITY_TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
     val mViewMode by viewModels<DisplayViewModel>()
+    val storage = MmkvStorage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_act)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        if(!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)){
+            PrivacyDialog().show(supportFragmentManager)
+        }
 
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)

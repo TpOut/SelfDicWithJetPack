@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
 
 /**
  * Created by TpOut on 2021/4/27.<br>
@@ -16,14 +17,18 @@ import androidx.fragment.app.FragmentManager
  */
 class PrivacyDialog : DialogFragment() {
 
+    val storage = MmkvStorage()
+
     //直接使用弹窗，互斥onCreateView
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setTitle("隐私弹窗")
             .setMessage("这是隐私弹窗内容哦")
-            .setPositiveButton("好的") { _, _ -> }
+            .setPositiveButton("好的") { _, _ ->
+                storage.store(KEY_STORAGE_PRIVATE_DIALOG_SHOW, true)
+            }
             .setNegativeButton("不好") { _, _ ->
-
+                requireActivity().finish()
             }
             .create()
 
@@ -52,5 +57,6 @@ class PrivacyDialog : DialogFragment() {
 
     companion object {
         const val TAG = "PrivacyDialog"
+        const val KEY_STORAGE_PRIVATE_DIALOG_SHOW = "KEY_STORAGE_PRIVATE_DIALOG_SHOW"
     }
 }
