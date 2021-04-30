@@ -16,4 +16,9 @@
     <string name="display_result">结果：%s</string>
 
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- shortcuts -->
+    <string name="shortcut_disable_message">quick remember is temporary closed</string>
+    <string name="shortcut_long_label">quick remember</string>
+    <string name="shortcut_short_label">jump into quick remember</string>
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutDisabledMessage="@string/shortcut_disable_message"
+        android:shortcutId="random"
+        android:shortcutLongLabel="@string/shortcut_long_label"
+        android:shortcutShortLabel="@string/shortcut_short_label">
+        <intent
+            android:action="com.example.selfdicwithjetpack.RANDOM"
+            android:targetClass="com.example.selfdicwithjetpack.MainActivity"
+            android:targetPackage="com.example.selfdicwithjetpack">
+        </intent>
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <!-- Specify more shortcuts here. -->
+</shortcuts>
