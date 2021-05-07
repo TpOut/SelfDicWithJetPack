@@ -11,7 +11,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 import com.example.selfdicwithjetpack.general.PrivacyDialog
 import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 const val MAIN_ACTIVITY_TAG = "MainActivity"
 
