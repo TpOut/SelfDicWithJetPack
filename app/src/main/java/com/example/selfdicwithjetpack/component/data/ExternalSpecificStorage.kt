@@ -52,7 +52,7 @@ class ExternalSpecificStorage : FileStorage {
         return filename.delete()
     }
 
-    // 如果不知道多少值合适，则直接使用File 的api 进行编写
+    // 如果不知道多少值合适，则直接使用File 的api 进行编写，通过异常判断
     //
     // App needs 10 MB within internal storage.
     val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
