@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Size
 import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import com.blankj.utilcode.util.LogUtils
+import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
 import java.util.concurrent.TimeUnit
 
 /**
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit
  *     因为android 10 专有的scoped， 建议此时设置 requestLegacyExternalStorage = true
  *
  */
-class SharedStorage {
+class MediaSharedStorage: FileStorage {
 
     fun getVolume(context: Context) {
         val volumeNames: Set<String> = MediaStore.getExternalVolumeNames(context)

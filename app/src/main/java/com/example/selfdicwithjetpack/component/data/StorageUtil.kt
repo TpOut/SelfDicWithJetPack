@@ -1,7 +1,5 @@
 package com.example.selfdicwithjetpack.model.utils.storage
 
-import com.tencent.mmkv.MMKV
-
 
 /**
  * Created by TpOut on 2021/4/28.<br>
