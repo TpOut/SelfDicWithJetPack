@@ -1,11 +1,21 @@
 package com.example.selfdicwithjetpack.model.utils.storage
 
+import android.os.Environment
+
 
 /**
  * Created by TpOut on 2021/4/28.<br>
  * Email address: 416756910@qq.com<br>
  */
-interface FileStorage{
+interface SharedStorage{
+    companion object{
+
+        // MANAGE_EXTERNAL_STORAGE 需求权限
+        // ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION，跳转intent
+        fun canManageAll(): Boolean{
+            return Environment.isExternalStorageManager()
+        }
+    }
 
 }
 

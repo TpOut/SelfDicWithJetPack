@@ -12,14 +12,14 @@ import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
+import com.example.selfdicwithjetpack.model.utils.storage.SharedStorage
 import java.io.*
 
 /**
  * Created by TpOut on 2021/5/8.<br>
  * Email address: 416756910@qq.com<br>
  */
-class DocumentSharedStorage : FileStorage {
+class DocumentSharedStorage : SharedStorage {
 
     val REQUEST_CODE_CREATE_FILE = 1
     fun create(initialUri: Uri, context: Activity) {

@@ -5,13 +5,13 @@ import android.app.blob.BlobStoreManager
 import android.content.Context
 import android.content.Context.BLOB_STORE_SERVICE
 import android.os.ParcelFileDescriptor
-import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
+import com.example.selfdicwithjetpack.model.utils.storage.SharedStorage
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
 
-class DatasetSharedStorage : FileStorage {
+class DatasetSharedStorage : SharedStorage {
 
     fun getBlobHandle(sha256DigestBytes: ByteArray): BlobHandle {
         return BlobHandle.createWithSha256(

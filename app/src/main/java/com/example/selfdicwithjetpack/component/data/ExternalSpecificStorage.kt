@@ -1,6 +1,5 @@
 package com.example.selfdicwithjetpack.component.data
 
-import android.app.usage.StorageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.blankj.utilcode.util.LogUtils
-import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
+import com.example.selfdicwithjetpack.model.utils.storage.SharedStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +18,7 @@ import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.util.*
 
-class ExternalSpecificStorage : FileStorage {
+class ExternalSpecificStorage : SharedStorage {
 
     // adb shell sm set-virtual-disk true
     // mounted - 可读写；mounted_read_only - 只读

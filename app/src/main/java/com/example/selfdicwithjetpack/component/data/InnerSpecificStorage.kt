@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.storage.StorageManager
 import android.util.Log
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
+import com.example.selfdicwithjetpack.model.utils.storage.SharedStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ import java.util.*
  * 一些方法只是为了标记
  * 不一定要使用
  */
-class InnerSpecificStorage : FileStorage {
+class InnerSpecificStorage : SharedStorage {
 
     //Environment.getDataDirectory()
     fun getDirectory(context: Context): File {

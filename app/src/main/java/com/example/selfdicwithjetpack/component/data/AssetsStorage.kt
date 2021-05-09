@@ -1,9 +1,9 @@
 package com.example.selfdicwithjetpack.component.data
 
 import android.content.Context
-import com.example.selfdicwithjetpack.model.utils.storage.FileStorage
+import com.example.selfdicwithjetpack.model.utils.storage.SharedStorage
 
-class AssetsStorage : FileStorage{
+class AssetsStorage : SharedStorage{
 
     // 在install time 时，可以访问原始文件
     // R.raw
