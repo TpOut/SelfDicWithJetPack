@@ -1,6 +1,7 @@
 package com.example.selfdicwithjetpack.component.data
 
 import com.example.selfdicwithjetpack.model.utils.storage.KvStorage
+import com.tencent.mmkv.MMKV
 
 // boolean, int, long, float, double, byte[]
 // String, Set<String>, Parcelable

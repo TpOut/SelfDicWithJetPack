@@ -3,10 +3,10 @@ package com.example.selfdicwithjetpack.dic
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
+import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.login.SP_KEY_LOGIN_USER_ID
 import com.example.selfdicwithjetpack.model.dic.DicEntity
-import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
 import kotlinx.coroutines.launch
 
 /**

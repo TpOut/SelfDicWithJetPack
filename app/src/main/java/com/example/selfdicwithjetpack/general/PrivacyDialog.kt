@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
+import com.example.selfdicwithjetpack.component.data.MmkvStorage
 
 /**
  * Created by TpOut on 2021/4/27.<br>

@@ -8,9 +8,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 import com.example.selfdicwithjetpack.general.PrivacyDialog
-import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
 
 const val MAIN_ACTIVITY_TAG = "MainActivity"
 

@@ -3,11 +3,11 @@ package com.example.selfdicwithjetpack.login
 import androidx.lifecycle.ViewModel
 import androidx.room.withTransaction
 import com.blankj.utilcode.util.LogUtils
+import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.data.AppDb
 import com.example.selfdicwithjetpack.model.user.AddressBean
 import com.example.selfdicwithjetpack.model.user.UserBean
 import com.example.selfdicwithjetpack.model.user.UserEntity
-import com.example.selfdicwithjetpack.model.utils.storage.MmkvStorage
 
 /**
  * Created by TpOut on 2020/10/20.<br>
