@@ -39,7 +39,7 @@ class DocumentSharedStorage : SharedStorage {
 
     fun open(initialUri: Uri, context: Activity) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
+            addCategory(Intent.CATEGORY_OPENABLE) //过滤虚拟文件
             type = "application/pdf"
 
             // Optionally, specify a URI for the directory that should be opened in
