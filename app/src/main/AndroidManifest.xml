@@ -40,6 +40,14 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:noHistory="true"
             android:resizeableActivity="true" />
+
+        <receiver android:name=".random.RandomWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/rand_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>
