@@ -6,9 +6,9 @@
 
     <TextView
         android:id="@+id/tv"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="你说什么"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="小部件配置页"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

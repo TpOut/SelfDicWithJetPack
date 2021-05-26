@@ -1,6 +1,11 @@
 package com.example.selfdicwithjetpack
 
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 import com.example.selfdicwithjetpack.general.PrivacyDialog
+import com.example.selfdicwithjetpack.random.RandomWidgetProvider
 
 const val MAIN_ACTIVITY_TAG = "MainActivity"
 
@@ -24,10 +30,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_act)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        if(!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)){
+        if (!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)) {
             PrivacyDialog().show(supportFragmentManager)
         }
-
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)
 //        val src: String = transResult.getSrc()
@@ -42,6 +47,11 @@ class MainActivity : AppCompatActivity() {
 //        beanList.add(0, itemBean)
 //        LogUtil.d(MainActivity.TAG, "" + beanList)
 //        historyAdapter.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        addRandomWidget()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -99,5 +109,37 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         LogUtils.d(MAIN_ACTIVITY_TAG, "onConfigurationChanged : $newConfig")
+    }
+
+    private fun addRandomWidget() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val appWidgetManager: AppWidgetManager = getSystemService(AppWidgetManager::class.java)
+            val myProvider = ComponentName(this, RandomWidgetProvider::class.java)
+
+            val successCallback: PendingIntent? =
+                if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                    // Create the PendingIntent object only if your app needs to be notified
+                    // that the user allowed the widget to be pinned. Note that, if the pinning
+                    // operation fails, your app isn't notified.
+                    Intent().let { intent ->
+                        // Configure the intent so that your app's broadcast receiver gets
+                        // the callback successfully. This callback receives the ID of the
+                        // newly-pinned widget (EXTRA_APPWIDGET_ID).
+                        PendingIntent.getBroadcast(
+                            this,
+                            0,
+                            intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                        )
+                    }
+                } else {
+                    null
+                }
+
+            successCallback?.also { pendingIntent ->
+                appWidgetManager.requestPinAppWidget(myProvider, null, pendingIntent)
+            }
+        }
+
     }
 }
