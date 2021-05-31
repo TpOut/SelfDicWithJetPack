@@ -8,7 +8,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +20,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.detail.DetailAct
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -76,6 +74,7 @@ class DisplayFrag : BaseFrag() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.printDicName()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -271,6 +270,8 @@ class DisplayFrag : BaseFrag() {
                 mSpinnerAdapter?.addAll(dicList)
             }
             dicSpinner?.setSelection(dicList.size - 1)
+            viewModel.setDicName(dicList.lastOrNull())
+
             tvSpinnerTip?.text = "⬅️ 当前词典"
             tvSpinnerTip?.setOnClickListener { }
             fetchData()
@@ -303,5 +304,9 @@ class DisplayFrag : BaseFrag() {
                 LogUtils.d("submitData - ${mAdapter.itemCount}}")
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }

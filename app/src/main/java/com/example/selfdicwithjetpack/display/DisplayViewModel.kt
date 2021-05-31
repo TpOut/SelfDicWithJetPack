@@ -1,7 +1,7 @@
 package com.example.selfdicwithjetpack.display
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.blankj.utilcode.util.LogUtils
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.map
 
 const val DISPLAY_VIEW_MODEL_TAG = "DisplayViewModel"
 
-class DisplayViewModel : ViewModel() {
+class DisplayViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private var currentQueryValue: String? = null
     private var mCurrentSearchResult: Flow<PagingData<DisplayUIModel>>? = null
@@ -46,6 +46,15 @@ class DisplayViewModel : ViewModel() {
                 AppDb.appDb.dicDao().getAllDics()
             }
         }
+    }
+
+    fun setDicName(dicName: String?){
+        Log.d("屠龙宝刀","setDicName $dicName")
+        savedStateHandle["dicName"] = dicName
+    }
+
+    fun printDicName(){
+        Log.d("屠龙宝刀","${savedStateHandle.getLiveData<String>("dicName").value}")
     }
 
     //val allWords: LiveData<List<WordEntity>> = repo.allWords
