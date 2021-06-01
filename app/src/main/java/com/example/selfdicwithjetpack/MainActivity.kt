@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.component.data.MmkvStorage
+import com.example.selfdicwithjetpack.component.schedule.singleWork
 import com.example.selfdicwithjetpack.display.DisplayViewModel
 import com.example.selfdicwithjetpack.general.PrivacyDialog
 import com.example.selfdicwithjetpack.random.RandomWidgetProvider
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         if (!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)) {
             PrivacyDialog().show(supportFragmentManager)
         }
+        singleWork(this)
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)
 //        val src: String = transResult.getSrc()
