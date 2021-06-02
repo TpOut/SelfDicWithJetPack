@@ -1,6 +1,7 @@
 package com.example.selfdicwithjetpack.component.schedule
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.work.*
@@ -100,6 +101,7 @@ fun getWorkInfo(context: Context, viewLifecycleOwner: LifecycleOwner) {
 
 }
 
+// 还支持RxJava 形式
 class UploadSyncWorker(context: Context, parameters: WorkerParameters) :
     CoroutineWorker(context, parameters) {
 
@@ -124,10 +126,9 @@ class UploadWorker(appContext: Context, workerParams: WorkerParameters) :
         // 获取参数
 //        inputData.getString()
 
-
-
         for (i in 1..10) {
 //            setProgressAsync()
+            Log.d("屠龙宝刀","progress $i")
             print("uploading... progress: ${i * 10}")
         }
         return Result.success()
