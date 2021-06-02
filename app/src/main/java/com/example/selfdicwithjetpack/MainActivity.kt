@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             PrivacyDialog().show(supportFragmentManager)
         }
         singleWork(this)
+        addRandomWidget()
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)
 //        val src: String = transResult.getSrc()
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        addRandomWidget()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -113,16 +113,22 @@ class MainActivity : AppCompatActivity() {
         LogUtils.d(MAIN_ACTIVITY_TAG, "onConfigurationChanged : $newConfig")
     }
 
+    //
     private fun addRandomWidget() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val appWidgetManager: AppWidgetManager = getSystemService(AppWidgetManager::class.java)
-            val myProvider = ComponentName(this, RandomWidgetProvider::class.java)
 
+            // 这个方法并没有用，添加了之后，再移除还存在
+//            appWidgetManager.installedProviders.forEach { providerInfo ->
+//                if (providerInfo.provider.className.contains(RandomWidgetProvider::class.java.simpleName)){
+//                    return
+//                }
+//            }
+            val myProvider = ComponentName(this, RandomWidgetProvider::class.java)
             val successCallback: PendingIntent? =
+                // 小米mix2 虽然这里返回true, 但是后续没有反应
+                // 三星galaxy a10s 会弹一个窗，
                 if (appWidgetManager.isRequestPinAppWidgetSupported) {
-                    // Create the PendingIntent object only if your app needs to be notified
-                    // that the user allowed the widget to be pinned. Note that, if the pinning
-                    // operation fails, your app isn't notified.
                     Intent().let { intent ->
                         // Configure the intent so that your app's broadcast receiver gets
                         // the callback successfully. This callback receives the ID of the
