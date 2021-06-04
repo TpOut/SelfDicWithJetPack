@@ -16,7 +16,15 @@
             app:destination="@+id/DisplayFrag"
             app:popUpTo="@+id/LoginFrag"
             app:popUpToInclusive="true" />
+
+        <action android:id="@+id/action_LoginFrag_showPrivacyDialog"
+            app:destination="@+id/privacy_dialog"/>
     </fragment>
+
+    <dialog
+        android:id="@+id/privacy_dialog"
+        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog">
+    </dialog>
 
     <fragment
         android:id="@+id/DisplayFrag"

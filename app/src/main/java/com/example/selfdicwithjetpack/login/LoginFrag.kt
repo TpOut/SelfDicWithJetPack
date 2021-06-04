@@ -11,8 +11,11 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.example.selfdicwithjetpack.R
+import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.component.debug.ToastUtil
+import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
+import com.example.selfdicwithjetpack.general.PrivacyDialog
 import kotlinx.android.synthetic.main.login_frag.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,14 +24,16 @@ import kotlinx.coroutines.launch
  * Created by TpOut on 2020/10/19.<br>
  * Email address: 416756910@qq.com<br>
  */
-class LoginFrag : Fragment(), LoginHandler {
+class LoginFrag : BaseFrag(), LoginHandler {
 
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: LoginFragBinding
+    val storage = MmkvStorage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
+        exitTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.fade)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -43,8 +48,15 @@ class LoginFrag : Fragment(), LoginHandler {
         binding = LoginFragBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        binding.handler = this
-        afterViewCreated(binding)
+        if (!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)) {
+            // 这种方式，除了统一，比起直接写，好像没啥好处吧
+            findNavController().navigate(
+                R.id.action_LoginFrag_showPrivacyDialog
+            )
+        } else {
+            binding.handler = this
+            afterViewCreated(binding)
+        }
         return binding.root
     }
 
@@ -61,6 +73,10 @@ class LoginFrag : Fragment(), LoginHandler {
                 )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onNextClick(v: View) {

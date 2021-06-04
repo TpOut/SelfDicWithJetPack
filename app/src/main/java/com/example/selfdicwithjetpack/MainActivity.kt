@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.selfdicwithjetpack.component.data.MmkvStorage
@@ -31,11 +32,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_act)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        if (!storage.hasKey(PrivacyDialog.KEY_STORAGE_PRIVATE_DIALOG_SHOW)) {
-            PrivacyDialog().show(supportFragmentManager)
-        }
         singleWork(this)
-        addRandomWidget()
+//        addRandomWidget()
+
+        // 如果要在onCreate 里获取
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
 //        rvHistory.scrollToPosition(0)
 //        btnConfirm.setEnabled(false)
 //        val src: String = transResult.getSrc()
@@ -126,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 //            }
             val myProvider = ComponentName(this, RandomWidgetProvider::class.java)
             val successCallback: PendingIntent? =
-                // 小米mix2 虽然这里返回true, 但是后续没有反应
+                // 小米mix2 虽然这里返回true, 但是后续没有反应，会引起当前页面pause/resume 一下
                 // 三星galaxy a10s 会弹一个窗，
                 if (appWidgetManager.isRequestPinAppWidgetSupported) {
                     Intent().let { intent ->

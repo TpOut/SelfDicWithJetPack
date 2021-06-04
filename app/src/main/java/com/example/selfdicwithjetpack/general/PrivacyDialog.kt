@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.example.selfdicwithjetpack.component.data.MmkvStorage
+import com.example.selfdicwithjetpack.component.ui.BaseDialogFrag
 
 /**
  * Created by TpOut on 2021/4/27.<br>
  * Email address: 416756910@qq.com<br>
  */
-class PrivacyDialog : DialogFragment() {
+class PrivacyDialog : BaseDialogFrag() {
 
     val storage = MmkvStorage()
 
