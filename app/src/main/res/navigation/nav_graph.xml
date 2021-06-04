@@ -17,14 +17,14 @@
             app:popUpTo="@+id/LoginFrag"
             app:popUpToInclusive="true" />
 
-        <action android:id="@+id/action_LoginFrag_showPrivacyDialog"
-            app:destination="@+id/privacy_dialog"/>
+        <action
+            android:id="@+id/action_LoginFrag_showPrivacyDialog"
+            app:destination="@+id/PrivacyDialog" />
     </fragment>
 
     <dialog
-        android:id="@+id/privacy_dialog"
-        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog">
-    </dialog>
+        android:id="@+id/PrivacyDialog"
+        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog"></dialog>
 
     <fragment
         android:id="@+id/DisplayFrag"
@@ -38,6 +38,7 @@
         <action
             android:id="@+id/action_DisplayFrag_to_RandomFrag"
             app:destination="@id/RandomFrag" />
+
         <action
             android:id="@+id/action_DisplayFrag_to_DicCreateFrag"
             app:destination="@+id/DicCreateFrag" />
@@ -70,13 +71,30 @@
         <action
             android:id="@+id/action_DetailFrag_to_DisplayFrag"
             app:destination="@id/DisplayFrag" />
+
     </fragment>
+
+    <activity
+        android:id="@+id/RandomConfigAct"
+        android:name="com.example.selfdicwithjetpack.random.RandomConfigAct"
+        android:label="@string/random_config_activity_label"
+        app:action="android.intent.action.VIEW"
+        app:dataPattern="https://com.tpout.selfdicwithjetpack?order={order}"
+        app:targetPackage="com.example.selfdicwithjetpack">
+        <argument
+            android:name="order"
+            app:argType="boolean" />
+    </activity>
 
     <fragment
         android:id="@+id/RandomFrag"
         android:name="com.example.selfdicwithjetpack.random.RandomFrag"
         android:label="@string/random_fragment_label"
         tools:layout="@layout/random_frag">
+
+        <action
+            android:id="@+id/action_RandomFrag_to_RandomConfigFrag"
+            app:destination="@+id/RandomConfigAct" />
 
         <action
             android:id="@+id/action_RandomFrag_to_DisplayFrag"

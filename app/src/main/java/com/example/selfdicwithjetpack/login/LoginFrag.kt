@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -53,10 +52,10 @@ class LoginFrag : BaseFrag(), LoginHandler {
             findNavController().navigate(
                 R.id.action_LoginFrag_showPrivacyDialog
             )
-        } else {
-            binding.handler = this
-            afterViewCreated(binding)
         }
+        // todo 没同意隐私条款之前，不做逻辑
+        binding.handler = this
+        afterViewCreated(binding)
         return binding.root
     }
 

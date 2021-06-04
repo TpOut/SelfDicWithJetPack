@@ -8,6 +8,7 @@
     <string name="dic_create_fragment_label">Dic Create Fragment</string>
     <string name="detail_fragment_label">Detail Fragment</string>
     <string name="random_fragment_label">Random Fragment</string>
+    <string name="random_config_activity_label">Random Config Activity</string>
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
