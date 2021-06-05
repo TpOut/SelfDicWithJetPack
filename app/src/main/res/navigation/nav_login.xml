@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_login"
+    app:startDestination="@id/LoginFrag">
+
+    <fragment
+        android:id="@+id/LoginFrag"
+        android:name="com.example.selfdicwithjetpack.login.LoginFrag"
+        android:label="@string/login_fragment_label"
+        tools:layout="@layout/login_frag">
+
+        <!-- 如果这么写，无法应用icon 的transition -->
+        <action
+            android:id="@+id/action_pop_out"
+            app:popUpTo="@id/nav_login"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_LoginFrag_showPrivacyDialog"
+            app:destination="@+id/PrivacyDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/PrivacyDialog"
+        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog" />
+
+</navigation>

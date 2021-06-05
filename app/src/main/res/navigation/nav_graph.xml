@@ -5,6 +5,8 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/LoginFrag">
 
+<!--    <include app:graph="@navigation/nav_login" />-->
+
     <fragment
         android:id="@+id/LoginFrag"
         android:name="com.example.selfdicwithjetpack.login.LoginFrag"
@@ -24,7 +26,7 @@
 
     <dialog
         android:id="@+id/PrivacyDialog"
-        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog"></dialog>
+        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog"/>
 
     <fragment
         android:id="@+id/DisplayFrag"
