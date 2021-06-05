@@ -5,7 +5,9 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/LoginFrag">
 
-<!--    <include app:graph="@navigation/nav_login" />-->
+    <!--    <include app:graph="@navigation/nav_login" />-->
+
+    <!--    <action> action 也可以抽取成全局的 </action>-->
 
     <fragment
         android:id="@+id/LoginFrag"
@@ -17,16 +19,18 @@
             android:id="@+id/action_LoginFrag_toDisplayFrag"
             app:destination="@+id/DisplayFrag"
             app:popUpTo="@+id/LoginFrag"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/alpha_01_10_duration_3000"
+            />
 
         <action
             android:id="@+id/action_LoginFrag_showPrivacyDialog"
-            app:destination="@+id/PrivacyDialog" />
+            app:destination="@+id/PrivacyDialog"/>
     </fragment>
 
     <dialog
         android:id="@+id/PrivacyDialog"
-        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog"/>
+        android:name="com.example.selfdicwithjetpack.general.PrivacyDialog" />
 
     <fragment
         android:id="@+id/DisplayFrag"

@@ -7,8 +7,10 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.navOptions
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -87,8 +89,12 @@ class DisplayAdapter :
                         binding.item!!.sentence
                     )
                 view.findNavController().navigate(
-                    actionDisplayFragToDetailFrag.actionId,
-                    actionDisplayFragToDetailFrag.arguments
+                    actionDisplayFragToDetailFrag,
+                    navOptions {
+                        anim{
+                            enter = R.anim.trans_x__300_0_duration_1000
+                        }
+                    }
                 )
             }
         }
