@@ -15,7 +15,6 @@ import com.example.selfdicwithjetpack.component.debug.ToastUtil
 import com.example.selfdicwithjetpack.component.ui.BaseFrag
 import com.example.selfdicwithjetpack.databinding.LoginFragBinding
 import com.example.selfdicwithjetpack.general.PrivacyDialog
-import kotlinx.android.synthetic.main.login_frag.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -79,10 +78,10 @@ class LoginFrag : BaseFrag(), LoginHandler {
     }
 
     override fun onNextClick(v: View) {
-        val name = et_name.text.toString()
-        val birthday = et_birthday.text.toString()
-        val city = et_city.text.toString()
-        val street = et_street.text.toString()
+        val name = binding.etName.text.toString()
+        val birthday = binding.etBirthday.text.toString()
+        val city = binding.etCity.text.toString()
+        val street = binding.etStreet.text.toString()
 
         when {
             name.isEmpty() -> {

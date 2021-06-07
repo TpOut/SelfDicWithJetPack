@@ -18,14 +18,14 @@
         <action
             android:id="@+id/action_LoginFrag_toDisplayFrag"
             app:destination="@+id/DisplayFrag"
+            app:enterAnim="@anim/alpha_01_10_duration_3000"
             app:popUpTo="@+id/LoginFrag"
             app:popUpToInclusive="true"
-            app:enterAnim="@anim/alpha_01_10_duration_3000"
-            />
+            app:popUpToSaveState="true" />
 
         <action
             android:id="@+id/action_LoginFrag_showPrivacyDialog"
-            app:destination="@+id/PrivacyDialog"/>
+            app:destination="@+id/PrivacyDialog" />
     </fragment>
 
     <dialog

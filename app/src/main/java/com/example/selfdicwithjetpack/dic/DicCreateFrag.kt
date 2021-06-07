@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.KeyboardUtils
 import com.example.selfdicwithjetpack.databinding.DicCreateFragBinding
-import kotlinx.android.synthetic.main.dic_create_frag.view.*
 
 /**
  * Created by TpOut on 2020/11/9.<br>
@@ -39,7 +38,7 @@ class DicCreateFrag : Fragment() {
 
     //更新了一波模拟器，回车都不管用了
     fun onEditorActionDone(v: View) {
-        onEditorActionDone(binding.root.et.text.toString())
+        onEditorActionDone(binding.et.text.toString())
     }
 
     // 模拟器键盘需要按pc 的回车键才行
