@@ -23,6 +23,15 @@
     <!-- 约束也以这里的为准，布局的就无效了 -->
     <ConstraintSet android:id="@+id/start">
         <Constraint
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
             android:id="@+id/btn_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
