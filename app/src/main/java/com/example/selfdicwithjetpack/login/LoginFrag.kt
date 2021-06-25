@@ -108,7 +108,7 @@ class LoginFrag : BaseFrag(), LoginHandler {
         }
     }
 
-    override fun onTempClick(v: View) {
+    override fun onGuestClick(v: View) {
         viewLifecycleOwner.lifecycleScope.launch {
             binding.userBean = DEFAULT_USER_BEAN
             delay(3000)

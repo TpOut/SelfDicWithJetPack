@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -22,10 +22,13 @@
             type="List&lt;com.example.selfdicwithjetpack.model.dic.FieldBean>" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ml_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/login_scene"
+        tools:showPaths="true">
 
         <TextView
             android:id="@+id/tv_info"
@@ -124,20 +127,31 @@
             android:text="next"
             android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}'
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_temp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btn_temp"
+        <TextView
+            android:id="@+id/btn_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{handler::onTempClick}"
             android:text="游客登陆"
-            android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}'
-            app:layout_constraintBottom_toBottomOf="@+id/btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn" />
+            android:visibility='@{userBean == null ? View.VISIBLE : View.INVISIBLE}' />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_guest_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" -> swipe ->"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_guest"
+            app:layout_constraintStart_toEndOf="@+id/btn_guest"
+            app:layout_constraintTop_toTopOf="@+id/btn_guest" />
+
+        <View
+            android:id="@+id/tv_guest_click_holder"
+            android:layout_width="0.01dp"
+            android:layout_height="0.01dp"
+            android:onClick="@{handler::onGuestClick}" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>

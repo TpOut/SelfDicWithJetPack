@@ -9,5 +9,5 @@ import android.view.View
 
 interface LoginHandler{
     fun onNextClick(v : View)
-    fun onTempClick(v : View)
+    fun onGuestClick(v : View)
 }
