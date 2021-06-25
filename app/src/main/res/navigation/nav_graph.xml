@@ -99,7 +99,7 @@
         tools:layout="@layout/random_frag">
 
         <action
-            android:id="@+id/action_RandomFrag_to_RandomConfigFrag"
+            android:id="@+id/action_RandomFrag_to_RandomConfigAct"
             app:destination="@+id/RandomConfigAct" />
 
         <action

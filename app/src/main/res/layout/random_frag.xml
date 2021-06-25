@@ -100,26 +100,6 @@
             tools:text="what is that" />
 
         <Button
-            android:id="@+id/tv_prev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="prev"
-            android:text="上一个"
-            app:layout_constraintBottom_toTopOf="@+id/tv_next"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/tv_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="next"
-            android:text="下一个"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
             android:id="@+id/tv_config"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

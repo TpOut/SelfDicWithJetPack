@@ -53,7 +53,7 @@ class RandomFrag(val layout: Int = R.layout.random_frag) : Fragment(layout), Ran
             putBoolean("order", true)
         }
         findNavController().navigate(
-            R.id.action_RandomFrag_to_RandomConfigFrag,
+            R.id.action_RandomFrag_to_RandomConfigAct,
             bundle
         )
     }
