@@ -4,8 +4,22 @@ cmake_minimum_required(VERSION 3.4.1)
 add_library(
         jni-function
         SHARED
-        jni-function.c)
+        jni-function.cpp
+)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+
+# 优化参数，-O0/-Os optimize ； -s strip
+#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffunction-sections -fdata-sections")
+#set(LOCAL_LDFLAGS "${LOCAL_LDFLAGS} -Wl,--gc-sections")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os -s -fvisibility=hidden")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Os -s -fvisibility=hidden")
+#
 # 引入某个已打包好的
 #add_library( imported-lib
 #        SHARED

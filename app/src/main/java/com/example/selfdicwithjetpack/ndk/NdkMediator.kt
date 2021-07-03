@@ -7,6 +7,8 @@ package com.example.selfdicwithjetpack.ndk
 class NdkMediator {
     external fun getNativeString(): String?
 
+    external fun createNativeCrash()
+
     init {
         System.loadLibrary("jni-function")
     }
