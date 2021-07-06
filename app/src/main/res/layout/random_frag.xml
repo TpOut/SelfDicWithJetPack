@@ -10,7 +10,6 @@
 
     <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutDescription="@xml/random_scene">
@@ -20,19 +19,88 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"
-            android:transitionName="icon" />
+            android:transitionName="icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/g_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/g_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="100dp" />
+
+        <include
+            android:id="@+id/item_0"
+            layout="@layout/random_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/g_l"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/item_1"
+            layout="@layout/random_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/g_r"
+            app:layout_constraintStart_toStartOf="@+id/g_l"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/item_2"
+            layout="@layout/random_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/g_r"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/item_3"
+            layout="@layout/random_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/item_4"
+            layout="@layout/random_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.helper.widget.Carousel
             android:id="@+id/carousel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:carousel_forwardTransition="@+id/forward"
             app:carousel_backwardTransition="@+id/backward"
-            app:carousel_previousState="@+id/previous"
-            app:carousel_nextState="@+id/next"
+            app:carousel_firstView="@+id/item_3"
+            app:carousel_forwardTransition="@+id/forward"
             app:carousel_infinite="true"
-            app:carousel_firstView="@+id/imageView2"
-            app:constraint_referenced_ids="imageView0,imageView1,imageView2,imageView3,imageView4" />
+            app:carousel_nextState="@+id/right"
+            app:carousel_previousState="@+id/left"
+            app:constraint_referenced_ids="item_0, item_1,item_2,item_3,item_4" />
 
         <Button
             android:id="@+id/tv_config"

@@ -1,9 +1,11 @@
 package com.example.selfdicwithjetpack.random
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.helper.widget.Carousel
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -25,6 +27,14 @@ class RandomFrag(val layout: Int = R.layout.random_frag) : Fragment(layout), Ran
     private var mList: ArrayList<DisplayUIModel> = arrayListOf()
     private var mIndex = 0
 
+    var colors = intArrayOf(
+        Color.parseColor("#6200EE"),
+        Color.parseColor("#3700B3"),
+        Color.parseColor("#03DAC5"),
+        Color.parseColor("#3700B3"),
+        Color.parseColor("#6200EE")
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
@@ -45,7 +55,19 @@ class RandomFrag(val layout: Int = R.layout.random_frag) : Fragment(layout), Ran
     }
 
     private fun afterViewCreated(binding: RandomFragBinding) {
+        binding.carousel.setAdapter(object : Carousel.Adapter {
+            override fun count(): Int {
+                return 5
+            }
 
+            override fun populate(view: View?, index: Int) {
+                view?.setBackgroundColor(colors[index])
+            }
+
+            override fun onNewItem(index: Int) {
+
+            }
+        })
     }
 
     override fun onConfigClick(v: View) {
