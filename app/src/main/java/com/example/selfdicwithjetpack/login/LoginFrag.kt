@@ -1,6 +1,7 @@
 package com.example.selfdicwithjetpack.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
+import com.blankj.utilcode.util.LogUtils
 import com.example.selfdicwithjetpack.R
 import com.example.selfdicwithjetpack.component.data.MmkvStorage
 import com.example.selfdicwithjetpack.component.debug.ToastUtil
@@ -56,20 +58,24 @@ class LoginFrag : BaseFrag(), LoginHandler {
         // todo 没同意隐私条款之前，不做逻辑
         binding.handler = this
         binding.mlRoot.setTransitionListener(object : MotionLayout.TransitionListener{
+
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
 
             }
 
             override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-
+                LogUtils.d("屠龙宝刀", "进度值：$p3")
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                p0?.enableTransition(R.id.trans_btn_guest, false)
+                LogUtils.d("屠龙宝刀", "currentId：$p1 -- ${R.id.start} -- ${R.id.end}")
             }
 
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-
+                if(p1 == R.id.trig_btn_guest){
+                    p0?.enableTransition(R.id.trans_btn_guest, false)
+                }
+                LogUtils.d("屠龙宝刀", "触发id $p1 -- positive $p2 -- 进度值：$p3")
             }
         })
         afterViewCreated(binding)

@@ -15,6 +15,7 @@
         <KeyFrameSet>
             <!-- 试了下，进度值不能取100 -->
             <KeyTrigger
+                motion:triggerId="@+id/trig_btn_guest"
                 motion:framePosition="99"
                 motion:motionTarget="@id/tv_guest_click_holder"
                 motion:onPositiveCross="performClick" />
