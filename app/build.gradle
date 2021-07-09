@@ -129,6 +129,8 @@ dependencies {
     // 导航
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    // 布局
+    implementation("androidx.slidingpanelayout:slidingpanelayout:1.2.0-alpha03")
 
     // 工具类
     implementation 'com.blankj:utilcodex:1.29.0'

@@ -5,6 +5,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="login_fragment_label">Login Fragment</string>
     <string name="display_fragment_label">Display Fragment</string>
+    <string name="setting_fragment_label">Setting Fragment</string>
     <string name="dic_create_fragment_label">Dic Create Fragment</string>
     <string name="detail_fragment_label">Detail Fragment</string>
     <string name="random_fragment_label">Random Fragment</string>

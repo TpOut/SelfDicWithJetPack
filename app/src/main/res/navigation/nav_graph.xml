@@ -80,6 +80,14 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/SettingFrag"
+        android:name="com.example.selfdicwithjetpack.setting.SettingFrag"
+        android:label="@string/setting_fragment_label"
+        tools:layout="@layout/detail_frag">
+
+    </fragment>
+
     <activity
         android:id="@+id/RandomConfigAct"
         android:name="com.example.selfdicwithjetpack.random.RandomConfigAct"
